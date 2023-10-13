@@ -3,7 +3,7 @@ const createNav = () => {
 
   navbar.innerHTML = `
   <div class="nav">
-  <img src="img/dark-logo.png" class="brand-logo" alt="">
+  <a href="http://127.0.0.1:5500/Wed/Do_An_Web/index.html#"><img src="img/dark-logo.png" class="brand-logo" alt=""></a>
   <div class="nav-items">
       <div class="search">
           <input type="text" class="search-box" placeholder="Search Brand, Product">
@@ -14,12 +14,12 @@ const createNav = () => {
   </div>
 </div>
 <ul class="Links-container">
-  <li class="link-item"><a href="#" class="link">Home</a></li>
-  <li class="link-item"><a href="#" class="link">Adidas</a></li>
-  <li class="link-item"><a href="#" class="link">Gucci</a></li>
-  <li class="link-item"><a href="#" class="link">Nike</a></li>
-  <li class="link-item"><a href="#" class="link">Chanel</a></li>
-  <li class="link-item"><a href="#" class="link">Louis Vuitton</a></li>
+  <li class="link-item"><a href="http://127.0.0.1:5500/Wed/Do_An_Web/index.html#" class="link">Home</a></li>
+  <li class="link-item"><a href="adidas.html" class="link">Adidas</a></li>
+  <li class="link-item"><a href="gucci.html" class="link">Gucci</a></li>
+  <li class="link-item"><a href="nike.html" class="link">Nike</a></li>
+  <li class="link-item"><a href="chanel.html" class="link">Chanel</a></li>
+  <li class="link-item"><a href="luois_vuitton.html" class="link">Louis Vuitton</a></li>
 
 
 

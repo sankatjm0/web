@@ -192,7 +192,7 @@
 }
 
 .collection {
-position: relative;
+  position: relative;
 }
 
 .collection img {
@@ -211,7 +211,21 @@ position: relative;
   font-size: 50px;
 }
 
-.collection:nth-child(3){
+.collection:nth-child(3) {
   grid-column: span 2;
-  margin-bottom: 10px
+  margin-bottom: 10px;
+}
+
+/* /////////////////////////// */
+.scrollTopButton {
+  position: fixed;
+  top: 80%;
+  transform: translateX(-50%);
+  right: 20px;
+  z-index: 999;
+}
+
+.scrollTopButton img {
+  width: 60px;
+  height: 60px;
 }
