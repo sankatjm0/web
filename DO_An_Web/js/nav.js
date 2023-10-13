@@ -15,12 +15,16 @@ const createNav = () => {
 </div>
 <ul class="Links-container">
   <li class="link-item"><a href="#" class="link">Home</a></li>
-  <li class="link-item"><a href="#" class="link">Women</a></li>
-  <li class="link-item"><a href="#" class="link">Men</a></li>
-  <li class="link-item"><a href="#" class="link">Kids</a></li>
-  <li class="link-item"><a href="#" class="link">Accessories</a></li>
+  <li class="link-item"><a href="#" class="link">Adidas</a></li>
+  <li class="link-item"><a href="#" class="link">Gucci</a></li>
+  <li class="link-item"><a href="#" class="link">Nike</a></li>
+  <li class="link-item"><a href="#" class="link">Chanel</a></li>
+  <li class="link-item"><a href="#" class="link">Louis Vuitton</a></li>
+
+
+
 </ul>
     
     `;
-}
+};
 createNav();
