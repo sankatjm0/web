@@ -73,7 +73,7 @@ app.post("/signup", (req, res) => {
       }
     });
 
-  res.json("data recieved");
+ 
 });
 
 //404 route
