@@ -4,6 +4,15 @@ const admin = require("firebase-admin");
 const bcrypt = require("bcrypt");
 const path = require("path");
 
+// firebase admin setup
+
+let serviceAccount = require("./shopquanao-3475d-firebase-adminsdk-c6mz2-f31f70b0fa.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+let db = admin.firestore();
+
 //delare static path
 let staticPath = path.join(__dirname, "Do_An_Web");
 
@@ -37,9 +46,33 @@ app.post("/signup", (req, res) => {
     return res.json({ alert: "Nhập email của bạn" });
   } else if (password.length < 6) {
     return res.json({ alert: "Nhập mật khẩu (ít nhất 6 ký tự)" });
-  } else {
-    // store user in db
   }
+  // store user in db
+
+  db.collection("users")
+    .doc(email)
+    .get()
+    .then((user) => {
+      if (user.exists) {
+        return res.json({ alert: "email already exists" });
+      } else {
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(password, salt, (err, hash) => {
+            req.body.password = hash;
+            db.collection("users")
+              .doc(email)
+              .set(req.body)
+              .then((data) => {
+                res.json({
+                  name: req.body.name,
+                  email: req.body.email,
+                });
+              });
+          });
+        });
+      }
+    });
+
   res.json("data recieved");
 });
 

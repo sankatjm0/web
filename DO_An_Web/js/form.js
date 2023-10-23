@@ -2,7 +2,7 @@ const loader = document.querySelector(".loader");
 
 //select input
 const submitBtn = document.querySelector(".submit-btn");
-const nameInput = document.querySelector("#name");
+const name = document.querySelector("#name");
 const email = document.querySelector("#email");
 const password = document.querySelector("#password");
 
@@ -16,7 +16,7 @@ submitBtn.addEventListener("click", () => {
   // } else {
   loader.style.display = "block";
   sendData("/signup", {
-    name: nameInput.value,
+    name: name.value,
     email: email.value,
     password: password.value,
   });
