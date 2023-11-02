@@ -85,6 +85,7 @@
   color: #383838;
   opacity: 0.5;
   transition: 0.5s;
+  font-size: 20px;
 }
 
 .link:hover {
