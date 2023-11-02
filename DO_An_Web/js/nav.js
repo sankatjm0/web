@@ -3,10 +3,10 @@ const createNav = () => {
 
   navbar.innerHTML = `
   <div class="nav">
-  <a href="http://127.0.0.1:5500/Wed/Do_An_Web/index.html#"><img src="img/dark-logo.png" class="brand-logo" alt=""></a>
+  <a href="http://127.0.0.1:5500/Wed/Do_An_Web/index-.html#"><img src="img/dark-logo.png" class="brand-logo" alt=""></a>
   <div class="nav-items">
       <div class="search">
-          <input type="text" class="search-box" placeholder="Search Brand, Product">
+          <input type="text" class="search-box" placeholder="Tìm kiếm sản phẩm">
           <button class="search-btn">Search</button>
           <a>
           <img src="img/user.png" id="user-img" alt="">
@@ -21,7 +21,7 @@ const createNav = () => {
   </div>
 </div>
 <ul class="Links-container">
-  <li class="link-item"><a href="http://127.0.0.1:5500/Wed/Do_An_Web/index.html#" class="link">Home</a></li>
+  <li class="link-item"><a href="http://127.0.0.1:5500/Wed/Do_An_Web/index-user.html#" class="link">Home</a></li>
   <li class="link-item"><a href="adidas.html" class="link">Adidas</a></li>
   <li class="link-item"><a href="gucci.html" class="link">Gucci</a></li>
   <li class="link-item"><a href="nike.html" class="link">Nike</a></li>
@@ -47,21 +47,21 @@ userImageButton.addEventListener("click", () => {
 });
 
 window.onload = () => {
-  let user = JSON.parse(sessionStorage.user||null);
-  if(user!=null){
+  let user = JSON.parse(sessionStorage.user || null);
+  if (user != null) {
     //means user is logged in
-    popuptext.innerHTML=`log in as, ${user.name}`;
-    actionBtn.innerHTML = 'log out';
-    actionBtn.addEventListener("click",()=>{
+    popuptext.innerHTML = `log in as, ${user.name}`;
+    actionBtn.innerHTML = "log out";
+    actionBtn.addEventListener("click", () => {
       sessionStorage.clear();
       location.reload();
-    })
-  }else{
+    });
+  } else {
     // user is logged out
-    popuptext.innerHTML = "log in to place order";
-    actionBtn.innerHTML = "log in";
-    actionBtn.addEventListener("click",()=>{
+    popuptext.innerHTML = "Đăng nhập để đặt hàng";
+    actionBtn.innerHTML = "Đăng nhập";
+    actionBtn.addEventListener("click", () => {
       location.href = "/login";
-    })
+    });
   }
 };

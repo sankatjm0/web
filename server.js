@@ -27,7 +27,7 @@ app.use(express.json());
 //routes
 //home route
 app.get("/", (req, res) => {
-  res.sendFile(path.join(staticPath, "index.html"));
+  res.sendFile(path.join(staticPath, "index-user.html"));
 });
 
 //singup
