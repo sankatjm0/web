@@ -44,6 +44,16 @@ let listIteam = [
         "actualprice":"40",
         "category":"Woman",
         "traDemark":"brand",
+        "image":"img/card4.png"
+    },
+    {
+        "id": "1",
+        "name": "a short line about the cloth",
+        "discounttag":50,
+        "Price": "20",
+        "actualprice":"40",
+        "category":"Woman",
+        "traDemark":"brand",
         "image":"img/card5.png"
     },
     {
