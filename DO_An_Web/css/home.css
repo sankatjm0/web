@@ -4,9 +4,10 @@
   padding: 10px 30px;
 }
 .hero-section {
+
   width: 100%;
-  height: calc(50vh - 120px);
-  background-image: url("../img/header.png");
+  height: calc(110vh - 110px);
+  background-image: url("../img/background.png");
   background-size: cover;
   display: flex;
   justify-content: center;
