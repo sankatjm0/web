@@ -38,14 +38,12 @@ submitBtn.addEventListener("click", () => {
     // login page
     if (!email.value || !password.value) {
       showAlert("fill all the inputs");
-    }
-    else{
+    } else {
       loader.style.display = "block";
-      sendData("/login",{
+      sendData("/login", {
         email: email.value,
         password: password.value,
-      })
+      });
     }
   }
 });
-
