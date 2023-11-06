@@ -6,8 +6,8 @@ const createNav = () => {
   <a href="index-user.html"><img src="img/dark-logo.png" class="brand-logo" alt=""></a>
   <div class="nav-items">
       <div class="search">
-          <input type="text" class="search-box" placeholder="Tìm kiếm sản phẩm">
-          <button class="search-btn">Tìm</button>
+          <input type="text" id= "search-box"class="search-box" placeholder="Tìm kiếm sản phẩm" value="">
+          <button class="search-btn" >Tìm</button>
           <a>
           <img src="img/user.png" id="user-img" alt="">
           <div class="login-logout-popup hide">
@@ -23,7 +23,7 @@ const createNav = () => {
 <ul class="Links-container">
   <li class="link-item"><a href="index-user.html" class="link">Home</a></li>
   <li class="link-item"><a href="adidas.html" class="link">Adidas</a></li>
-  <li class="link-item"><a href="gucci.html" class="link">Gucci</a></li>
+  <li class="link-item"><a href="search.html?query=gucci" class="link">Gucci</a></li>
   <li class="link-item"><a href="nike.html" class="link">Nike</a></li>
   <li class="link-item"><a href="chanel.html" class="link">Chanel</a></li>
   <li class="link-item"><a href="luois_vuitton.html" class="link">Louis Vuitton</a></li>
@@ -35,6 +35,11 @@ const createNav = () => {
     `;
 };
 createNav();
+
+document.querySelector('.search-btn').addEventListener('click', function () {
+  const searchValue = document.querySelector('.search-box').value;
+  window.location.href = 'search.html?query=' + encodeURIComponent(searchValue);
+});
 
 // nav popup
 const userImageButton = document.querySelector("#user-img");

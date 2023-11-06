@@ -4,11 +4,16 @@ let primary = document.getElementById('primary');
 let filtersnew = document.querySelector('.shop-filter-group--new');
 let number1 = document.getElementById('number1');
 let number2 = document.getElementById('number2');
+const search = document.getElementById('search-box');
 
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const searchValue = urlParams.get('query');
+        
 let listIteam = [
     {
         "id": "1",
-        "name": "a short line about the cloth",
+        "name": "a b line what the gucci",
         "discounttag":50,
         "Price": "20",
         "actualprice":"40",
@@ -18,7 +23,7 @@ let listIteam = [
     },
     {
         "id": "1",
-        "name": "a short line about the cloth",
+        "name": "a short line about the adidas",
         "discounttag":50,
         "Price": "30",
         "actualprice":"60",
@@ -100,6 +105,8 @@ let listIteam = [
 let foundItems = [];
 
 function Findname(Name){
+    search.value=searchValue;
+
     foundItems = [];
     listIteam.forEach(item => {
         if(item.name.includes(Name)){
@@ -351,4 +358,4 @@ function applyFilters(){
     }
         
 }
-Findname(' ');
+Findname(searchValue);
