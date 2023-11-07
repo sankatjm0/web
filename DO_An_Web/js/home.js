@@ -124,7 +124,7 @@ if (bar) {
     imgSrc: "https://i.postimg.cc/JhrH0hYM/n8.jpg",
     brand: "Adidas",
     name: "2 in 1 Double Routed",
-    price: "$78"
+    price: ""
   },
   {
     imgSrc: "https://i.postimg.cc/2Sq4mytJ/f8.jpg",

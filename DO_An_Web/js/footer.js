@@ -6,10 +6,10 @@ const createFooter = () => {
             <div class="footer-ul-container">   
             </div>
         </div>
-        <p class="info">Spport Emails - help@shopnhalam.com,
+        <p class="info">Email hỗ trợ - help@shopnhalam.com,
             customersupport@shopnhalam.com
         </p>
-        <p class="info">Telephone - 0878955654</p>
+        <p class="info">Số điện thoại - 0878955654</p>
         <div class="footer-social-container">
             <div>
                 <a href="#" class="social-link">terms & services</a>

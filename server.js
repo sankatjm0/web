@@ -54,7 +54,7 @@ app.post("/signup", (req, res) => {
     .get()
     .then((user) => {
       if (user.exists) {
-        return res.json({ alert: "email already exists" });
+        return res.json({ alert: "Email đã tồn tại" });
       } else {
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(password, salt, (err, hash) => {
@@ -83,7 +83,7 @@ app.post("/login", (req, res) => {
   let { email, password } = req.body;
 
   if (!email.length || !password.length) {
-    return res.json({ alert: "fill all the inputs" });
+    return res.json({ alert: "Điền đầy đủ thông tin" });
   }
 
   db.collection("users")
@@ -91,7 +91,7 @@ app.post("/login", (req, res) => {
     .get()
     .then((user) => {
       if (!user.exists) {
-        return res.json({ alert: "log in email does not exists" });
+        return res.json({ alert: "Email hoặc mật khẩu không chính xác" });
       } else {
         bcrypt.compare(password, user.data().password, (err, result) => {
           if (result) {
@@ -101,7 +101,7 @@ app.post("/login", (req, res) => {
               email: data.email,
             });
           } else {
-            return res.json({ alert: "password in incorrect" });
+            return res.json({ alert: "Email hoặc mật khẩu không chính xác" });
           }
         });
       }

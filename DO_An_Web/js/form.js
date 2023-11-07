@@ -20,11 +20,11 @@ submitBtn.addEventListener("click", () => {
   if (name != null) {
     // sign up
     if (name.value.length < 3) {
-      showAlert("name must be 3 letters long");
+      showAlert("Tên phải ít nhất 3 ký tự");
     } else if (!email.value.length) {
-      showAlert("enter your email");
+      showAlert("Vui lòng nhập Email của bạn");
     } else if (password.value.length < 6) {
-      showAlert("password should be 6 letters long");
+      showAlert("Mật khẩu ít nhất 6 ký tự");
     } else {
       // submit form
       loader.style.display = "block";
@@ -37,7 +37,7 @@ submitBtn.addEventListener("click", () => {
   } else {
     // login page
     if (!email.value || !password.value) {
-      showAlert("fill all the inputs");
+      showAlert("Điền đầy đủ thông tin");
     } else {
       loader.style.display = "block";
       sendData("/login", {
