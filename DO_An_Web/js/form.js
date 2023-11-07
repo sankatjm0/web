@@ -43,6 +43,7 @@ submitBtn.addEventListener("click", () => {
       sendData("/login", {
         email: email.value,
         password: password.value,
+  
       });
     }
   }

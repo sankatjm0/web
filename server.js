@@ -25,9 +25,14 @@ app.use(express.static(staticPath));
 app.use(express.json());
 
 //routes
-//home route
+//home user route
 app.get("/", (req, res) => {
   res.sendFile(path.join(staticPath, "index-user.html"));
+});
+
+//home admin route
+app.get("/admin", (req, res) => {
+  res.sendFile(path.join(staticPath, "index-admin.html"));
 });
 
 //singup
@@ -47,8 +52,8 @@ app.post("/signup", (req, res) => {
   } else if (password.length < 6) {
     return res.json({ alert: "Nhập mật khẩu (ít nhất 6 ký tự)" });
   }
-  // store user in db
 
+  // store user in db
   db.collection("users")
     .doc(email)
     .get()
@@ -96,6 +101,7 @@ app.post("/login", (req, res) => {
         bcrypt.compare(password, user.data().password, (err, result) => {
           if (result) {
             let data = user.data();
+            // console.log(data.name);
             return res.json({
               name: data.name,
               email: data.email,
