@@ -29,8 +29,10 @@ body {
 }
 
 input[type="text"],
+input[type="password"],
 input[type="email"],
-input[type="password"] {
+input[type="number"],
+ textarea{
   display: block;
   width: 300px;
   height: 40px;

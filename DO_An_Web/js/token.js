@@ -1,4 +1,4 @@
-let char =
+const char =
   "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:',.<>/?`~";
 
 const generateToken = (key) => {
@@ -10,21 +10,20 @@ const generateToken = (key) => {
   }
   return token;
 };
-const compareToken = (token, key)=>{
-  let string='';
-  for(let i=0;i< token,length;i++){
-    let index1 = char.indexOf(token[i]);
-    let index2 = char.indexOf(token[i+1]);
-    string += char[index1+index2];
-  }
-  if(string==key){
-    return true;
-  }
-  return false;
-}
-// commom function
 
-// send data funtion
+const compareToken = (token, key) => {
+  let string = '';
+  for (let i = 0; i < token.length; i += 2) {
+    let index1 = char.indexOf(token[i]);
+    let index2 = char.indexOf(token[i + 1]);
+    string += char[index1 + index2];
+  }
+  return string === key;
+};
+
+// Common functions
+
+// Send data function
 const sendData = (path, data) => {
   fetch(path, {
     method: "post",
@@ -38,18 +37,17 @@ const sendData = (path, data) => {
 };
 
 const processData = (data) => {
-  loader.style.display = null;
+  loader.style.display = "none";
   if (data.alert) {
     showAlert(data.alert);
   } else if (data.name) {
-    // create authToken
+    // Create authToken
     data.authToken = generateToken(data.email);
     sessionStorage.user = JSON.stringify(data);
     location.replace("/");
   }
 };
 
-// alert funciont
 const showAlert = (mgs) => {
   let alertBox = document.querySelector(".alert-box");
   let alertMgs = document.querySelector(".alert-mgs");
@@ -57,5 +55,5 @@ const showAlert = (mgs) => {
   alertBox.classList.add("show");
   setTimeout(() => {
     alertBox.classList.remove("show");
-  }, 3000);
+  }, 300);
 };

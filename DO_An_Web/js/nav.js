@@ -23,7 +23,7 @@ const createNav = () => {
 <ul class="Links-container">
   <li class="link-item"><a href="index-user.html" class="link">Home</a></li>
   <li class="link-item"><a href="adidas.html" class="link">Adidas</a></li>
-  <li class="link-item"><a href="search.html?query=gucci" class="link">Gucci</a></li>
+  <li class="link-item"><a href="gucci.html" class="link">Gucci</a></li>
   <li class="link-item"><a href="nike.html" class="link">Nike</a></li>
   <li class="link-item"><a href="chanel.html" class="link">Chanel</a></li>
   <li class="link-item"><a href="luois_vuitton.html" class="link">Louis Vuitton</a></li>
