@@ -1,18 +1,17 @@
 //importing packages
-const express = require('express');
-const admin = require('firebase-admin');
-const bcrypt = require('bcrypt');
-const path = require('path');
+const express = require("express");
+const admin = require("firebase-admin");
+const bcrypt = require("bcrypt");
+const path = require("path");
 
 // firebase admin setup
 
 let serviceAccount = require("./shopquanao-3475d-firebase-adminsdk-c6mz2-f31f70b0fa.json");
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
+  credential: admin.credential.cert(serviceAccount),
 });
 let db = admin.firestore();
-
 
 //delare static path
 let staticPath = path.join(__dirname, "Do_An_Web");
@@ -27,21 +26,21 @@ app.use(express.json());
 
 //routes
 //home user route
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
   res.sendFile(path.join(staticPath, "index-user.html"));
 });
 
 //home admin route
-app.get('/admin', (req, res) => {
+app.get("/admin", (req, res) => {
   res.sendFile(path.join(staticPath, "index-admin.html"));
 });
 
 //singup
-app.get('/signup', (req, res) => {
+app.get("/signup", (req, res) => {
   res.sendFile(path.join(staticPath, "signup.html"));
 });
 
-app.post('/signup', (req, res) => {
+app.post("/signup", (req, res) => {
   let { name, email, password } = req.body;
 
   // form validations
@@ -81,11 +80,11 @@ app.post('/signup', (req, res) => {
 });
 
 //login route
-app.get('/login', (req, res) => {
+app.get("/login", (req, res) => {
   res.sendFile(path.join(staticPath, "login.html"));
 });
 
-app.post('/login', (req, res) => {
+app.post("/login", (req, res) => {
   let { email, password } = req.body;
 
   if (!email.length || !password.length) {
@@ -116,22 +115,47 @@ app.post('/login', (req, res) => {
 });
 
 //404 route
-app.get('/404', (req, res) => {
+app.get("/404", (req, res) => {
   res.sendFile(path.join(staticPath, "404.html"));
 });
 
 app.use((req, res) => {
-  res.redirect('/404');
+  res.redirect("/404");
 });
 
 //addProduct route
-app.get('/add-product', (req, res) => {
+app.get("/add-product", (req, res) => {
   res.sendFile(path.join(staticPath, "addProduct.html"));
 });
 
 // seller
-app.get('/seller', (req, res) => {
+app.get("/seller", (req, res) => {
   res.sendFile(path.join(staticPath, "seller.html"));
+});
+app.post("/seller", (req, res) => {
+  let { name, address, number, email } = req.body;
+  if (
+    !name.length ||
+    !address.length ||
+    !number.length < 10 ||
+    !Number(number)
+  ) {
+    return res.json({ alert: "some informations is/are invalid" });
+  } else {
+    db.collection("sellers")
+      .doc(email)
+      .set(req.body)
+      .then((data) => {
+        db.collection("users")
+          .doc(email)
+          .update({
+            seller: true,
+          })
+          .then((data) => {
+            res.json(true);
+          });
+      });
+  }
 });
 
 app.listen(300, () => {
