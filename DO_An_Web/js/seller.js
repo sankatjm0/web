@@ -1,4 +1,5 @@
 let loader = document.querySelector(".loader");
+let user= JSON.parse(sessionStorage.user || null);
 
 const becomeSellerElement = document.querySelector(".become-seller");
 const productListingElement = document.querySelector(".product-listing");
@@ -7,17 +8,21 @@ const showApplyFormBTn = document.querySelector("#apply-btn");
 console.log(11111111111111111111);
 
 window.onload = () => {
-  if (sessionStorage.user) {
-    let user = JSON.parse(sessionStorage.user);
-    if (!user.seller) {
-      becomeSellerElement.classList.remove("hide");
+  if (user) { 
+    if(compareToken(user.authToken, user.email)){
+  
+      if (!user.seller) {
+        becomeSellerElement.classList.remove("hide");
+      } else {
+        loader.style.display = 'block';
+        setupProducts();
+        
+      }
     } else {
-      productListingElement.classList.remove("hide");
+      location.replace("/login");
     }
-  } else {
-    location.replace("/login");
   }
-};
+} 
 showApplyFormBTn.addEventListener("click", () => {
   becomeSellerElement.classList.add("hide");
   applyForm.classList.remove("hide");
@@ -46,6 +51,26 @@ applyFormButton.addEventListener("click", () => {
       address: address.value,
       number: number.value,
       email: JSON.parse(sessionStorage.user).email,
-    });
+    })
   }
-});
+})
+
+const setupProducts = () => {
+  fetch('/get-products',{
+    method:'post',
+    headers: new Headers({"Content-Type": "application/json"}),
+    body: JSON.stringify({email: user.email})
+  })
+  .then(res => res.json())
+  .then(data => {
+    loader.style.display = null;
+    productListingElement.classList.remove('hide');
+    if(data == 'no products'){
+      let emptySvg = document.querySelector('.no-product-image');
+      emptySvg.classList.remove('hide');
+    } else{
+        data.forEach(product => createProduct(product));
+          
+    }
+  }); 
+}

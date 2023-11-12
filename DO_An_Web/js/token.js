@@ -53,19 +53,24 @@ const processData = (data) => {
     sessionStorage.user = JSON.stringify(data);
     location.replace("/");
   } else if (data == true) {
+    //seller page
     let user = JSON.parse(sessionStorage.user);
     user.seller = true;
     sessionStorage.user = JSON.stringify(user);
     location.reload();
+  } else if(data.product){
+    location.href = '/seller';
   }
+
 };
 console.log(11111111111111111111);
-const showAlert = (mgs) => {
+const showAlert = (msg) => {
   let alertBox = document.querySelector(".alert-box");
-  let alertMgs = document.querySelector(".alert-mgs");
-  alertMgs.innerHTML = mgs;
+  let alertMgs = document.querySelector(".alert-msg");
+  alertMgs.innerHTML = msg;
   alertBox.classList.add("show");
   setTimeout(() => {
     alertBox.classList.remove("show");
   }, 300);
+  return false;
 };
