@@ -16,8 +16,8 @@ const createProduct = (data) => {
                     ${data.draf? `<span class="tag">Draft</span>` : ''}
                     
                     <img src="${data.images[0] || 'img/no image.png'}" class="product-thumb" alt="">
-                    <button class="card-action-btn edit-btn" onclick="openEditor()"><img src="img/edit.pnng"></button>
-                    <button class="card-action-btn open-btn" onclick="location.href = '/${data.id}'"><img src="img/open.pnng"></button>
+                    <button class="card-action-btn edit-btn" onclick="location.href = '/add-product{data.id}'"><img src="img/edit.pnng"></button>
+                    <button class="card-action-btn open-btn" onclick="location.href = '/products{data.id}'"><img src="img/open.pnng"></button>
                     <button class="card-action-btn delete-popup-btn" 
                     onclick="openDeletePopup('${data.id}')" ><img src="img/delete.pnng"></button>
                 </div>

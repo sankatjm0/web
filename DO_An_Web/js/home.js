@@ -231,6 +231,7 @@ function displayPagination() {
   }
 }
 
+
 // Mặc định hiển thị trang đầu tiên
 displayProducts(1);
 displayPagination();

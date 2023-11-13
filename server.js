@@ -189,7 +189,10 @@ app.post('/delete-product', (req,res) => {
     res.json('err');
   })
 })
-
+//product page
+app.get("/products/id", (req, res) => {
+  res.sendFile(path.join(staticPath, "product.html"));
+})
 //404 route
 app.get("/404", (req, res) => {
   res.sendFile(path.join(staticPath, "404.html"));
