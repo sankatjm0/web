@@ -3,6 +3,7 @@ const express = require("express");
 const admin = require("firebase-admin");
 const bcrypt = require("bcrypt");
 const path = require("path");
+const  nodemailer= require('nodemailer');
 
 // firebase admin setup
 
@@ -190,8 +191,21 @@ app.post('/delete-product', (req,res) => {
   })
 })
 //product page
-app.get("/products/id", (req, res) => {
+app.get("/products/:id", (req, res) => {
   res.sendFile(path.join(staticPath, "product.html"));
+})
+app.get("/search/:key", (req, res) => {
+  res.sendFile(path.join(staticPath, "search.html"));
+})
+app.get("/cart", (req, res) => {
+  res.sendFile(path.join(staticPath, "cart.html"));
+})
+app.get("/checkout", (req, res) => {
+  res.sendFile(path.join(staticPath, "checkout.html"));
+})
+
+app.post("/oder", (req, res) => {
+  res.sendFile(path.join(staticPath, "checkout.html"));
 })
 //404 route
 app.get("/404", (req, res) => {
