@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Quản lý sản phẩm</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        form {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Quản lý sản phẩm</h2>
+
+    <form id="productForm">
+        <label for="brand">Tên hãng:</label>
+        <input type="text" id="brand" required>
+
+        <label for="name">Tên sản phẩm:</label>
+        <input type="text" id="name" required>
+
+        <label for="price">Giá:</label>
+        <input type="number" id="price" required>
+
+
+        <label for="image">Hình ảnh:</label>
+        <input type="file" id="img" accept="" required>
+
+        <button type="submit">Thêm sản phẩm</button>
+    </form>
+
+    <table id="productTable">
+        <tr>
+            <th id="sl">Số Lượng</th>
+            <th>Hãng</th>
+            <th>Tên sản phẩm</th>
+            <th>Hình ảnh</th>
+            <th>Giá</th>
+        </tr>
+    </table>
+
+    <script>
+        // Mảng chứa danh sách sản phẩm
+
+        var products = JSON.parse(localStorage.getItem('product')) || [];
+
+        // Lấy tham chiếu đến form và bảng
+        const productForm = document.getElementById('productForm');
+        const productTable = document.getElementById('productTable');
+        displayProducts();
+
+        // Xử lý sự kiện khi form được gửi đi
+        productForm.addEventListener('submit', function (e) {
+            e.preventDefault(); // Ngăn chặn chuyển hướng trang sau khi gửi form
+
+            // Lấy giá trị từ các trường input
+            const name = document.getElementById('name').value;
+            const price = document.getElementById('price').value;
+            const img = document.getElementById('img').value;
+            const brand = document.getElementById('brand').value;
+            const imageInput = document.getElementById('image');
+
+
+            products.push({
+                brand: brand,
+                img: img,
+                name: name,
+                price: price,
+            });
+
+
+
+            // Lưu danh sách tài khoản vào localStorage
+            localStorage.setItem('product', JSON.stringify(products));
+
+
+            // Xóa giá trị trong các trường input
+            document.getElementById('name').value = '';
+            document.getElementById('price').value = '';
+            document.getElementById('brand').value = '';
+            document.getElementById('img').value = '';
+        });
+
+        // Hàm hiển thị bảng sản phẩm
+        function displayProducts() {
+            // Xóa nội dung bảng hiện tại
+            productTable.innerHTML = `
+                <tr>
+                    <th>Số lượng</th>
+                    <th>Hãng</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Hình ảnh</th>
+                    <th>Giá</th>
+ 
+                </tr>
+            `;
+
+            // Duyệt qua danh sách sản phẩm và hiển thị từng sản phẩm trong bảng
+            for (let i = 0; i < products.length; i++) {
+                const product = products[i];
+
+                const row = document.createElement('tr');
+                const imgCell = document.createElement('td');
+                const imgLink = document.createElement('a');
+                imgLink.href = product.img;
+                imgLink.textContent = "Xem ảnh"; // Thay thế bằng văn bản hiển thị cho liên kết ảnh
+
+                imgCell.appendChild(imgLink);
+
+                row.innerHTML = `
+        <td>${i + 1}</td>
+        <td>${product.brand}</td>
+        <td>${product.name}</td>
+        <td></td>
+        <td>${product.price}</td>
+        <td>
+            <button onclick="editProduct(${i})">Sửa</button>
+            <button onclick="deleteProduct(${i})">Xóa</button>
+        </td>
+    `;
+
+                row.querySelector("td:nth-child(4)").appendChild(imgCell);
+
+                productTable.appendChild(row);
+            }
+        }
+
+        // Hàm xóa sản phẩm
+        function deleteProduct(index) {
+            products.splice(index, 1); // Xóa sản phẩm khỏi mảng
+            displayProducts(); // Hiển thị lại bảng sản phẩm
+        }
+
+        // Hàm sửa sản phẩm
+        function editProduct(index) {
+            const product = products[index];
+
+            // Đổ dữ liệu của sản phẩm vào các trường input
+
+            document.getElementById('name').value = product.name;
+            document.getElementById('price').value = product.price;
+            document.getElementById('brand').value = product.brand;
+            document.getElementById('img').value = product.img;
+
+            // Xóa sản phẩm khỏi mảng
+            products.splice(index, 1);
+
+            // Hiển thị lại bảng sản phẩm
+            displayProducts();
+        }
+    </script>
+</body>
+
+</html>
