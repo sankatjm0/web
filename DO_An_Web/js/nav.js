@@ -16,7 +16,7 @@ const createNav = () => {
           </div>
           </a>
 
-      <a href="/cart.html"><img src="img/cart.png" alt=""></a>
+      <a href="#"><img src="img/cart.png" alt=""></a>
       </div>
   </div>
 </div>
@@ -34,6 +34,7 @@ const createNav = () => {
     
     `;
 };
+
 createNav();
 
 document.querySelector('.search-btn').addEventListener('click', function () {
@@ -52,10 +53,10 @@ userImageButton.addEventListener("click", () => {
 });
 
 window.onload = () => {
-  let user = JSON.parse(sessionStorage.user || null);
+  let user = sessionStorage.getItem('current') || null;
   if (user != null) {
     //means user is logged in
-    popuptext.innerHTML = `Xin chào, ${user.name}`;
+    popuptext.innerHTML = `Xin chào, ${user}`;
     actionBtn.innerHTML = "Đăng xuất";
     actionBtn.addEventListener("click", () => {
       sessionStorage.clear();
@@ -66,7 +67,7 @@ window.onload = () => {
     popuptext.innerHTML = "Đăng nhập để đặt hàng";
     actionBtn.innerHTML = "Đăng nhập";
     actionBtn.addEventListener("click", () => {
-      location.href = "/login";
+      location.replace("./login.html");
     });
   }
 };

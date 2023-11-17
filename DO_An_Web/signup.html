@@ -5,30 +5,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CLothing : Create Account</title>
+    
     <link rel="stylesheet" href="css/signup.css">
 </head>
 
 <body>
     <img src="img/loader.gif" class="loader">
 
-    <div class="alert-box">
-        <img src="img/error.png" class="alert-img">
-        <p class="alert-mgs">Thông báo</p>
-    </div>
 
     <div class="container">
         <img src="img/dark-logo.png" class="logo">
-        <input type="text" autocapitalize="off" id="name" placeholder="name">
-        <input type="email" autocapitalize="off" id="email" placeholder="email">
-        <input type="password" autocapitalize="off" id="password" placeholder="password">
-        <input type="checkbox" checked ="checkbox" id="terms-and-cond">
-        <label for="terms-and-cond">đồng ý với <a href="#">Điều khoản và điều kiện</a></label>
-        <button class="submit-btn">Tạo tài khoảnt</button>
-        <a href="/login" class="link" >Bạn đã có tài khoản? Đăng nhập tại đây</a>
+        <form class="signup">
+            <div>
+        <input type="text" autocapitalize="off" id="username" placeholder="Username" />
+        <small></small>
+            </div>
+
+            <div>
+        <input type="text" autocapitalize="off" id="phone" placeholder="Phone number" />
+        <small></small>
+            </div>
+
+            <div>
+        <input type="text" autocapitalize="off" id="password" placeholder="Password" />
+        <small></small>
+            </div>
+        
+        <button type="submit" class="submit-btn">Tạo tài khoản</button>
+        </form>
+        <a href="./login.html" class="link" >Bạn đã có tài khoản? Đăng nhập tại đây</a>
 
 
     </div>
-    <script src="js/form.js"></script>
+    <script src="js/login.js"></script>
     <script src="js/token.js"></script>
 </body>
 
