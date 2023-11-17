@@ -35,6 +35,9 @@ app.get("/", (req, res) => {
 app.get("/admin", (req, res) => {
   res.sendFile(path.join(staticPath, "index-admin.html"));
 });
+app.get("/LocalStorage", (req, res) => {
+  res.sendFile(path.join(staticPath, "LocalStorage.html"));
+});
 
 //singup
 app.get("/signup", (req, res) => {
