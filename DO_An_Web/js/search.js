@@ -9,11 +9,11 @@ const search = document.getElementById('search-box');
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-const searchValue = urlParams.get('query');
+const searchValue = urlParams.get('search');
       
 window.onload = function () {
     products = JSON.parse(localStorage.getItem("product")) || [];
-    Findname(" ");
+    Findname();
 }
 // let listIteam = [
 //     {
@@ -25,18 +25,20 @@ window.onload = function () {
 // ];
 let foundItems = [];
 
-document.querySelector('.product-container').addEventListener('click', function () {
-    const searchId = document.querySelector('.product-container').value;
-    window.location.href = 'product.html?query=' + encodeURIComponent(searchValue);
+document.querySelector('.product-container').addEventListener('click', function (event) {
+        if (event.target.tagName.toLowerCase() !== 'button') {
+            const searchId = document.querySelector('.product-container').value;
+            window.location.href = 'product.html?ID=' + encodeURIComponent(searchId);
+        } 
 });
 
-function Findname(Name){
+function Findname(){
     search.value=searchValue;
 
     foundItems = [];
     if(products !== undefined)
     products.forEach(item => {
-        if(item.name.includes(Name)){
+        if(item.name.includes(searchValue)){
             foundItems.push(item);
         }
     });

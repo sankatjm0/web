@@ -24,7 +24,6 @@
   height: auto;
   grid-row-gap:40px;
   padding:5px;
-  cursor: pointer;
 }
 
 .shop-filter-group {
@@ -55,4 +54,7 @@
   width: 100%;
   background-color: red;
   border: none;
+}
+.product-card{
+  cursor: pointer;
 }

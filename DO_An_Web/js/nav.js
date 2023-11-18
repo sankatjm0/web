@@ -39,7 +39,7 @@ createNav();
 
 document.querySelector('.search-btn').addEventListener('click', function () {
   const searchValue = document.querySelector('.search-box').value;
-  window.location.href = 'search.html?query=' + encodeURIComponent(searchValue);
+  window.location.href = 'search.html?search=' + encodeURIComponent(searchValue);
 });
 
 // nav popup
