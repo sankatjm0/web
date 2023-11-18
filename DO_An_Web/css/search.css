@@ -24,6 +24,7 @@
   height: auto;
   grid-row-gap:40px;
   padding:5px;
+  cursor: pointer;
 }
 
 .shop-filter-group {
