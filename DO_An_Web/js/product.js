@@ -1,6 +1,4 @@
-const sizeBtns = document.querySelectorAll(".size-radio-btn");
 let checkdBtn = 0;
-
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const searchId = urlParams.get('ID');
@@ -9,15 +7,26 @@ window.onload = function () {
   products = JSON.parse(localStorage.getItem("product")) || [];
 }
 // size do
-sizeBtns.forEach((item, i) => {
-  item.addEventListener("click", () => {
-    sizeBtns[checkdBtn].classList.remove("check");
-    item.classList.add("check");
-    checkdBtn = i;
-  });
+window.addEventListener('load', function() {
+  if (Array.isArray(products) && products.length > 1) {
+
+    searchProduct();
+
+    sizeBtns = document.querySelectorAll(".size-radio-btn");
+    sizeBtns.forEach((item, i) => {
+      item.addEventListener("click", () => {
+        sizeBtns[checkdBtn].classList.remove("check");
+        item.classList.add("check");
+        checkdBtn = i;
+      });
+    });
+  }
 });
 
-function searchProduct(searchId){
+
+
+
+function searchProduct(){
   foundItems = [];
   if(products !== undefined)
   products.forEach(item => {
@@ -27,6 +36,8 @@ function searchProduct(searchId){
   });
 }
 //
+
+
 function addProduct(item){
   const addproduct = document.querySelector(".product-details");
   addproduct.innerHTML=`
