@@ -21,15 +21,13 @@ const createNav = () => {
   </div>
 </div>
 <ul class="Links-container">
-  <li class="link-item"><a href="index-user.html" class="link">Home</a></li>
-  <li class="link-item"><a href="adidas.html" class="link">Adidas</a></li>
-  <li class="link-item"><a href="gucci.html" class="link">Gucci</a></li>
-  <li class="link-item"><a href="nike.html" class="link">Nike</a></li>
-  <li class="link-item"><a href="chanel.html" class="link">Chanel</a></li>
-  <li class="link-item"><a href="luois_vuitton.html" class="link">Louis Vuitton</a></li>
-
-
-
+  <li class="link"><a href="index-user.html" style="text-decoration: none; color: #383838;">Home</a></li>
+  <li id="adidas"class="link">Adidas</li>
+  <li id="gucci"class="link">Gucci</li>
+  <li id="nike" class="link">Nike</li>
+  <li id="chanel" class="link">Chanel</li>
+  <li id="luoisvuitton" class="link">Luois Vuitton</li>
+ 
 </ul>
     
     `;
@@ -37,9 +35,10 @@ const createNav = () => {
 
 createNav();
 
-document.querySelector('.search-btn').addEventListener('click', function () {
-  const searchValue = document.querySelector('.search-box').value;
-  window.location.href = 'search.html?search=' + encodeURIComponent(searchValue);
+document.querySelector(".search-btn").addEventListener("click", function () {
+  const searchValue = document.querySelector(".search-box").value;
+  window.location.href =
+    "search.html?search=" + encodeURIComponent(searchValue);
 });
 
 // nav popup
@@ -53,7 +52,7 @@ userImageButton.addEventListener("click", () => {
 });
 
 window.onload = () => {
-  let user = sessionStorage.getItem('current') || null;
+  let user = sessionStorage.getItem("current") || null;
   if (user != null) {
     //means user is logged in
     popuptext.innerHTML = `Xin chào, ${user}`;
