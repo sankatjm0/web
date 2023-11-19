@@ -1,6 +1,6 @@
 let products;
 
-window.onload = function () {
+window.onload = function run () {
   products = JSON.parse(localStorage.getItem("product")) || [];
 
   document
@@ -10,8 +10,17 @@ window.onload = function () {
       <br>
 <h2 style=" font-size: 30px; text-align: center;">Quản lý sản phẩm<br><br></h2>
 <form id="productForm" >
-  <label for="brand">Tên hãng:</label>
-  <input type="text" id="brand" required>
+<div>
+<label for="brand">Nhãn hàng</label><br>
+<select id="brand" required>
+    <option value="nike">Nike</option>
+    <option value="lv">Louis Vuitton</option>
+    <option value="gucci">Gucci</option>
+    <option value="chanel">Chanel</option>
+    <option value="adidas">Adidas</option>
+</select>
+<small></small>
+</div>
 
   <label for="name">Tên sản phẩm:</label>
   <input type="text" id="name" required>
@@ -19,10 +28,16 @@ window.onload = function () {
   <label for="price">Giá:</label>
   <input type="number" id="price" required>
 
-  <label for="image">Hình ảnh:</label>
-  <input type="file" id="img" accept="" required>
-  <br><br>
-  <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
+  <div>
+            <label for="prod-img">Chọn ảnh sản phẩm</label><br>
+            <input id="prod-img" name="prod-img" type="file" accept="image/*" /><br>
+            <div id="add-img">
+                <img id="preview" src="#" width="20%">
+                <input id="settle" type="submit" value="Thêm ảnh"></input>
+            </div>
+            <small></small>
+
+        </div>
   <button style="background-color: #4CAF50; color: white; padding: 10px 20px; font-size: 16px; border: none; border-radius: 4px; cursor: pointer;" type="submit">
   Thêm sản phẩm</button>
 </div>
@@ -40,6 +55,36 @@ window.onload = function () {
   </tr>
 </table>
 `;
+      //chuyen doi dinh dang anh de them vao local
+    //   function getBase64Image(img) {
+    //     var canvas = document.createElement("canvas");
+    //     canvas.width = img.width;
+    //     canvas.height = img.height;
+    
+    //     var ctx = canvas.getContext("2d");
+    //     ctx.drawImage(img, 0, 0);
+    
+    //     var dataURL = canvas.toDataURL("image/png");
+    
+    //     return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+    // }
+      const imgPath = document.getElementById("prod-img");
+      const reader = new FileReader();
+
+      
+
+      //preview anh chon tu may
+      document.getElementById('prod-img').onchange = function () {
+        const img = URL.createObjectURL(this.files[0])
+        document.getElementById('preview').src = img;}
+        //xac nhan chon anh -> them anh vao local
+      // document.getElementById("settle").addEventListener("submit", function(event) {
+      //   event.preventDefault();
+      //   const image = document.getElementById("prod-img");
+      //   let imgData = getBase64Image(image);
+      //   products.push({img: imgData});
+      // })
+      // }
 
       // Lấy tham chiếu đến form và bảng
       const productForm = document.getElementById("productForm");
@@ -52,14 +97,21 @@ window.onload = function () {
         // Lấy giá trị từ các trường input
         const name = document.getElementById("name").value;
         const price = document.getElementById("price").value;
-        const img = document.getElementById("img").value;
         const brand = document.getElementById("brand").value;
+        reader.addEventListener("load", function () {
+          // convert image file to base64 string and save to localStorage
+          localStorage.setItem("product", JSON.stringify(products));
+      }, false);
+
+      if (imgPath) {
+          reader.readAsDataURL(imgPath);
+      }
 
         products.push({
+          img: reader.result,
           brand: brand,
-          img: img,
           name: name,
-          price: price,
+          price: price
         });
 
         // Lưu danh sách tài khoản vào localStorage
@@ -69,7 +121,7 @@ window.onload = function () {
         document.getElementById("name").value = "";
         document.getElementById("price").value = "";
         document.getElementById("brand").value = "";
-        document.getElementById("img").value = "";
+        document.getElementById("prod-img").value = "";
         displayProducts();
       });
 
@@ -94,18 +146,19 @@ function displayProducts() {
 
   // Duyệt qua danh sách sản phẩm và hiển thị từng sản phẩm trong bảng
   for (let i = 0; i < products.length; i++) {
-    const product = products[i];
+    // const product = products[i];
     const row = document.createElement("tr");
     const imgCell = document.createElement("td");
-    const imgLink = document.createElement("a");
-    imgLink.href = product.img;
-    imgLink.textContent = "Xem ảnh"; // Thay thế bằng văn bản hiển thị cho liên kết ảnh
-    imgCell.appendChild(imgLink);
+    // var dataImage = products[i].img;
+    var bannerImg = document.createElement("img");
+    // bannerImg.src = 'url(data:image/png;base64,${dataImage})';
+    bannerImg.src = localStorage.getItem('image');
+    imgCell.appendChild(bannerImg);
     row.innerHTML = `
           <td>${i + 1}</td>
-          <td>${product.brand}</td>
-          <td>${product.name}</td>
-          <td>${product.price}</td>
+          <td>${products[i].brand}</td>
+          <td>${products[i].name}</td>
+          <td>${products[i].price}</td>
           <td></td>
           
           <td>
