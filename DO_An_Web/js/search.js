@@ -14,6 +14,8 @@ const searchValue = urlParams.get('search');
 window.onload = function () {
     products = JSON.parse(localStorage.getItem("product")) || [];
     Findname();
+    redirectToProductDetails();
+
 }
 // let listIteam = [
 //     {
@@ -24,13 +26,17 @@ window.onload = function () {
 //     }
 // ];
 let foundItems = [];
+function redirectToProductDetails() {
+    document.querySelectorAll('.product-card').forEach(card => {
+        card.addEventListener('click', function() {
+            const productId = this.getAttribute('data-id');
+            window.location.href = 'product.html?ID=' + encodeURIComponent(productId);
+        });
+    });
+}
 
-document.querySelector('.product-container').addEventListener('click', function (event) {
-        if (event.target.tagName.toLowerCase() !== 'button') {
-            const searchId = document.querySelector('.product-container').value;
-            window.location.href = 'product.html?ID=' + encodeURIComponent(searchId);
-        } 
-});
+
+
 
 function Findname(){
     search.value=searchValue;
@@ -72,6 +78,7 @@ function showProduct(list){
         list.forEach(item => {
             let NewItem = document.createElement('div');
             NewItem.className = "product-card";
+            NewItem.setAttribute('data-id', item.ID);
             shop_listIteam.append(NewItem);
 
                 let NewItem_product_image = document.createElement('div');

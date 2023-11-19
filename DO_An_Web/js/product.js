@@ -8,7 +8,7 @@ window.onload = function () {
 }
 // size do
 window.addEventListener('load', function() {
-  if (Array.isArray(products) && products.length > 1) {
+  if (products.length > 1) {
 
     searchProduct();
 
@@ -26,15 +26,16 @@ window.addEventListener('load', function() {
 
 
 
-function searchProduct(){
-  foundItems = [];
-  if(products !== undefined)
-  products.forEach(item => {
-      if(item.id===searchId){
-        addProduct(item);
-      }
-  });
+function searchProduct() {
+  if (products !== undefined) {
+      products.forEach(item => {
+          if (item.ID.toString()=== searchId) {
+              addProduct(item);
+          }
+      });
+  }
 }
+
 //
 
 
