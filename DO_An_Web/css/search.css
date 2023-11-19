@@ -55,3 +55,6 @@
   background-color: red;
   border: none;
 }
+.product-card{
+  cursor: pointer;
+}

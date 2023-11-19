@@ -1,47 +1,74 @@
-const productImages = document.querySelectorAll(".product-images img");
-const productImageSlide = document.querySelector(".image-slider");
-
-let activeImageSlide = 0;
-
-productImages.forEach((item, i) => {
-  item.addEventListener("click", () => {
-    productImages[activeImageSlide].classList.remove("active");
-    item.classList.add("active");
-    productImageSlide.style.backgroundImage = `url('${item.src}')`;
-    activeImageSlide = i;
-  });
-});
-
-//toggle size buttons
-
-const sizeBtns = document.querySelectorAll(".size-radio-btn");
 let checkdBtn = 0;
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const searchId = urlParams.get('ID');
 
-sizeBtns.forEach((item, i) => {
-  item.addEventListener("click", () => {
-    sizeBtns[checkdBtn].classList.remove("check");
-    item.classList.add("check");
-    checkdBtn = i;
-  });
+window.onload = function () {
+  products = JSON.parse(localStorage.getItem("product")) || [];
+}
+// size do
+window.addEventListener('load', function() {
+  if (products.length > 1) {
+
+    searchProduct();
+
+    sizeBtns = document.querySelectorAll(".size-radio-btn");
+    sizeBtns.forEach((item, i) => {
+      item.addEventListener("click", () => {
+        sizeBtns[checkdBtn].classList.remove("check");
+        item.classList.add("check");
+        checkdBtn = i;
+      });
+    });
+  }
 });
 
-// JavaScript code to handle quantity controls
-document.addEventListener("DOMContentLoaded", function () {
-  const quantityContainer = document.querySelector(".quantity");
-  const quantityInput = quantityContainer.querySelector("input");
-  const quantityMinus = quantityContainer.querySelector(".quantity-minus");
-  const quantityPlus = quantityContainer.querySelector(".quantity-plus");
 
-  quantityMinus.addEventListener("click", function () {
-    const currentValue = parseInt(quantityInput.value);
-    if (currentValue > 0) {
-      quantityInput.value = currentValue - 1;
-    }
-  });
 
-  quantityPlus.addEventListener("click", function () {
-    const currentValue = parseInt(quantityInput.value);
-    quantityInput.value = currentValue + 1;
-  });
-});
 
+function searchProduct() {
+  if (products !== undefined) {
+      products.forEach(item => {
+          if (item.ID.toString()=== searchId) {
+              addProduct(item);
+          }
+      });
+  }
+}
+
+//
+
+
+function addProduct(item){
+  const addproduct = document.querySelector(".product-details");
+  addproduct.innerHTML=`
+  <div class="image-slider">
+    <img src="${item.img}" alt="">
+  </div>
+
+  <div class="details">
+    <h2 class="product-brand">${item.brand}</h2>
+    <p class="product-short-des">write-here</p>
+    <span class="product-price">${item.price}</span>
+
+    <p class="product-sub-headding">Chọn kích thước</p>
+
+    <input type="radio" name="size" value="s" checked hidden id="s-size">
+    <label for="s-size" class="size-radio-btn check">s</label>
+    <input type="radio" name="size" value="m" hidden id="m-size">
+    <label for="s-size" class="size-radio-btn">m</label>
+    <input type="radio" name="size" value="l" hidden id="l-size">
+    <label for="s-size" class="size-radio-btn">l</label>
+    <input type="radio" name="size" value="xl" hidden id="xl-size">
+    <label for="s-size" class="size-radio-btn">xl</label>
+    <input type="radio" name="size" value="xxl" hidden id="xxl-size">
+    <label for="s-size" class="size-radio-btn">xxl</label>
+
+    <div class="btn-group">
+        <button class="btn cart-btn">Thêm vào danh sách</button>
+        <buttom class="btn">Thêm vào vỏ hàng</buttom>
+    </div>
+  </div>
+  
+  `;
+}
