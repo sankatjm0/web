@@ -1,4 +1,4 @@
-products = JSON.parse(localStorage.getItem("product")) || [];
+const products = JSON.parse(localStorage.getItem("product")) || [];
 document.getElementById("louisvuitton").addEventListener("click", function () {
   document.getElementById("content").innerHTML = ` <section id="header">
   <section id="product1" class="section-p1">

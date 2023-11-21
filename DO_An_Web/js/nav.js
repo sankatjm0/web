@@ -26,7 +26,7 @@ const createNav = () => {
   <li id="gucci"class="link">Gucci</li>
   <li id="nike" class="link">Nike</li>
   <li id="chanel" class="link">Chanel</li>
-  <li id="luoisvuitton" class="link">Luois Vuitton</li>
+  <li id="louisvuitton" class="link">Louis Vuitton</li>
  
 </ul>
     
@@ -66,7 +66,7 @@ window.onload = () => {
     popuptext.innerHTML = "Đăng nhập để đặt hàng";
     actionBtn.innerHTML = "Đăng nhập";
     actionBtn.addEventListener("click", () => {
-      location.replace("./login.html");
+      location.replace("./signin.html");
     });
   }
 };

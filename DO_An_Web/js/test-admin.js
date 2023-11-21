@@ -1,7 +1,7 @@
-let products;
 
-window.onload = function run () {
-  products = JSON.parse(localStorage.getItem("product")) || [];
+const products = JSON.parse(localStorage.getItem("product")) || [];
+
+window.onload = function () {
 
   document
     .getElementById("products-admin")
@@ -68,15 +68,12 @@ window.onload = function run () {
     
     //     return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
     // }
-      const imgPath = document.getElementById("prod-img");
-      const reader = new FileReader();
-
-      
-
+     
       //preview anh chon tu may
       document.getElementById('prod-img').onchange = function () {
-        const img = URL.createObjectURL(this.files[0])
-        document.getElementById('preview').src = img;}
+        let img = URL.createObjectURL(this.files[0])
+        document.getElementById('preview').src = img;
+      };
         //xac nhan chon anh -> them anh vao local
       // document.getElementById("settle").addEventListener("submit", function(event) {
       //   event.preventDefault();
@@ -93,41 +90,46 @@ window.onload = function run () {
       // Xử lý sự kiện khi form được gửi đi
       productForm.addEventListener("submit", function (e) {
         e.preventDefault(); // Ngăn chặn chuyển hướng trang sau khi gửi form
-
+        alert("test");
         // Lấy giá trị từ các trường input
         const name = document.getElementById("name").value;
         const price = document.getElementById("price").value;
         const brand = document.getElementById("brand").value;
-        reader.addEventListener("load", function () {
-          // convert image file to base64 string and save to localStorage
-          localStorage.setItem("product", JSON.stringify(products));
-      }, false);
+        const pic = document.getElementById("prod-img");
+        const reader = new FileReader();
+        pic.addEventListener("change", function () {
 
-      if (imgPath) {
-          reader.readAsDataURL(imgPath);
-      }
+          reader.addEventListener("load", function () {
+              products.push({
+                img: reader.result,
+                brand: brand,
+                name: name,
+                price: price
+              });
+          });
 
-        products.push({
-          img: reader.result,
-          brand: brand,
-          name: name,
-          price: price
+          reader.readAsDataURL(this.files[0]);
+
         });
 
+        
         // Lưu danh sách tài khoản vào localStorage
         localStorage.setItem("product", JSON.stringify(products));
 
+
+        displayProducts();
         // Xóa giá trị trong các trường input
         document.getElementById("name").value = "";
         document.getElementById("price").value = "";
         document.getElementById("brand").value = "";
         document.getElementById("prod-img").value = "";
-        displayProducts();
+        document.getElementById("preview").src = "";
+        
       });
 
       // Hàm hiển thị bảng sản phẩm
 
-      displayProducts();
+      // displayProducts();
     });
 };
 function displayProducts() {
@@ -149,11 +151,15 @@ function displayProducts() {
     // const product = products[i];
     const row = document.createElement("tr");
     const imgCell = document.createElement("td");
-    // var dataImage = products[i].img;
-    var bannerImg = document.createElement("img");
-    // bannerImg.src = 'url(data:image/png;base64,${dataImage})';
-    bannerImg.src = localStorage.getItem('image');
-    imgCell.appendChild(bannerImg);
+    const picture = document.createElement("img");
+    let prodImg = products[i].img;
+    picture.src = prodImg;
+    picture.width="20";
+      
+    
+
+    imgCell.appendChild(picture);
+    
     row.innerHTML = `
           <td>${i + 1}</td>
           <td>${products[i].brand}</td>

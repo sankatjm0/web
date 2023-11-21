@@ -1,4 +1,4 @@
-let products;
+
 let shop_listIteam = document.querySelector('.product-container');
 let filters = document.querySelectorAll('.shop-filter-group-list');
 let primary = document.getElementById('primary');
