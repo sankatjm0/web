@@ -66,7 +66,7 @@ window.onload = () => {
     popuptext.innerHTML = "Đăng nhập để đặt hàng";
     actionBtn.innerHTML = "Đăng nhập";
     actionBtn.addEventListener("click", () => {
-      location.replace("./login.html");
+      location.replace("./signin.html");
     });
   }
 };

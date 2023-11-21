@@ -138,7 +138,7 @@ function editProduct(index) {
 
   // Hiển thị tên tệp đã chọn (nếu có) bằng cách gán vào một phần tử khác
   const imgFileName = product.img.replace(/^.*[\\\/]/, "");
-  document.getElementById("imgFileName").textContent = imgFileName;
+  document.getElementById("img").textContent = imgFileName;
 
   // Xóa sản phẩm khỏi mảng
   products.splice(index, 1);
