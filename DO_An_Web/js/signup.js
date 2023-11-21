@@ -34,12 +34,15 @@ signup.addEventListener("submit", function (event) {
 
   // validate the form
   function checkUser(event) {
-	for (let i = 0; i < userArr.length; i++) {
-	  if (userArr[i] && userArr[i].username === signup.elements["username"].value) {
-		showError(signup.elements["username"], "Tên đăng nhập đã tồn tại.");
-		event.preventDefault();
-	  }
-	}
+    for (let i = 0; i < userArr.length; i++) {
+      if (
+        userArr[i] &&
+        userArr[i].username === signup.elements["username"].value
+      ) {
+        showError(signup.elements["username"], "Tên đăng nhập đã tồn tại.");
+        event.preventDefault();
+      }
+    }
   }
 
   let nameValid = hasValue(signup.elements["username"], NAME_REQUIRED);
@@ -53,8 +56,17 @@ signup.addEventListener("submit", function (event) {
     alert("Dang ki thanh cong");
     let username = signup.elements["username"].value;
     let password = signup.elements["password"].value;
+    let address = signup.elements["address"].value;
+    let name = signup.elements["name"].value;
+    let phone = signup.elements["phone"].value;
     var user = JSON.parse(localStorage.getItem("user")) || [];
-    user.push({ username: username, password: password });
+    user.push({
+      username: username,
+      password: password,
+      address: address,
+      name: name,
+      phone: phone,
+    });
     localStorage.setItem("user", JSON.stringify(user));
     sessionStorage.setItem("current", username);
     location.replace("./index-user.html?");
