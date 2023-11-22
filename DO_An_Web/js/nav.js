@@ -26,7 +26,7 @@ const createNav = () => {
   <li id="gucci"class="link">Gucci</li>
   <li id="nike" class="link">Nike</li>
   <li id="chanel" class="link">Chanel</li>
-  <li id="louisvuitton" class="link">Louis Vuitton</li>
+  <li id="luoisvuitton" class="link">Louis Vuitton</li>
  
 </ul>
     
