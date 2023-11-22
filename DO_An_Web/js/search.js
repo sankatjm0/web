@@ -1,8 +1,9 @@
 
-let shop_listIteam = document.querySelector('.product-container');
+let shop_listIteam = document.querySelector('.pro-container');
 let filters = document.querySelectorAll('.shop-filter-group-list');
-let primary = document.getElementById('primary');
 let filtersnew = document.querySelector('.shop-filter-group--new');
+
+let primary = document.getElementById('primary');
 let number1 = document.getElementById('number1');
 let number2 = document.getElementById('number2');
 const search = document.getElementById('search-box');
@@ -17,17 +18,10 @@ window.onload = function () {
     redirectToProductDetails();
 
 }
-// let listIteam = [
-//     {
-//         "name": "a b line what the gucci",
-//         "Price": "20",
-//         " ":"color",
-//         "image":"img/card2.png"
-//     }
-// ];
+
 let foundItems = [];
 function redirectToProductDetails() {
-    document.querySelectorAll('.product-card').forEach(card => {
+    document.querySelectorAll('.pro').forEach(card => {
         card.addEventListener('click', function() {
             const productId = this.getAttribute('data-id');
             window.location.href = 'product.html?ID=' + encodeURIComponent(productId);
@@ -75,45 +69,43 @@ function showProduct(list){
 
     shop_listIteam.innerHTML = '';
     if(list.length !=0){
-        list.forEach(item => {
-            let NewItem = document.createElement('div');
-            NewItem.className = "product-card";
-            NewItem.setAttribute('data-id', item.ID);
-            shop_listIteam.append(NewItem);
+        list.forEach(product => {
+            let productElement = document.createElement("div");
+            productElement.className = "pro";
+            productElement.setAttribute('data-id', product.ID);
+            shop_listIteam.appendChild(productElement);
 
-                let NewItem_product_image = document.createElement('div');
-                NewItem_product_image.className = "product-image";
-                NewItem.append(NewItem_product_image);
-
-                    let Newitem__img = document.createElement('img');
-                    Newitem__img.className = "product-thumb";
-                    Newitem__img.src = item.img;
-                    Newitem__img.alt=""
-                    NewItem_product_image.prepend(Newitem__img);
-
-                    let New_button = document.createElement('button');
-                    New_button.className = "card-btn";
-                    New_button.innerHTML="add to whislist";
-                    NewItem_product_image.append(New_button);
-
-                    let product_info = document.createElement('div');
-                    product_info.className = "product-info";
-                    NewItem.append(product_info);
-
-                    let product_h2 = document.createElement('h2');
-                    product_h2.className = "product-brand";
-                    product_h2.innerHTML=item.brand;
-                    product_info.append(product_h2);
-
-                    let product_p = document.createElement('p');
-                    product_p.className = "product-short-des";
-                    product_p.innerHTML=item.name;
-                    product_info.append(product_p);
-
-                    let product_span_1 = document.createElement('span');
-                    product_span_1.className = "price";
-                    product_span_1.innerHTML=item.price+'đ';
-                    product_info.append(product_span_1);
+            // Thêm hình ảnh sản phẩm
+            let imgElement = document.createElement("img");
+            imgElement.src = product.img;
+            productElement.appendChild(imgElement);
+      
+            // Thêm thông tin sản phẩm
+            let desElement = document.createElement("div");
+            desElement.className = "des";
+      
+            let brandElement = document.createElement("span");
+            brandElement.innerText = product.brand;
+            desElement.appendChild(brandElement);
+      
+            let nameElement = document.createElement("h5");
+            nameElement.innerText = product.name;
+            desElement.appendChild(nameElement);
+            
+            let priceElement = document.createElement("h4");
+            priceElement.innerText = product.price;
+            desElement.appendChild(priceElement);
+      
+            productElement.appendChild(desElement);
+      
+            // Thêm nút mua hàng
+            let cartLink = document.createElement("a");
+            cartLink.href = ""; // Đặt đường dẫn tới trang mua hàng tại đây
+            let cartIcon = document.createElement("i");
+            cartIcon.className = "fal fa-shopping-cart cart";
+            cartLink.appendChild(cartIcon);
+            productElement.appendChild(cartLink);
+      
         });
     }
 }
@@ -164,7 +156,7 @@ function applyFilters(){
     if(selectedCategories.length ==0){
         showProduct(foundItems);
     }
-    
+    console.log(shop_checkbox);
 
     let item = [];
     let item_Price = [];
@@ -263,4 +255,3 @@ function applyFilters(){
     }
         
 }
-Findname(searchValue);
