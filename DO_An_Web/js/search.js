@@ -31,10 +31,13 @@ function Findname(){
     foundItems = [];
     if(products !== undefined)
     products.forEach(item => {
-        if(item.name.includes(searchValue)){
+        if(item.name.toLowerCase().includes(searchValue.toLowerCase()) || item.brand.toLowerCase().includes(searchValue.toLowerCase())){
             foundItems.push(item);
         }
     });
+    if(foundItems.length===0){
+        khongtimthaysanpham();
+    }
     showProduct(foundItems);
     show_filter(foundItems).then(() => {
         let primary = document.getElementById('primary');
@@ -42,7 +45,7 @@ function Findname(){
         Listener_checkbox.forEach(checkbox=>{
             checkbox.addEventListener('change', () => {
                 applyFilters(foundItems);
-            });        
+            });
         });
         primary.onclick = function() {
             applyFilters(foundItems);
