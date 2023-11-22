@@ -1,6 +1,8 @@
 let shop_listIteam = document.querySelector('.pro-container');
 let filters = document.querySelectorAll('.shop-filter-group-list');
 let filtersnew = document.querySelector('.shop-filter-group--new');
+let number1 = document.getElementById('number1');
+let number2 = document.getElementById('number2');
 
 const search = document.getElementById('search-box');
 const queryString = window.location.search;
@@ -14,10 +16,12 @@ window.onload = function () {
 }
 
 function redirectToProductDetails() {
-    document.querySelectorAll('.pro').forEach(card => {
-        card.addEventListener('click', function() {
-            const productId = this.getAttribute('data-id');
-            window.location.href = 'product.html?ID=' + encodeURIComponent(productId);
+    document.querySelectorAll('.product-card').forEach(card => {
+        card.addEventListener('click', function(event) {
+            if (!event.target.matches('.card-btn')) {
+                const productId = this.getAttribute('data-id');
+                window.location.href = 'product.html?ID=' + encodeURIComponent(productId);
+            }
         });
     });
 }
@@ -45,58 +49,55 @@ function Findname(){
         }
     });
 }
+
 filtersnew.onclick = function() {
-    let shop_checkbox = document.querySelectorAll('.shop-filter-group-item-check');
-    shop_checkbox.forEach(checkbox => {
-        if (checkbox.checked) {
-            checkbox.checked=false;
-        }
-    });
-    number1.value=null;
-    number2.value=null;
-    showProduct(foundItems);
+    let shop_listIteam = document.querySelector('.search-results');
+    shop_listIteam.innerHTML=``;
 }
 
 function showProduct(list){
 
     shop_listIteam.innerHTML = '';
     if(list.length !=0){
-        list.forEach(product => {
-            let productElement = document.createElement("div");
-            productElement.className = "pro";
-            productElement.setAttribute('data-id', product.ID);
-            shop_listIteam.appendChild(productElement);
+        list.forEach(item => {
+            let NewItem = document.createElement('div');
+            NewItem.className = "product-card";
+            NewItem.setAttribute('data-id', item.ID);
+            shop_listIteam.append(NewItem);
 
-            // Thêm hình ảnh sản phẩm
-            let imgElement = document.createElement("img");
-            imgElement.src = product.img;
-            productElement.appendChild(imgElement);
-      
-            // Thêm thông tin sản phẩm
-            let desElement = document.createElement("div");
-            desElement.className = "des";
-      
-            let brandElement = document.createElement("span");
-            brandElement.innerText = product.brand;
-            desElement.appendChild(brandElement);
-      
-            let nameElement = document.createElement("h5");
-            nameElement.innerText = product.name;
-            desElement.appendChild(nameElement);
-            
-            let priceElement = document.createElement("h4");
-            priceElement.innerText = product.price;
-            desElement.appendChild(priceElement);
-      
-            productElement.appendChild(desElement);
-      
-            // Thêm nút mua hàng
-            let cartLink = document.createElement("a");
-            cartLink.href = ""; // Đặt đường dẫn tới trang mua hàng tại đây
-            let cartIcon = document.createElement("i");
-            cartIcon.className = "fal fa-shopping-cart cart";
-            cartLink.appendChild(cartIcon);
-            productElement.appendChild(cartLink);
+                let NewItem_product_image = document.createElement('div');
+                NewItem_product_image.className = "product-image";
+                NewItem.append(NewItem_product_image);
+
+                    let Newitem__img = document.createElement('img');
+                    Newitem__img.className = "product-thumb";
+                    Newitem__img.src = item.img;
+                    Newitem__img.alt=""
+                    NewItem_product_image.prepend(Newitem__img);
+
+                    let New_button = document.createElement('button');
+                    New_button.className = "card-btn";
+                    New_button.innerHTML="add to whislist";
+                    NewItem_product_image.append(New_button);
+
+                    let product_info = document.createElement('div');
+                    product_info.className = "product-info";
+                    NewItem.append(product_info);
+
+                    let product_h2 = document.createElement('h2');
+                    product_h2.className = "product-brand";
+                    product_h2.innerHTML=item.brand;
+                    product_info.append(product_h2);
+
+                    let product_p = document.createElement('p');
+                    product_p.className = "product-short-des";
+                    product_p.innerHTML=item.name;
+                    product_info.append(product_p);
+
+                    let product_span_1 = document.createElement('span');
+                    product_span_1.className = "price";
+                    product_span_1.innerHTML=item.price+'đ';
+                    product_info.append(product_span_1);
       
         });
     }
@@ -147,7 +148,6 @@ function checkthuonghieu(foundItems){
             thuonghieuchecked.push(thuonghieucheckbox[i]);
         }
     }
-
     let locsanpham= [];
     if (atLeastOneChecked) {
         foundItems.forEach(check=>{
@@ -157,17 +157,19 @@ function checkthuonghieu(foundItems){
                 }
             }
         });
+        
+        if(locsanpham.length===0){
+            return 0;
+        }
+        else{
+            foundItems.length = 0;
+            locsanpham.forEach(item => {
+                foundItems.push(item);
+            });
+        
+        }
     }
-    if(locsanpham.length===0){
-        return 0;
-    }
-    else{
-        foundItems.length = 0;
-        locsanpham.forEach(item => {
-            foundItems.push(item);
-        });
-    
-    }
+
     return 1;
 }
 function checkgia(foundItems){
@@ -195,8 +197,7 @@ function checkgia(foundItems){
 function checkkhoanggia(foundItems){
     let giachecked= [];
 
-    let number1 = document.getElementById('number1');
-    let number2 = document.getElementById('number2');
+
     if(number1.value === "" && number2.value === ""){
         return 1;
     }
@@ -213,19 +214,22 @@ function checkkhoanggia(foundItems){
         giachecked.forEach(item => {
             foundItems.push(item);
         });
-    
     }
     return 1;
+}
+function khongtimthaysanpham(){
+    let search = document.querySelector('.search-results');
+    search.innerHTML=`<div>Không tìm thấy kết quả nào</div>`;
 }
 function applyFilters(copyfoundItems){
 
     let foundItems = [...copyfoundItems];
 
     if(checkthuonghieu(foundItems)===0){
-
+        khongtimthaysanpham();
     }
     if(checkkhoanggia(foundItems)===0){
-
+        khongtimthaysanpham();
     }
     checkgia(foundItems);
 
