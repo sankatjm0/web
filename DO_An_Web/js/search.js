@@ -3,6 +3,7 @@ let filters = document.querySelectorAll('.shop-filter-group-list');
 let filtersnew = document.querySelector('.shop-filter-group--new');
 let number1 = document.getElementById('number1');
 let number2 = document.getElementById('number2');
+let primary = document.getElementById('primary');
 
 const search = document.getElementById('search-box');
 const queryString = window.location.search;
@@ -40,7 +41,6 @@ function Findname(){
     }
     showProduct(foundItems);
     show_filter(foundItems).then(() => {
-        let primary = document.getElementById('primary');
         let Listener_checkbox = document.querySelectorAll('.shop-filter-group-item-check,.shop-filter-group-item-check-price');
         Listener_checkbox.forEach(checkbox=>{
             checkbox.addEventListener('change', () => {
