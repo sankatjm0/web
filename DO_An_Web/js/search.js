@@ -45,6 +45,7 @@ function Findname(){
         Listener_checkbox.forEach(checkbox=>{
             checkbox.addEventListener('change', () => {
                 applyFilters(foundItems);
+                redirectToProductDetails();
             });
         });
         primary.onclick = function() {
