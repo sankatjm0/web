@@ -26,6 +26,8 @@ function redirectToProductDetails() {
         });
     });
 }
+
+
 function Findname(){
     search.value=searchValue;
 

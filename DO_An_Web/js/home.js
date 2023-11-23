@@ -3,7 +3,6 @@ const productContainers = [...document.querySelectorAll(".product-container")];
 
 
 
-
 document
   .querySelector(".scrollTopButton")
   .addEventListener("click", function () {
