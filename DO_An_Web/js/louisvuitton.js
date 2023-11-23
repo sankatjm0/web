@@ -1,5 +1,5 @@
 products = JSON.parse(localStorage.getItem("product")) || [];
-document.getElementById("luoisvuitton").addEventListener("click", function () {
+document.getElementById("louisvuitton").addEventListener("click", function () {
   document.getElementById("content").innerHTML = ` <section id="header">
   <section id="product1" class="section-p1">
       <h2 id="h2-brand">Louis Vuitton</h2>
@@ -14,7 +14,7 @@ document.getElementById("luoisvuitton").addEventListener("click", function () {
   for (var i = 0; i < products.length; i++) {
     var product = products[i];
 
-    if (product.brand === "luoisvuitton") {
+    if (product.brand === "louisvuitton") {
       nike[t] = product;
       t++;
     }

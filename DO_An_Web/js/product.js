@@ -48,7 +48,7 @@ function addProduct(item){
 
   <div class="details">
     <h2 class="product-brand">${item.brand}</h2>
-    <p class="product-short-des">write-here</p>
+    <p class="product-short-des">${item.name}</p>
     <span class="product-price">${item.price}</span>
 
     <p class="product-sub-headding">Chọn kích thước</p>
@@ -65,7 +65,7 @@ function addProduct(item){
     <label for="s-size" class="size-radio-btn">xxl</label>
 
     <div class="btn-group">
-        <button class="btn cart-btn">Thêm vào danh sách</button>
+        <br>
         <buttom class="btn">Thêm vào vỏ hàng</buttom>
     </div>
   </div>
