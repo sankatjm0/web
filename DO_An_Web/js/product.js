@@ -101,7 +101,7 @@ function addToCart(ID) {
 
 
 
-//Cart page
+//Cart pagea
 function renderProductsToTable () {
   let data = ``;
   productInCart.map((value, index) => {
@@ -168,6 +168,7 @@ function cartLoadPage () {
   renderProductsToTable();
   totalMoney();
 }
+
 
 
 
