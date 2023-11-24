@@ -101,6 +101,77 @@ function addToCart(ID) {
 
 
 
+//Cart pagea
+function renderProductsToTable () {
+  let data = ``;
+  productInCart.map((value, index) => {
+    data += `
+      <tr>
+        <td>${value.name}</td>
+        <td><img width='100' src='${value.image}' alt=''></td>
+        <td>${value.price}</td>
+        <td>
+          <button onclick='plusQuantity(${index})' class='btn btn-secondary'>+</button>
+          <span class='mx-2'>${value.quantity}</span>
+          <button onclick='minusQuantity(${index}, ${value.quantity})' class='btn btn-secondary'>-</button>
+        </td>
+        <td>${(value.quantity * value.price.replace(/,/g, '')).toLocaleString()}</td>
+        <td><button onclick='deleteProductInCart(${index})' class='btn btn-danger'>Delete</button></td>
+      </tr>
+    `;
+  });
+  document.getElementById('products-cart').innerHTML = data;
+}
+
+function plusQuantity (index) {
+  productInCart[index] = {
+    ...productInCart[index],
+    quantity: ++productInCart[index].quantity
+  };
+  saveToLocalStorage();
+  renderProductsToTable();
+  totalMoney()
+}
+
+function minusQuantity (index, quantity) {
+  if (quantity > 1) {
+    productInCart[index] = {
+      ...productInCart[index],
+      quantity: --productInCart[index].quantity
+    };
+    saveToLocalStorage();
+    renderProductsToTable();
+    totalMoney()
+  } else {
+    alert('Quantity min is 1');
+  }
+}
+
+function deleteProductInCart (index) {
+  productInCart.splice(index, 1);
+  saveToLocalStorage();
+  renderProductsToTable();
+  totalMoney()
+}
+
+function totalMoney () {
+  if (productInCart.length > 0) {
+    let total = 0;
+    for (let i = 0; i < productInCart.length; i++) {
+      total += productInCart[i].quantity * productInCart[i].price.replace(/,/g, '');
+    }
+    document.getElementById("total-money").innerHTML = total.toLocaleString()
+  }
+}
+
+function cartLoadPage () {
+  renderProductsToTable();
+  totalMoney();
+}
+
+
+
+
 
 
 document.getElementById("nike").addEventListener("click", function() {
