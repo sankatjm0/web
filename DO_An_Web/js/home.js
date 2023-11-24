@@ -3,11 +3,11 @@ const productContainers = [...document.querySelectorAll(".product-container")];
 
 
 
-document
-  .querySelector(".scrollTopButton")
-  .addEventListener("click", function () {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
+// document
+//   .querySelector(".scrollTopButton")
+//   .addEventListener("click", function () {
+//     window.scrollTo({ top: 0, behavior: "smooth" });
+//   });
 
 const bar = document.getElementById("bar");
 const close = document.getElementById("close");

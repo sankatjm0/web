@@ -1,40 +1,30 @@
+const addressInput = document.getElementById("address");
+const streetInput = document.getElementById("street");
+const cityInput = document.getElementById("city");
+const stateInput = document.getElementById("state");
+const pincodeInput = document.getElementById("pincode");
+const landmarkInput = document.getElementById("landmark");
 const placeOrderBtn = document.querySelector(".place-order-btn");
-placeOrderBtn.addEventListener("click", () => {
-  let address = getAddress();
-  if (address) {
-    fetch("/order", {
-      method: "post",
-      headers: new Headers({ "Content-Type": "app;ication/json" }),
-      body: JSON.stringify({
-        order:JSON.parse(localStorage.cart),
-        email: JSON.parse(sessionStorage.user).email,
-        add: address,
-      }) 
-    }).then(res=>res.json())
-    .then(data=>{
-        
-    })
+
+placeOrderBtn.addEventListener("click", function () {
+  if (validateForm()) {
+   alert("Đặt hàng thành công!");
+  } else {
+    alert("Vui lòng điền đủ thông tin!");
   }
 });
 
-const getAddress = () => {
-  let address = document.querySelector("#address").value;
-  let street = document.querySelector("#street").value;
-  let city = document.querySelector("#city").value;
-  let state = document.querySelector("#state").value;
-  let pincode = document.querySelector("#pincode").value;
-  let landmark = document.querySelector("#landmark").value;
-
+function validateForm() {
   if (
-    !address.lenght ||
-    !street.lenght ||
-    !city.lenght ||
-    !state.lenght ||
-    !pincode.lenght ||
-    !landmark.lenght
+    addressInput.value.trim() === "" ||
+    streetInput.value.trim() === "" ||
+    cityInput.value.trim() === "" ||
+    stateInput.value.trim() === "" ||
+    pincodeInput.value.trim() === "" ||
+    landmarkInput.value.trim() === ""
   ) {
-    return showAlert("fill all the inputs first");
-  } else {
-    return { address, street, city, state, landmark, pincode };
+    return false;
   }
-};
+  return true;
+}
+
