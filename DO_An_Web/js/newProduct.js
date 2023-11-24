@@ -86,12 +86,14 @@ function displayPagination() {
 function redirectToProductDetails() {
   document.querySelectorAll('.pro').forEach(card => {
       card.addEventListener('click', function() {
-              const productId = this.getAttribute('data-id');
-              window.location.href = 'product.html?ID=' + encodeURIComponent(productId);
-      
+          const productId = this.getAttribute('data-id');
+          console.log('Clicked product with ID:', productId);
+          console.log('Current URL:', window.location.href);
+          window.location.href = 'product.html?ID=' + encodeURIComponent(productId);
       });
   });
 }
+
 
 window.onload = function () {
   // Mặc định hiển thị trang đầu tiên

@@ -3,6 +3,7 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const searchId = urlParams.get('ID');
 
+
 window.onload = function () {
   products = JSON.parse(localStorage.getItem("product")) || [];
 }
