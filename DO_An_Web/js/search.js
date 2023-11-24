@@ -4,6 +4,8 @@ let filtersnew = document.querySelector('.shop-filter-group--new');
 let number1 = document.getElementById('number1');
 let number2 = document.getElementById('number2');
 let primary = document.getElementById('primary');
+let reset = document.getElementById('reset');
+
 
 const search = document.getElementById('search-box');
 const queryString = window.location.search;
@@ -27,7 +29,7 @@ function redirectToProductDetails() {
     });
 }
 
-
+let find = {};
 function Findname(){
     search.value=searchValue;
 
@@ -41,31 +43,97 @@ function Findname(){
     if(foundItems.length===0){
         khongtimthaysanpham();
     }
-    showProduct(foundItems);
+    phantrang(foundItems);
+
     show_filter(foundItems).then(() => {
         let Listener_checkbox = document.querySelectorAll('.shop-filter-group-item-check,.shop-filter-group-item-check-price');
         Listener_checkbox.forEach(checkbox=>{
             checkbox.addEventListener('change', () => {
                 applyFilters(foundItems);
-                redirectToProductDetails();
+                phantrang(find);
+                
             });
         });
         primary.onclick = function() {
             applyFilters(foundItems);
+            phantrang(find);
+  
         }
+        reset.onclick = function() {
+            phantrang(foundItems);
+            
+            let Listener_checkbox = document.querySelectorAll('.shop-filter-group-item-check,.shop-filter-group-item-check-price');
+            Listener_checkbox.forEach(function(Listener_checkbox) {
+                Listener_checkbox.checked = false;
+            });
+        
+
+            let radioButtons = document.querySelectorAll('.shop-filter-group-item-check-price');
+            radioButtons.forEach(function(radioButton) {
+                radioButton.checked = false;
+            });
+        
+            let numberInputs = document.querySelectorAll('.shop-filter-group-filter-input');
+            numberInputs.forEach(function(input) {
+                input.value = '';
+            });
+        }
+
     });
 }
 
 filtersnew.onclick = function() {
+
+    
     let shop_listIteam = document.querySelector('.search-results');
     shop_listIteam.innerHTML=``;
 }
 
-function showProduct(list){
+function phantrang(list){
+    let productElement = document.getElementById("product1");
+    if (productElement.children.length > 0) {
+        showProduct(list,1)
+    }
 
+
+    lengthpage=16;
+    
+    if(list.length !=0){
+        page = Math.ceil(list.length/lengthpage);
+        var paginationContainer = document.getElementById("pagination");
+        paginationContainer.innerHTML = "";
+
+
+            
+        for (var i = 1; i <= page; i++) {
+            var pageLink = document.createElement("a");
+            pageLink.href = "javascript:void(0);";
+            pageLink.innerText = i;
+            pageLink.dataset.page = i;
+            pageLink.addEventListener("click", function() {
+                var page = parseInt(this.dataset.page);
+                showProduct(list,page);
+            });
+
+            paginationContainer.appendChild(pageLink);
+        }
+
+    }
+    redirectToProductDetails();
+
+}
+function showProduct(list,page){
+
+var startIndex = (page - 1) * 16+1;
+let endIndex = startIndex + 15;
+
+if(endIndex > list.length){
+    endIndex=list.length;
+}
     shop_listIteam.innerHTML = '';
     if(list.length !=0){
-        list.forEach(item => {
+        for (let i = startIndex; i <= endIndex; i++) {
+            item = list[i - 1];
             let NewItem = document.createElement('div');
             NewItem.className = "product-card";
             NewItem.setAttribute('data-id', item.ID);
@@ -105,7 +173,7 @@ function showProduct(list){
                     product_span_1.innerHTML=item.price+'đ';
                     product_info.append(product_span_1);
       
-        });
+        }
     }
 }
 function createFilterItem(value,shop_filter) {
@@ -229,15 +297,15 @@ function khongtimthaysanpham(){
 }
 function applyFilters(copyfoundItems){
 
-    let foundItems = [...copyfoundItems];
+    find = [...copyfoundItems];
 
-    if(checkthuonghieu(foundItems)===0){
+    if(checkthuonghieu(find)===0){
         khongtimthaysanpham();
     }
-    if(checkkhoanggia(foundItems)===0){
+    if(checkkhoanggia(find)===0){
         khongtimthaysanpham();
     }
-    checkgia(foundItems);
+    checkgia(find);
 
-    showProduct(foundItems);
+    // showProduct(find);
 }

@@ -16,7 +16,7 @@ const createNav = () => {
           </div>
           </a>
 
-      <a href="#"><img src="img/cart.png" alt=""></a>
+      <a href="/Do_An_Web/cart.html"><img src="img/cart.png" alt=""></a>
       </div>
   </div>
 </div>
