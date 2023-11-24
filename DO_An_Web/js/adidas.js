@@ -1,5 +1,19 @@
 products = JSON.parse(localStorage.getItem("product")) || [];
+
 document.getElementById("adidas").addEventListener("click", function () {
+  adidas();
+});
+
+queryStrings = window.location.search;
+urlParamss = new URLSearchParams(queryStrings);
+searchIds = urlParamss.get('nav');
+
+if(searchIds==='adidas'){
+  adidas();
+}
+
+function adidas(){
+  
   document.getElementById("content").innerHTML = ` <section id="header">
   <section id="product1" class="section-p1">
       <h2 id="h2-brand">Adidas</h2>
@@ -112,8 +126,7 @@ document.getElementById("adidas").addEventListener("click", function () {
   displayProducts(1);
   displayPagination();
   redirectToProductDetails();
-});
-
+}
 
 
 

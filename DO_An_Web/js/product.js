@@ -103,8 +103,23 @@ function addToCart(ID) {
 
 
 
+document.getElementById("nike").addEventListener("click", function() {
+  window.location.href = "index-user.html?nav=nike";
+});
 
-    
+document.getElementById("adidas").addEventListener("click", function() {
+  window.location.href = "index-user.html?nav=adidas";
+});
 
+document.getElementById("gucci").addEventListener("click", function() {
+  window.location.href = "index-user.html?nav=gucci";
+});
 
+document.getElementById("chanel").addEventListener("click", function() {
+  window.location.href = "index-user.html?nav=chanel";
+});
+
+document.getElementById("louisvuitton").addEventListener("click", function() {
+  window.location.href = "index-user.html?nav=louisvuitton";
+});
 

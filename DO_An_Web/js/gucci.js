@@ -1,5 +1,15 @@
 products = JSON.parse(localStorage.getItem("product")) || [];
-document.getElementById("gucci").addEventListener("click", function () {
+
+let queryStrings = window.location.search;
+let urlParamss = new URLSearchParams(queryStrings);
+let searchIds = urlParamss.get('nav');
+
+if(searchIds==='gucci'){
+  gucci();
+}
+
+function gucci(){
+  
   document.getElementById("content").innerHTML = ` <section id="header">
   <section id="product1" class="section-p1">
       <h2 id="h2-brand">Gucci</h2>
@@ -112,5 +122,5 @@ document.getElementById("gucci").addEventListener("click", function () {
   displayProducts(1);
   displayPagination();
   redirectToProductDetails();
-});
+}
 // Số sản phẩm trên mỗi trang

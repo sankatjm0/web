@@ -1,5 +1,18 @@
 products = JSON.parse(localStorage.getItem("product")) || [];
 document.getElementById("nike").addEventListener("click", function () {
+  nike();
+});
+queryStrings = window.location.search;
+urlParamss = new URLSearchParams(queryStrings);
+searchIds = urlParamss.get('nav');
+
+if(searchIds==='nike'){
+  nike();
+}
+
+
+function nike(){
+  
   document.getElementById("content").innerHTML = ` <section id="header">
   <section id="product1" class="section-p1">
       <h2 id="h2-brand">Nike</h2>
@@ -111,5 +124,5 @@ document.getElementById("nike").addEventListener("click", function () {
   displayProducts(1);
   displayPagination();
   redirectToProductDetails();
-});
+}
 // Số sản phẩm trên mỗi trang

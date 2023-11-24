@@ -1,5 +1,17 @@
-products = JSON.parse(localStorage.getItem("product")) || [];
+roducts = JSON.parse(localStorage.getItem("product")) || [];
 document.getElementById("louisvuitton").addEventListener("click", function () {
+  louisvuitton();
+});
+queryStrings = window.location.search;
+urlParamss = new URLSearchParams(queryStrings);
+searchIds = urlParamss.get('nav');
+
+if(searchIds==='louisvuitton'){
+  louisvuitton();
+}
+
+function louisvuitton(){
+  
   document.getElementById("content").innerHTML = ` <section id="header">
   <section id="product1" class="section-p1">
       <h2 id="h2-brand">Louis Vuitton</h2>
@@ -111,5 +123,5 @@ document.getElementById("louisvuitton").addEventListener("click", function () {
   displayProducts(1);
   displayPagination();
   redirectToProductDetails();
-});
+}
 // Số sản phẩm trên mỗi trang
