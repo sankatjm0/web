@@ -64,11 +64,21 @@ function addProduct(item){
     <label for="s-size" class="size-radio-btn">xl</label>
     <input type="radio" name="size" value="xxl" hidden id="xxl-size">
     <label for="s-size" class="size-radio-btn">xxl</label>
+    <br>
+    <br>
+    <div class="qlt">
+        <button onclick="decreaseQuantity(${item.ID})">-</button>
+        <span id="quantity-${item.ID}">1</span>
+        <button onclick="increaseQuantity(${item.ID})">+</button>
+    </div>
+    <br>
 
     <div class="btn-group">
-        <br>
-        <buttom  onclick='addToCart(${item.ID})' class="btn">Thêm vào vỏ hàng</buttom>
-    </div>
+    <br>
+    <button onclick='addToCart(${item.ID})' class="btn">Thêm vào vỏ hàng</button>
+</div>
+  </div>
+  </div>
   </div>
   
   `;
@@ -77,6 +87,75 @@ function addProduct(item){
 var productInCart = [];
 
 // Hàm thêm sản phẩm vào giỏ hàng
+// function addToCart(ID) {
+//   let checkProduct = productInCart.some(value => value.ID === ID);
+
+//   if (!checkProduct) {
+//       let product = products.find(value => value.ID === ID);
+//       productInCart.unshift({
+//           ...product,
+//           quantity: 1,
+//           time: getCurrentTime()
+//       });
+//   } else {
+//       let product = productInCart.find(value => value.ID === ID);
+//       let getIndex = productInCart.findIndex(value => value.ID === ID);
+//       productInCart[getIndex] = {
+//           ...product,
+//           quantity: ++product.quantity,
+//           time: getCurrentTime()
+//       };
+//   }
+
+//   // Lưu mảng productInCart vào localStorage sau khi thêm sản phẩm
+//   localStorage.setItem('productInCart', JSON.stringify(productInCart));
+// }
+
+// Hàm lấy thời gian hiện tại
+function getCurrentTime() {
+  const currentTime = new Date();
+  return currentTime.toLocaleString();
+}
+
+
+//Cart pagea
+// function renderProductsToTable () {
+//   let data = ``;
+//   productInCart.map((value, index) => {
+//     data += `
+//       <tr>
+//         <td>${value.name}</td>
+//         <td><img width='100' src='${value.image}' alt=''></td>
+//         <td>${value.price}</td>
+//         <td>
+//           <button onclick='plusQuantity(${index})' class='btn btn-secondary'>+</button>
+//           <span class='mx-2'>${value.quantity}</span>
+//           <button onclick='minusQuantity(${index}, ${value.quantity})' class='btn btn-secondary'>-</button>
+//         </td>
+//         <td>${(value.quantity * value.price.replace(/,/g, '')).toLocaleString()}</td>
+//         <td><button onclick='deleteProductInCart(${index})' class='btn btn-danger'>Delete</button></td>
+//       </tr>
+//     `;
+//   });
+//   document.getElementById('products-cart').innerHTML = data;
+// }
+
+function increaseQuantity(ID) {
+  const quantityElement = document.getElementById(`quantity-${ID}`);
+  let quantity = parseInt(quantityElement.textContent);
+  quantity += 1;
+  quantityElement.textContent = quantity;
+}
+
+function decreaseQuantity(ID) {
+  const quantityElement = document.getElementById(`quantity-${ID}`);
+  let quantity = parseInt(quantityElement.textContent);
+  if (quantity > 1) {
+    quantity -= 1;
+    quantityElement.textContent = quantity;
+  }
+}
+
 function addToCart(ID) {
   let checkProduct = productInCart.some(value => value.ID === ID);
 
@@ -84,14 +163,16 @@ function addToCart(ID) {
       let product = products.find(value => value.ID === ID);
       productInCart.unshift({
           ...product,
-          quantity: 1
+          quantity: 1,
+          time: getCurrentTime()
       });
   } else {
       let product = productInCart.find(value => value.ID === ID);
       let getIndex = productInCart.findIndex(value => value.ID === ID);
       productInCart[getIndex] = {
           ...product,
-          quantity: ++product.quantity
+          quantity: ++product.quantity,
+          time: getCurrentTime()
       };
   }
 
@@ -99,75 +180,27 @@ function addToCart(ID) {
   localStorage.setItem('productInCart', JSON.stringify(productInCart));
 }
 
+//function deleteProductInCart (index) {
+//   productInCart.splice(index, 1);
+//   saveToLocalStorage();
+//   renderProductsToTable();
+//   totalMoney()
+// }
 
+// //function totalMoney () {
+//   if (productInCart.length > 0) {
+//     let total = 0;
+//     for (let i = 0; i < productInCart.length; i++) {
+//       total += productInCart[i].quantity * productInCart[i].price.replace(/,/g, '');
+//     }
+//     document.getElementById("total-money").innerHTML = total.toLocaleString()
+//   }
+// }
 
-//Cart pagea
-function renderProductsToTable () {
-  let data = ``;
-  productInCart.map((value, index) => {
-    data += `
-      <tr>
-        <td>${value.name}</td>
-        <td><img width='100' src='${value.image}' alt=''></td>
-        <td>${value.price}</td>
-        <td>
-          <button onclick='plusQuantity(${index})' class='btn btn-secondary'>+</button>
-          <span class='mx-2'>${value.quantity}</span>
-          <button onclick='minusQuantity(${index}, ${value.quantity})' class='btn btn-secondary'>-</button>
-        </td>
-        <td>${(value.quantity * value.price.replace(/,/g, '')).toLocaleString()}</td>
-        <td><button onclick='deleteProductInCart(${index})' class='btn btn-danger'>Delete</button></td>
-      </tr>
-    `;
-  });
-  document.getElementById('products-cart').innerHTML = data;
-}
-
-function plusQuantity (index) {
-  productInCart[index] = {
-    ...productInCart[index],
-    quantity: ++productInCart[index].quantity
-  };
-  saveToLocalStorage();
-  renderProductsToTable();
-  totalMoney()
-}
-
-function minusQuantity (index, quantity) {
-  if (quantity > 1) {
-    productInCart[index] = {
-      ...productInCart[index],
-      quantity: --productInCart[index].quantity
-    };
-    saveToLocalStorage();
-    renderProductsToTable();
-    totalMoney()
-  } else {
-    alert('Quantity min is 1');
-  }
-}
-
-function deleteProductInCart (index) {
-  productInCart.splice(index, 1);
-  saveToLocalStorage();
-  renderProductsToTable();
-  totalMoney()
-}
-
-function totalMoney () {
-  if (productInCart.length > 0) {
-    let total = 0;
-    for (let i = 0; i < productInCart.length; i++) {
-      total += productInCart[i].quantity * productInCart[i].price.replace(/,/g, '');
-    }
-    document.getElementById("total-money").innerHTML = total.toLocaleString()
-  }
-}
-
-function cartLoadPage () {
-  renderProductsToTable();
-  totalMoney();
-}
+// function cartLoadPage () {
+//   renderProductsToTable();
+//   totalMoney();
+// }
 
 
 

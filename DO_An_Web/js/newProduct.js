@@ -52,12 +52,12 @@ function displayProducts(page) {
       productElement.appendChild(desElement);
 
       // Thêm nút mua hàng
-      var cartLink = document.createElement("a");
-      cartLink.href = ""; // Đặt đường dẫn tới trang mua hàng tại đây
-      var cartIcon = document.createElement("i");
-      cartIcon.className = "fal fa-shopping-cart cart";
-      cartLink.appendChild(cartIcon);
-      productElement.appendChild(cartLink);
+      // var cartLink = document.createElement("a");
+      // cartLink.href = ""; // Đặt đường dẫn tới trang mua hàng tại đây
+      // var cartIcon = document.createElement("i");
+      // cartIcon.className = "fal fa-shopping-cart cart";
+      // cartLink.appendChild(cartIcon);
+      // productElement.appendChild(cartLink);
 
       container.appendChild(productElement);
   }

@@ -1,5 +1,10 @@
 products = JSON.parse(localStorage.getItem("product")) || [];
 
+document.getElementById("gucci").addEventListener("click", function () {
+  gucci();
+});
+
+
 let queryStrings = window.location.search;
 let urlParamss = new URLSearchParams(queryStrings);
 let searchIds = urlParamss.get('nav');
