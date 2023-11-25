@@ -1,5 +1,20 @@
 products = JSON.parse(localStorage.getItem("product")) || [];
 document.getElementById("chanel").addEventListener("click", function () {
+  chanel();
+});
+
+queryStrings = window.location.search;
+urlParamss = new URLSearchParams(queryStrings);
+searchIds = urlParamss.get('nav');
+
+if(searchIds==='chanel'){
+  chanel();
+}
+
+
+
+function chanel(){
+  
   document.getElementById("content").innerHTML = ` <section id="header">
   <section id="product1" class="section-p1">
       <h2 id="h2-brand">Chanel</h2>
@@ -43,6 +58,7 @@ document.getElementById("chanel").addEventListener("click", function () {
       // Tạo phần tử sản phẩm và các phần tử con
       var productElement = document.createElement("div");
       productElement.className = "pro";
+      productElement.setAttribute('data-id', product.ID);
 
       var imgElement = document.createElement("img");
       imgElement.src = product.img;
@@ -95,8 +111,20 @@ document.getElementById("chanel").addEventListener("click", function () {
     }
   }
 
+  function redirectToProductDetails() {
+    document.querySelectorAll('.pro').forEach(card => {
+        card.addEventListener('click', function() {
+            const productId = this.getAttribute('data-id');
+            console.log('Clicked product with ID:', productId);
+            console.log('Current URL:', window.location.href);
+            window.location.href = 'product.html?ID=' + encodeURIComponent(productId);
+        });
+    });
+  }
+
   // Mặc định hiển thị trang đầu tiên
   displayProducts(1);
   displayPagination();
-});
+  redirectToProductDetails();
+}
 // Số sản phẩm trên mỗi trang

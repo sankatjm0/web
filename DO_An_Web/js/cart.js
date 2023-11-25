@@ -1,94 +1,108 @@
+var data = JSON.parse(localStorage.getItem("productInCart")) || [];
+
 const createSmallCards = (data) => {
   return `
-  <div class="sm-product">
-    <img src="${data.image}" class="sm-product-img">
-    <div class="sm-text">
+    <div class="sm-product">
+      <img src="${data.img}" class="sm-product-img">
+      <div class="sm-text">
         <p class="sm-product-name">${data.name}</p>
-        <p class="sm-des">${data.shortDes}</p>
-    </div>
-    <div class="item-counter">
-        <button class="counter-btn decrement">-</button>
-        <p class="item-count">${data.item}</p>
-        <button class="counter-btn increment">+</button>
-    </div>
-    <p class="sm-price" data-price="${data.sellPrice}>$${
-    data.sellPrice * data.item
-  }</p>
-    <button class="sm-delete-btn">
+      </div>
+      <p class="price">$${data.price}</p>
+      <div class="item-counter">
+        <button onclick="decrease(${data.ID})" class="counter-btn decrement" data-id="${data.ID}">-</button>  
+        <p class="item-count" id="quantity-${data.ID}">${data.quantity}</p>
+        <button onclick="increase(${data.ID})" class="counter-btn increment" data-id="${data.ID}">+</button>
+      </div>
+      
+      <button onclick="removeProduct(${data.ID})" class="sm-delete-btn" data-id="${data.ID}">
         <img src="img/close.png">
-    </button>
-</div> `;
+      </button>
+    </div>`;
 };
 
 let totalBill = 0;
 
 const setProducts = (name) => {
   const element = document.querySelector(`.${name}`);
-  let data = JSON.parse(localStorage.getItem(name));
-  if (data == null) {
+    
+  // Xóa các phần tử con hiện có trong phần tử cha
+  element.innerHTML = '';
+
+  if (data.length === 0) {
     element.innerHTML = `<img src="img/empty-cart.png" class="empty-img" alt="">`;
   } else {
     for (let i = 0; i < data.length; i++) {
       element.innerHTML += createSmallCards(data[i]);
-      if (name == "cart") {
-        totalBill += Number(data[i].sellPrice * data[i].item);
+      if (name === "cart") {
+        totalBill += Number(data[i].price * data[i].quantity);
       }
     }
     updateBill();
   }
-  setupEvents(name);
+  //setupEvents(name); // Bỏ chú thích dòng này vì không thấy định nghĩa hàm setupEvents()
 };
 
 const updateBill = () => {
-  let billPrice = document.querySelector(".bill");
-  billPrice.innerHTML = `$${totalBill}`;
+  const billElement = document.querySelector(".bill");
+  billElement.textContent = `$${totalBill.toFixed(0)}`;
 };
-const setupEvents = (name) => {
-  // setup counter event
-  const counterMinus = document.querySelectorAll(`.${name} .decrement`);
-  const counterPlus = document.querySelectorAll(`.${name} .increment`);
-  const counts = document.querySelectorAll(`.${name} .item-count`);
-  const price = document.querySelectorAll(`.${name} .sm-price`);
-  const deleteBtn = document.querySelectorAll(`.${name} .sm-delete-btn`);
 
-  let product = JSON.parse(localStorage.getItem(name));
-
-  counts.forEach((item, i) => {
-    let cost = Number(price[i].getAttribute("data-price"));
-
-    counterMinus[i].addEventListener("click", () => {
-      if (item.innerHTML > 1) {
-        item.innerHTML--;
-        totalBill -= cost;
-        price[i].innerHTML = `$${item.innerHTML * cost}`;
-        if (name == "cart") {
-          updateBill();
-        }
-
-        product[i].item = item.innerHTML;
-        localStorage.setItem(name, JSON.stringify(product));
-      }
-    });
-
-    counterPlus[i].addEventListener("click", () => {
-      if (item.innerHTML < 9) {
-        item.innerHTML++;
-        totalBill += cost;
-        price[i].innerHTML = `$${item.innerHTML * cost}`;
-        if (name == "cart") {
-          updateBill();
-        }
-        product[i].item = item.innerHTML;
-        localStorage.setItem(name, JSON.stringify(product));
-      }
-    });
-  });
-  deleteBtn.forEach((item, i) => {
-    item.addEventListener("click", () => {
-      product = product.filter((data, index) => index != i);
-      localStorage.setItem(name, JSON.stringify(product));
-    });
-  });
+const increase = (productId) => {
+  const product = data.find((item) => item.ID === productId);
+  if (product) {
+    product.quantity += 1;
+    totalBill += Number(product.price);
+    document.getElementById(`quantity-${productId}`).textContent = product.quantity;
+    updateBill();
+    saveDataToLocal();
+  }
 };
+
+const decrease = (productId) => {
+  const product = data.find((item) => item.ID === productId);
+  if (product && product.quantity > 1) {
+    product.quantity -= 1;
+    totalBill -= Number(product.price);
+    document.getElementById(`quantity-${productId}`).textContent = product.quantity;
+    updateBill();
+    saveDataToLocal();
+  }
+};
+
+const removeProduct = (productId) => {
+  const productIndex = data.findIndex((item) => item.ID === productId);
+  if (productIndex !== -1) {
+    const product = data[productIndex];
+    totalBill -= Number(product.price * product.quantity);
+    data.splice(productIndex, 1);
+    updateBill();
+    saveDataToLocal();
+    setProducts("cart"); // Cập nhật lại danh sách sản phẩm trong giỏ hàng sau khi xóa
+  }
+};
+
+const saveDataToLocal = () => {
+  localStorage.setItem("productInCart", JSON.stringify(data));
+};
+
 setProducts("cart");
-setProducts("wishlist");
+
+document.getElementById("nike").addEventListener("click", function() {
+  window.location.href = "index-user.html?nav=nike";
+});
+
+document.getElementById("adidas").addEventListener("click", function() {
+  window.location.href = "index-user.html?nav=adidas";
+});
+
+document.getElementById("gucci").addEventListener("click", function() {
+  window.location.href = "index-user.html?nav=gucci";
+});
+
+document.getElementById("chanel").addEventListener("click", function() {
+  window.location.href = "index-user.html?nav=chanel";
+});
+
+document.getElementById("louisvuitton").addEventListener("click", function() {
+  window.location.href = "index-user.html?nav=louisvuitton";
+});

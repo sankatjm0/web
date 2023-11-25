@@ -8,6 +8,8 @@
     <title>Search Results</title>
     <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="css/search.css">
+    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
 </head>
 
 <body>
@@ -26,23 +28,25 @@
                 <ul class="shop-filter-group-list traDemark">
                 </ul>
             </fieldset>
+
             <fieldset class="shop-filter-group">
                 <legend class="shop-filter-group-title">Giá</legend>
                 <ul class="shop-filter-group-list-b">
                     <div class="shop-filter-group-item">
                     <label for="thap">
-                        <input id ="thap" type="radio" name="sort" class="shop-filter-group-item-check" value="ThapDenCao">
+                        <input id ="thap" type="radio" name="sort" class="shop-filter-group-item-check-price" value="ThapDenCao">
                         Thấp Đến Cao
                     </label>
                     </div>
                     <div class="shop-filter-group-item">
                     <label for="cao">
-                        <input id="cao"type="radio" name="sort" class="shop-filter-group-item-check" value="CaoDenThap">
+                        <input id="cao"type="radio" name="sort" class="shop-filter-group-item-check-price" value="CaoDenThap">
                         Cao Đến Thấp
                     </label>
                     </div>
                 </ul>
             </fieldset>
+            
             <fieldset class="shop-filter-group">
                 <legend class="shop-filter-group-title">Khoảng Giá</legend>
                 <div class="shop-filter-group-filter">
@@ -51,32 +55,19 @@
                     <input id="number2" type="number" placeholder="đ ĐẾN" class="shop-filter-group-filter-input">
                     </label>
                 </div>
-                <button id="primary" class="btn btn--primary shop-filter-group-filter-btn">Áp dụng</button>
+                <button id="primary" class="btn btn--primary shop-filter-group-filter-btn">ÁP DỤNG</button>
             </fieldset>
 
-            <button class="btn btn--primary shop-filter-group-filter-btn shop-filter-group--new">LÀM MỚI</button>
+            <button id ="reset" class="btn btn--primary shop-filter-group-filter-btn shop-filter-group--new">LÀM MỚI</button>
         </nav>
         
-        <nav class="product-container">
-            <!-- <div class="product-card">
-                <a href="product.html?ID=1" >
-                    <div class="product-image">
-                        <span class="discount-tag">50% off</span> 
-                        <img src="img/card2.png" class="product-thumb" alt="">
-                        <button class="card-btn">add to whislist</button>
-                    </div>
-                    <div class="product-info">
-                        <h2 class="product-brand">brand</h2>
-                        <p class="product-short-des">a short line about the cloth</p>
-                        <span class="price">$20 </span>
-                        <span class="actual-price">$40</span> 
-
-                    </div>
-                </a>
-            </div> -->
-        </nav>
+        <section id="product1" class="section-p1">
+            <nav class="pro-container" id="product-container">
+            </nav>
+        </section>
     </section>
     
+    <div id="pagination"></div>
 
     <footer></footer>
 

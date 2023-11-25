@@ -1,12 +1,13 @@
-
-let shop_listIteam = document.querySelector('.product-container');
+let shop_listIteam = document.querySelector('.pro-container');
 let filters = document.querySelectorAll('.shop-filter-group-list');
-let primary = document.getElementById('primary');
 let filtersnew = document.querySelector('.shop-filter-group--new');
 let number1 = document.getElementById('number1');
 let number2 = document.getElementById('number2');
-const search = document.getElementById('search-box');
+let primary = document.getElementById('primary');
+let reset = document.getElementById('reset');
 
+
+const search = document.getElementById('search-box');
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const searchValue = urlParams.get('search');
@@ -15,67 +16,124 @@ window.onload = function () {
     products = JSON.parse(localStorage.getItem("product")) || [];
     Findname();
     redirectToProductDetails();
-
 }
-// let listIteam = [
-//     {
-//         "name": "a b line what the gucci",
-//         "Price": "20",
-//         " ":"color",
-//         "image":"img/card2.png"
-//     }
-// ];
-let foundItems = [];
+
 function redirectToProductDetails() {
     document.querySelectorAll('.product-card').forEach(card => {
-        card.addEventListener('click', function() {
-            const productId = this.getAttribute('data-id');
-            window.location.href = 'product.html?ID=' + encodeURIComponent(productId);
+        card.addEventListener('click', function(event) {
+            if (!event.target.matches('.card-btn')) {
+                const productId = this.getAttribute('data-id');
+                window.location.href = 'product.html?ID=' + encodeURIComponent(productId);
+            }
         });
     });
 }
 
-
-
-
+let find = {};
 function Findname(){
     search.value=searchValue;
 
     foundItems = [];
     if(products !== undefined)
     products.forEach(item => {
-        if(item.name.includes(searchValue)){
+        if(item.name.toLowerCase().includes(searchValue.toLowerCase()) || item.brand.toLowerCase().includes(searchValue.toLowerCase())){
             foundItems.push(item);
         }
     });
-    showProduct(foundItems);
+    if(foundItems.length===0){
+        khongtimthaysanpham();
+    }
+    phantrang(foundItems);
+
     show_filter(foundItems).then(() => {
-        let shop_checkbox = document.querySelectorAll('.shop-filter-group-item-check');
-        shop_checkbox.forEach(checkbox=>{
-            checkbox.addEventListener('change',applyFilters);
+        let Listener_checkbox = document.querySelectorAll('.shop-filter-group-item-check,.shop-filter-group-item-check-price');
+        Listener_checkbox.forEach(checkbox=>{
+            checkbox.addEventListener('change', () => {
+                applyFilters(foundItems);
+                phantrang(find);
+                
+            });
         });
         primary.onclick = function() {
-            applyFilters();
+            applyFilters(foundItems);
+            phantrang(find);
+  
         }
+        reset.onclick = function() {
+            phantrang(foundItems);
+            
+            let Listener_checkbox = document.querySelectorAll('.shop-filter-group-item-check,.shop-filter-group-item-check-price');
+            Listener_checkbox.forEach(function(Listener_checkbox) {
+                Listener_checkbox.checked = false;
+            });
+        
+
+            let radioButtons = document.querySelectorAll('.shop-filter-group-item-check-price');
+            radioButtons.forEach(function(radioButton) {
+                radioButton.checked = false;
+            });
+        
+            let numberInputs = document.querySelectorAll('.shop-filter-group-filter-input');
+            numberInputs.forEach(function(input) {
+                input.value = '';
+            });
+        }
+
     });
 }
+
 filtersnew.onclick = function() {
-    let shop_checkbox = document.querySelectorAll('.shop-filter-group-item-check');
-    shop_checkbox.forEach(checkbox => {
-        if (checkbox.checked) {
-            checkbox.checked=false;
-        }
-    });
-    number1.value=null;
-    number2.value=null;
-    showProduct(foundItems);
+
+    
+    let shop_listIteam = document.querySelector('.search-results');
+    shop_listIteam.innerHTML=``;
 }
 
-function showProduct(list){
+function phantrang(list){
+    let productElement = document.getElementById("product1");
+    if (productElement.children.length > 0) {
+        showProduct(list,1)
+    }
 
+
+    lengthpage=16;
+    
+    if(list.length !=0){
+        page = Math.ceil(list.length/lengthpage);
+        var paginationContainer = document.getElementById("pagination");
+        paginationContainer.innerHTML = "";
+
+
+            
+        for (var i = 1; i <= page; i++) {
+            var pageLink = document.createElement("a");
+            pageLink.href = "javascript:void(0);";
+            pageLink.innerText = i;
+            pageLink.dataset.page = i;
+            pageLink.addEventListener("click", function() {
+                var page = parseInt(this.dataset.page);
+                showProduct(list,page);
+            });
+
+            paginationContainer.appendChild(pageLink);
+        }
+
+    }
+    redirectToProductDetails();
+
+}
+function showProduct(list,page){
+
+var startIndex = (page - 1) * 16+1;
+let endIndex = startIndex + 15;
+
+if(endIndex > list.length){
+    endIndex=list.length;
+}
     shop_listIteam.innerHTML = '';
     if(list.length !=0){
-        list.forEach(item => {
+        for (let i = startIndex; i <= endIndex; i++) {
+            item = list[i - 1];
             let NewItem = document.createElement('div');
             NewItem.className = "product-card";
             NewItem.setAttribute('data-id', item.ID);
@@ -114,10 +172,11 @@ function showProduct(list){
                     product_span_1.className = "price";
                     product_span_1.innerHTML=item.price+'đ';
                     product_info.append(product_span_1);
-        });
+      
+        }
     }
 }
-function createFilterItem(value, categoryType,shop_filter) {
+function createFilterItem(value,shop_filter) {
     let New_Item = document.createElement('div');
     New_Item.className = "shop-filter-group-item";
     if(shop_filter!=null)
@@ -130,7 +189,7 @@ function createFilterItem(value, categoryType,shop_filter) {
     let Newproduct_input = document.createElement('input');
     Newproduct_input.className = "shop-filter-group-item-check";
     Newproduct_input.type = "checkbox";
-    Newproduct_input.value = categoryType + value;
+    Newproduct_input.value =  value;
     Newitem__label.prepend(Newproduct_input);
 }
 function show_filter(list) {
@@ -145,122 +204,129 @@ function show_filter(list) {
         list.forEach(item => {
             if (!traDemark.includes(item.brand)) {
                 traDemark = traDemark + item.brand;
-                createFilterItem(item.brand, "traDemark",shop_filter_traDemark);
+                createFilterItem(item.brand,shop_filter_traDemark);
             }
         });
     }
     return Promise.resolve();
 }
-function applyFilters(){
-    
-    let shop_checkbox = document.querySelectorAll('.shop-filter-group-item-check');
 
-    const selectedCategories = [];
-    shop_checkbox.forEach(checkbox => {
-        if (checkbox.checked) {
-            selectedCategories.push(checkbox.value);
+function checkthuonghieu(foundItems){
+    let atLeastOneChecked = false;
+    let thuonghieuchecked= [];
+    let thuonghieucheckbox = document.querySelectorAll('.shop-filter-group-item-check');
+    
+    for (let i = 0; i < thuonghieucheckbox.length; i++) {
+        if (thuonghieucheckbox[i].checked) {
+            atLeastOneChecked = true;
+            thuonghieuchecked.push(thuonghieucheckbox[i]);
         }
-    });
-    if(selectedCategories.length ==0){
-        showProduct(foundItems);
     }
-    
-
-    let item = [];
-    let item_Price = [];
-    let traDemark = [];
-    let ThapDenCao = false;
-    let CaoDenThap = false;
-    selectedCategories.forEach(check=>{
-        if(check.includes('traDemark')){
-            traDemark.push(check);
-        }
-        if(check.includes('ThapDenCao')){
-            ThapDenCao=true;
-        }
-        if(check.includes('CaoDenThap')){
-            CaoDenThap=true;
-        }
-    });
-    
-    if(traDemark.length==0){
-
-    }
-    else{
+    let locsanpham= [];
+    if (atLeastOneChecked) {
         foundItems.forEach(check=>{
-            let checked =0;
-            if(traDemark.length==0){
-                checked++;
-            }
-            for (let i = 0; i < traDemark.length; i++) {
-                let traDemark_item=traDemark[i].replace(/traDemark/, "");
-                if(check.brand==traDemark_item){
-                    checked++;
-                    break;
+            for (let i = 0; i < thuonghieuchecked.length; i++) {
+                if(check.brand==thuonghieuchecked[i].value){
+                    locsanpham.push(check);
                 }
             }
-            if(checked==1){
-                item.push(check);
-            }
-            
         });
-        if(item.length==0){
-            shop_listIteam.innerHTML = '';
-            return ;
-        }
-    }
-    
-    if(number1.value === "" && number2.value === ""){
-        if(item.length!=0){
-            if(ThapDenCao){
-                item.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
-            }
-            if(CaoDenThap){
-                item.sort((b, a) => parseFloat(a.price) - parseFloat(b.price));
-            }
-            showProduct(item);
+        
+        if(locsanpham.length===0){
+            return 0;
         }
         else{
-            let item_i = [...foundItems];
-            if(ThapDenCao){
-                item_i.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
-                console.log(item_i);
-            }
-            if(CaoDenThap){
-                item_i.sort((b, a) => parseFloat(a.price) - parseFloat(b.price));
-            }
-            showProduct(item_i);
+            foundItems.length = 0;
+            locsanpham.forEach(item => {
+                foundItems.push(item);
+            });
+        
         }
+    }
+
+    return 1;
+}
+function checkgia(foundItems){
+    let atLeastOneChecked = false;
+    let giachecked;
+    let giacheckcheckbox = document.querySelectorAll('.shop-filter-group-item-check-price');
+
+    for (let i = 0; i < giacheckcheckbox.length; i++) {
+        if (giacheckcheckbox[i].checked) {
+            atLeastOneChecked = true;
+            giachecked=giacheckcheckbox[i];
+            break;
+        }
+    }
+
+    if (atLeastOneChecked) {
+        if("ThapDenCao"===giachecked.value){
+            foundItems.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+        }
+        if("CaoDenThap"===giachecked.value){
+            foundItems.sort((b, a) => parseFloat(a.price) - parseFloat(b.price));
+        }
+    }
+}
+function checkkhoanggia(foundItems){
+    let giachecked= [];
+
+
+    if(number1.value === "" && number2.value === ""){
+        return 1;
+    }
+    foundItems.forEach(check=>{
+        if(parseFloat(check.price)>=parseFloat(number1.value) && parseFloat(check.price)<=parseFloat(number2.value)){
+            giachecked.push(check);
+        }
+    });
+    if(giachecked.length===0){
+        return 0;
     }
     else{
-        if(item.length!=0){
-            item.forEach(checka=>{
-                if(parseFloat(checka.price)>=parseFloat(number1.value) && parseFloat(checka.price)<=parseFloat(number2.value)){
-                    item_Price.push(checka);
-                }
-            });
-        }
-        else{
-            let item_i = [...foundItems];
-            item_i.forEach(checka=>{
-                if(parseFloat(checka.price)>=parseFloat(number1.value) && parseFloat(checka.price)<=parseFloat(number2.value)){
-                    item_Price.push(checka);
-                }
-            });
-        }
-        if(ThapDenCao){
-            item_Price.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
-        }
-        if(CaoDenThap){
-            item_Price.sort((b, a) => parseFloat(a.price) - parseFloat(b.price));
-        }
-        if(item_Price.length!=0){
-            showProduct(item_Price);
-        }
-        else{
-            shop_listIteam.innerHTML = '';
-        }
+        foundItems.length = 0;
+        giachecked.forEach(item => {
+            foundItems.push(item);
+        });
     }
-        
+    return 1;
 }
-Findname(searchValue);
+function khongtimthaysanpham(){
+    let search = document.querySelector('.search-results');
+    search.innerHTML=`<div>Không tìm thấy kết quả nào</div>`;
+}
+function applyFilters(copyfoundItems){
+
+    find = [...copyfoundItems];
+
+    if(checkthuonghieu(find)===0){
+        khongtimthaysanpham();
+    }
+    if(checkkhoanggia(find)===0){
+        khongtimthaysanpham();
+    }
+    checkgia(find);
+
+    // showProduct(find);
+}
+
+document.getElementById("nike").addEventListener("click", function() {
+    window.location.href = "index-user.html?nav=nike";
+});
+
+document.getElementById("adidas").addEventListener("click", function() {
+    window.location.href = "index-user.html?nav=adidas";
+});
+
+document.getElementById("gucci").addEventListener("click", function() {
+    window.location.href = "index-user.html?nav=gucci";
+});
+
+document.getElementById("chanel").addEventListener("click", function() {
+    window.location.href = "index-user.html?nav=chanel";
+});
+
+document.getElementById("louisvuitton").addEventListener("click", function() {
+    window.location.href = "index-user.html?nav=louisvuitton";
+});
+
