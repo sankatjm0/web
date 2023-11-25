@@ -29,7 +29,6 @@ var userArr = JSON.parse(localStorage.getItem('user'))||[];
 
 signin.addEventListener("submit", function (event) {
 	
-	
 	event.preventDefault();
 	let count = 0;
 	let notBlankName = hasValue(signin.elements["username"], NAME_REQUIRED);
@@ -38,7 +37,7 @@ signin.addEventListener("submit", function (event) {
 	
     if (signin.elements["password"].value === userArr[num].password) {
 		alert("Dang nhap thanh cong.");
-		sessionStorage.setItem("current", userArr[num].username);
+		sessionStorage.setItem("current", JSON.stringify(userArr[num]));
 		location.replace("./index-user.html?");
 		        } else {
             
@@ -49,7 +48,7 @@ signin.addEventListener("submit", function (event) {
   
 
   if (notBlankName && notBlankPass) {
-	for(let i = 0; i<=localStorage.length; i++) {
+	for(let i = 0; i<userArr.length; i++) {
         
 		if(userArr[i].username === signin.elements["username"].value) {
             count++;

@@ -68,7 +68,7 @@ signup.addEventListener("submit", function (event) {
       phone: phone,
     });
     localStorage.setItem("user", JSON.stringify(user));
-    sessionStorage.setItem("current", username);
+    sessionStorage.setItem("current", JSON.stringify(user));
     location.replace("./index-user.html?");
   }
 });

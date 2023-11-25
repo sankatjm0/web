@@ -11,7 +11,8 @@ const createNav = () => {
           <a>
           <img src="img/user.png" id="user-img" alt="">
           <div class="login-logout-popup hide">
-          <p class="account-info">Xin chào, name</p>
+          <p class="account-info"></p>
+          <p id="user-info"></p>
           <button class="btn" id="user-btn">Đăng xuất</button>
           </div>
           </a>
@@ -42,20 +43,41 @@ document.querySelector(".search-btn").addEventListener("click", function () {
 });
 
 // nav popup
+const userInfo = document.querySelector("#user-info");
 const userImageButton = document.querySelector("#user-img");
 const userPopup = document.querySelector(".login-logout-popup");
 const popuptext = document.querySelector(".account-info");
 const actionBtn = document.querySelector("#user-btn");
-
+const updateBody = document.getElementById("sdt");
+const user = JSON.parse(localStorage.getItem("user")) || null;
+const current = JSON.parse(sessionStorage.getItem("current")) || null;
+  
 userImageButton.addEventListener("click", () => {
   userPopup.classList.toggle("hide");
 });
 
 window.onload = () => {
-  let user = sessionStorage.getItem("current") || null;
-  if (user != null) {
+  if (current != null) {
     //means user is logged in
-    popuptext.innerHTML = `Xin chào, ${user}`;
+    popuptext.innerHTML = `Xin chào, ${current.name}`;
+    userInfo.innerHTML = `<a href="#modal-two" class="btn btn-big">Thong tin nguoi dung</a>
+    <a href="#" class="modal" id="modal-two" aria-hidden="true">
+    </a>
+    <div class="modal-dialog">
+    <a href="#" class="btn-close" aria-hidden="true">×</a>
+
+      <div class="modal-header">
+        <h2>Thong tin @${current.username}</h2>
+      </div>
+      <div id="modal-body" class="modal-body">
+        <p>Ten: ${current.name}</p>
+        <div id="sdt">So dien thoai: ${current.phone}</div><button onclick="addSDT()" style="display: inline-block;">doi</button>
+        <p>Dia chi: ${current.address}</p>
+      </div>
+      <div class="modal-footer">
+        <button onClick="update()" class="btn">Thoat</button>
+      </div>
+    </div>`;
     actionBtn.innerHTML = "Đăng xuất";
     actionBtn.addEventListener("click", () => {
       sessionStorage.clear();
@@ -70,3 +92,20 @@ window.onload = () => {
     });
   }
 };
+
+function myFunction() {
+  var popup = document.getElementById("update-info");
+  popup.classList.toggle("show");
+}
+
+function addSDT() {
+  current.phone = prompt("Nhap so dien thoai", "");
+  for(let i=0; i<user.length; i++) {
+    if(user[i].username == current.username) {
+      user[i].phone = current.phone;
+      localStorage.setItem('user', JSON.stringify(user));
+      sessionStorage.setItem('current', JSON.stringify(current));
+      updateBody.innerText = `So dien thoai: ${current.phone}`;
+    }
+  }
+}
