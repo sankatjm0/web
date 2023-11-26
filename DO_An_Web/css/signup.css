@@ -3,7 +3,15 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+small {
+  color: #e24c4b;
+  font-size: 10px;
+  text-align: right;
+  display: inline;
+  padding: 0%;
+  position: relative;
+  top: 0;
+}
 body {
   width: 100%;
   min-height: 100vh;
@@ -41,7 +49,7 @@ input[type="number"],
   background: #ffff;
   border: none;
   outline: none;
-  margin: 20px 0;
+  margin: 10px 0;
 
   color: #383838;
   font-size: 14px;

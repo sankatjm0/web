@@ -23,8 +23,8 @@ function hasValue(input, message) {
 	return showSuccess(input);
 }
 const signin = document.querySelector(".signin");
-const NAME_REQUIRED = "Vui long nhap ten";
-const PASSWORD_REQUIRED = "Vui long nhap mat khau";
+const NAME_REQUIRED = "Vui lòng nhập tên tài khoản";
+const PASSWORD_REQUIRED = "Vui lòng nhập mật khẩu";
 var userArr = JSON.parse(localStorage.getItem('user'))||[];
 
 signin.addEventListener("submit", function (event) {
@@ -36,12 +36,12 @@ signin.addEventListener("submit", function (event) {
   function checkPass(num){
 	
     if (signin.elements["password"].value === userArr[num].password) {
-		alert("Dang nhap thanh cong.");
+		alert("Đăng nhập thành công.");
 		sessionStorage.setItem("current", JSON.stringify(userArr[num]));
 		location.replace("./index-user.html?");
 		        } else {
             
-            showError(signin.elements["password"], "Sai mat khau");
+            showError(signin.elements["password"], "Sai mật khẩu");
 			
   }
 } 
@@ -57,6 +57,6 @@ signin.addEventListener("submit", function (event) {
         } 
 
   } 
-  if (count==0) alert("Tai khoan khong ton tai.");
+  if (count==0) alert("Tài khoản không tồn tại.");
 } 
 });
