@@ -38,7 +38,9 @@ signin.addEventListener("submit", function (event) {
     if (signin.elements["password"].value === userArr[num].password) {
 		alert("Đăng nhập thành công.");
 		sessionStorage.setItem("current", JSON.stringify(userArr[num]));
-		location.replace("./index-user.html?");
+		if (signin.elements["username"].value == "admin") {
+			location.replace("./index-admin.html");
+		} else location.replace("./index-user.html?");
 		        } else {
             
             showError(signin.elements["password"], "Sai mật khẩu");

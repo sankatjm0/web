@@ -204,3 +204,8 @@ function editProduct(index) {
   // Hiển thị lại bảng sản phẩm
   displayProducts();
 }
+
+function guest() {
+  sessionStorage.clear();
+  location.replace("index-user.html");
+}
