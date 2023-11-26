@@ -105,6 +105,7 @@ function gucci(){
       pageLink.addEventListener("click", function () {
         var page = parseInt(this.dataset.page);
         displayProducts(page);
+        redirectToProductDetails();
       });
 
       paginationContainer.appendChild(pageLink);

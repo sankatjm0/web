@@ -158,13 +158,15 @@ function decreaseQuantity(ID) {
 
 function addToCart(ID) {
   let checkProduct = productInCart.some(value => value.ID === ID);
-
+  const selectedSize = document.querySelector('.size-radio-btn.check').innerText;
   if (!checkProduct) {
       let product = products.find(value => value.ID === ID);
       productInCart.unshift({
           ...product,
           quantity: 1,
-          time: getCurrentTime()
+          time: getCurrentTime(),
+          status: "Chưa xử lí",
+          size: selectedSize
       });
   } else {
       let product = productInCart.find(value => value.ID === ID);
@@ -172,7 +174,9 @@ function addToCart(ID) {
       productInCart[getIndex] = {
           ...product,
           quantity: ++product.quantity,
-          time: getCurrentTime()
+          time: getCurrentTime(), 
+          status: "Chưa xử lí",
+          size: selectedSize
       };
   }
 
