@@ -1,3 +1,5 @@
+const user = JSON.parse(localStorage.getItem("user")) || null;
+current = JSON.parse(sessionStorage.getItem("current")) || null;
 const createNav = () => {
   const navbar = document.querySelector(".navbar");
 
@@ -11,13 +13,13 @@ const createNav = () => {
           <a>
           <img src="img/user.png" id="user-img" alt="">
           <div class="login-logout-popup hide">
-          <p class="account-info"></p>
-          <p id="user-info"></p>
+          <p class="account-info">hi</p>
+          <button onclick="show()" id="user-info"></button>
           <button class="btn" id="user-btn">Đăng xuất</button>
           </div>
           </a>
 
-      <a href="/cart.html"><img src="img/cart.png" alt=""></a>
+      <a href="cart.html"><img src="img/cart.png" alt=""></a>
       </div>
   </div>
 </div>
@@ -30,6 +32,21 @@ const createNav = () => {
   <li id="louisvuitton" class="link">Louis Vuitton</li>
  
 </ul>
+<div id="card">
+<div class="backdrop"></div>
+<div class="card">
+<h1>Thông tin tài khoản</h1>
+<p class="title">@sankatjm0</p>
+<div class="thongtin">
+<p>Tên khách hàng: ${current.name}</p>
+<p>Số điện thoại: ${current.phone}</p>
+<p>Địa chỉ: ${current.address}</p>
+</div>
+<p><button class="b" onclick="cancel()" style="bottom: 10px;
+right: 10px;">Thoát</button></p>
+<p id="update"><button class="b" onclick="update()" style="bottom: 10px;
+right: 70px;">Cập nhật thông tin</button></p>
+</div></div>
     
     `;
 };
@@ -48,36 +65,20 @@ const userImageButton = document.querySelector("#user-img");
 const userPopup = document.querySelector(".login-logout-popup");
 const popuptext = document.querySelector(".account-info");
 const actionBtn = document.querySelector("#user-btn");
-const updateBody = document.getElementById("sdt");
-const user = JSON.parse(localStorage.getItem("user")) || null;
-const current = JSON.parse(sessionStorage.getItem("current")) || null;
+
   
 userImageButton.addEventListener("click", () => {
   userPopup.classList.toggle("hide");
 });
 
-window.onload = () => {
-  if (current != null) {
+// window.onload = () => {
+
+    if (current != null) {
     //means user is logged in
     popuptext.innerHTML = `Xin chào, ${current.name}`;
-    userInfo.innerHTML = `<a href="#modal-two" class="btn btn-big">Thong tin nguoi dung</a>
-    <a href="#" class="modal" id="modal-two" aria-hidden="true">
-    </a>
-    <div class="modal-dialog">
-    <a href="#" class="btn-close" aria-hidden="true">×</a>
-
-      <div class="modal-header">
-        <h2>Thong tin @${current.username}</h2>
-      </div>
-      <div id="modal-body" class="modal-body">
-        <p>Ten: ${current.name}</p>
-        <div id="sdt">So dien thoai: ${current.phone}</div><button onclick="addSDT()" style="display: inline-block;">doi</button>
-        <p>Dia chi: ${current.address}</p>
-      </div>
-      <div class="modal-footer">
-        <button onClick="update()" class="btn">Thoat</button>
-      </div>
-    </div>`;
+    userInfo.innerHTML = `Xem thông tin
+    `
+    ;
     actionBtn.innerHTML = "Đăng xuất";
     actionBtn.addEventListener("click", () => {
       sessionStorage.clear();
@@ -91,14 +92,15 @@ window.onload = () => {
       location.replace("./signin.html");
     });
   }
-};
+// };
 
-function myFunction() {
-  var popup = document.getElementById("update-info");
-  popup.classList.toggle("show");
-}
+// function myFunction() {
+//   var popup = document.getElementById("update-info");
+//   popup.classList.toggle("show");
+// }
 
 function addSDT() {
+  let updateBody = document.getElementById("sdt");
   current.phone = prompt("Nhap so dien thoai", "");
   for(let i=0; i<user.length; i++) {
     if(user[i].username == current.username) {
@@ -108,4 +110,39 @@ function addSDT() {
       updateBody.innerText = `So dien thoai: ${current.phone}`;
     }
   }
+}
+
+function show() {
+  document.querySelector("#card").style.display = `block`;
+
+}
+
+function cancel() {
+  document.querySelector("#card").style.display = 'none';
+}
+
+function update() {
+  document.querySelector(".thongtin").innerHTML = `<p>Tên khách hàng: <input id="name"></p>
+  <p>Số điện thoại: <input id="phone"></p>
+  <p>Địa chỉ: <input id="address"></p>`;
+  document.querySelector("#update").innerHTML = `<button class="b" onclick="save()" style="bottom: 10px;
+  right: 70px;">Lưu</button>`
+}
+
+function save() {
+  for(let i=0; i<user.length; i++) {
+    if(user[i].username == current.username) {
+      user[i].name = document.querySelector("#name").value;
+      user[i].phone = document.querySelector("#phone").value;
+      user[i].address = document.querySelector("#address").value;
+      localStorage.setItem('user', JSON.stringify(user));
+      sessionStorage.setItem('current', JSON.stringify(user[i]));
+      current = JSON.parse(sessionStorage.getItem('current'));
+    }
+  }
+  document.querySelector(".thongtin").innerHTML = `<p>Tên khách hàng: ${current.name}</p>
+  <p>Số điện thoại: ${current.phone}</p>
+  <p>Địa chỉ: ${current.address}</p>`
+  document.querySelector("#update").innerHTML = `<button class="b" onclick="update()" style="bottom: 10px;
+  right: 70px;">Cập nhật thông tin</button>`
 }
