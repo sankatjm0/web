@@ -1,5 +1,7 @@
-var data = JSON.parse(localStorage.getItem("productInCart")) || [];
-
+data = [];
+if (current != null) {
+  data = current.cart;
+}
 const createSmallCards = (data) => {
   return `
     <div class="sm-product">
@@ -14,7 +16,6 @@ const createSmallCards = (data) => {
           <p class="sm-product-name">${data.name}</p>
         </div>
         <p class="price">$${data.price}</p>
-        <p class="time">Time: ${data.time}</p>
         <p class="size">Size: ${data.size}</p>
       </div>
       <div class="item-counter">
@@ -22,9 +23,7 @@ const createSmallCards = (data) => {
       <p class="item-count" id="quantity-${data.ID}">${data.quantity}</p>
       <button onclick="increase(${data.ID})" class="counter-btn increment" data-id="${data.ID}">+</button>
       </div>
-      <div class="item-status">
-      <p class="status">Trạng Thái: ${data.status}</p>
-      </div>
+     
       
     </div>`;
 };
@@ -92,8 +91,15 @@ const removeProduct = (productId) => {
 };
 
 const saveDataToLocal = () => {
-  localStorage.setItem("productInCart", JSON.stringify(data));
+  for (let i=0; i<user.length; i++) {
+    if (user[i].username == current.username) {
+      user[i].cart = data;
+    }
+  current.cart = data;
+  sessionStorage.setItem('current', JSON.stringify(current));
+  localStorage.setItem('user', JSON.stringify(user));
 };
+}
 
 setProducts("cart");
 
