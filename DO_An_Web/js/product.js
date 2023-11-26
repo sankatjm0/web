@@ -3,12 +3,12 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const searchId = urlParams.get('ID');
 
-window.onload = function () {
+
   products = JSON.parse(localStorage.getItem("product")) || [];
   productInCart = JSON.parse(localStorage.getItem("productInCart")) || [];
-}
+
 // size do
-window.addEventListener('load', function() {
+// window.addEventListener('load', function() {
   if (products.length > 1) {
 
     searchProduct();
@@ -22,7 +22,7 @@ window.addEventListener('load', function() {
       });
     });
   }
-});
+// });
 
 
 

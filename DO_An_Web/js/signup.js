@@ -24,8 +24,11 @@ function hasValue(input, message) {
 
 const signup = document.querySelector(".signup");
 var userArr = [];
-const NAME_REQUIRED = "Vui long nhap ten";
-const PASSWORD_REQUIRED = "Vui long nhap mat khau";
+const USERNAME_REQUIRED = "Vui lòng nhập tên đăng nhập";
+const PASSWORD_REQUIRED = "Vui lòng nhập mật khẩu";
+const ADDRESS_REQUIRED = "Vui lòng nhập địa chỉ";
+const PHONE_REQUIRED = "Vui lòng nhập số diện thoại";
+const NAME_REQUIRED = "Vui lòng nhập tên";
 userArr = JSON.parse(localStorage.getItem("user")) || [];
 
 signup.addEventListener("submit", function (event) {
@@ -44,16 +47,19 @@ signup.addEventListener("submit", function (event) {
       }
     }
   }
+  let addressValid = hasValue(signup.elements["address"], ADDRESS_REQUIRED);
+  let phoneValid = hasValue(signup.elements["phone"], PHONE_REQUIRED);
+  let nameValid = hasValue(signup.elements["name"], NAME_REQUIRED);
 
-  let nameValid = hasValue(signup.elements["username"], NAME_REQUIRED);
+  let usernameValid = hasValue(signup.elements["username"], USERNAME_REQUIRED);
   let passwordValid = hasValue(signup.elements["password"], PASSWORD_REQUIRED);
   // let emailValid = validateEmail(form.elements["email"], EMAIL_REQUIRED, EMAIL_INVALID);
   // if valid, submit the form.
 
-  if (nameValid && passwordValid) {
+  if (nameValid && passwordValid && addressValid && phoneValid && usernameValid) {
     checkUser();
 
-    alert("Dang ki thanh cong");
+    alert("Đăng kí thành công!");
     let username = signup.elements["username"].value;
     let password = signup.elements["password"].value;
     let address = signup.elements["address"].value;
@@ -68,7 +74,7 @@ signup.addEventListener("submit", function (event) {
       phone: phone,
     });
     localStorage.setItem("user", JSON.stringify(user));
-    sessionStorage.setItem("current", username);
+    sessionStorage.setItem("current", JSON.stringify(user));
     location.replace("./index-user.html?");
   }
 });

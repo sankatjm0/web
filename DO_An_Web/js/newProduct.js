@@ -1,4 +1,4 @@
-products = JSON.parse(localStorage.getItem("product")) || [];
+ products = JSON.parse(localStorage.getItem("product")) || [];
 // Số sản phẩm trên mỗi trang
 var itemsPerPage = 8;
 
@@ -83,23 +83,27 @@ function displayPagination() {
   }
 }
 
-function redirectToProductDetails() {
+redirectToProductDetails = function () {
   document.querySelectorAll('.pro').forEach(card => {
       card.addEventListener('click', function() {
           const productId = this.getAttribute('data-id');
-          console.log('Clicked product with ID:', productId);
-          console.log('Current URL:', window.location.href);
+          // console.log('Clicked product with ID:', productId);
+          // console.log('Current URL:', window.location.href);
           window.location.href = 'product.html?ID=' + encodeURIComponent(productId);
       });
   });
 }
 
+displayProducts(1);
+displayPagination();
+redirectToProductDetails();
 
-window.onload = function () {
-  // Mặc định hiển thị trang đầu tiên
-  displayProducts(1);
-  displayPagination();
-  redirectToProductDetails();
-}
+
+// window.onload = function () {
+//   // Mặc định hiển thị trang đầu tiên
+//   displayProducts(1);
+//   displayPagination();
+//   redirectToProductDetails();
+// }
 
 

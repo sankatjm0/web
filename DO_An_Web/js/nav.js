@@ -1,3 +1,5 @@
+const user = JSON.parse(localStorage.getItem("user")) || null;
+current = JSON.parse(sessionStorage.getItem("current")) || null;
 const createNav = () => {
   const navbar = document.querySelector(".navbar");
 
@@ -11,12 +13,13 @@ const createNav = () => {
           <a>
           <img src="img/user.png" id="user-img" alt="">
           <div class="login-logout-popup hide">
-          <p class="account-info">Xin chào, name</p>
+          <p class="account-info">hi</p>
+          <button onclick="show()" id="user-info"></button>
           <button class="btn" id="user-btn">Đăng xuất</button>
           </div>
           </a>
 
-      <a href="/cart.html"><img src="img/cart.png" alt=""></a>
+      <a href="cart.html"><img src="img/cart.png" alt=""></a>
       </div>
   </div>
 </div>
@@ -29,6 +32,21 @@ const createNav = () => {
   <li id="louisvuitton" class="link">Louis Vuitton</li>
  
 </ul>
+<div id="card" style="display="none";">
+<div class="backdrop"></div>
+<div class="card">
+<h1>Thông tin tài khoản</h1>
+<p class="title">@sankatjm0</p>
+<div class="thongtin">
+<p>Tên khách hàng: ${current.name}</p>
+<p>Số điện thoại: ${current.phone}</p>
+<p>Địa chỉ: ${current.address}</p>
+</div>
+<p><button class="b" onclick="cancel()" style="bottom: 10px;
+right: 10px;">Thoát</button></p>
+<p id="update"><button class="b" onclick="update()" style="bottom: 10px;
+right: 70px;">Cập nhật thông tin</button></p>
+</div></div>
     
     `;
 };
@@ -42,20 +60,25 @@ document.querySelector(".search-btn").addEventListener("click", function () {
 });
 
 // nav popup
+const userInfo = document.querySelector("#user-info");
 const userImageButton = document.querySelector("#user-img");
 const userPopup = document.querySelector(".login-logout-popup");
 const popuptext = document.querySelector(".account-info");
 const actionBtn = document.querySelector("#user-btn");
 
+  
 userImageButton.addEventListener("click", () => {
   userPopup.classList.toggle("hide");
 });
 
-window.onload = () => {
-  let user = sessionStorage.getItem("current") || null;
-  if (user != null) {
+// window.onload = () => {
+
+    if (current != null) {
     //means user is logged in
-    popuptext.innerHTML = `Xin chào, ${user}`;
+    popuptext.innerHTML = `Xin chào, ${current.name}`;
+    userInfo.innerHTML = `Xem thông tin
+    `
+    ;
     actionBtn.innerHTML = "Đăng xuất";
     actionBtn.addEventListener("click", () => {
       sessionStorage.clear();
@@ -69,4 +92,62 @@ window.onload = () => {
       location.replace("./signin.html");
     });
   }
-};
+// };
+
+// function myFunction() {
+//   var popup = document.getElementById("update-info");
+//   popup.classList.toggle("show");
+// }
+
+function addSDT() {
+  let updateBody = document.getElementById("sdt");
+  current.phone = prompt("Nhap so dien thoai", "");
+  for(let i=0; i<user.length; i++) {
+    if(user[i].username == current.username) {
+      user[i].phone = current.phone;
+      localStorage.setItem('user', JSON.stringify(user));
+      sessionStorage.setItem('current', JSON.stringify(current));
+      updateBody.innerText = `So dien thoai: ${current.phone}`;
+    }
+  }
+}
+
+function show() {
+  document.querySelector("#card").style.display = `block`;
+  document.querySelector(".card").style.display = `block`;
+  document.querySelector(".backdrop").style.display = `block`;
+
+}
+
+function cancel() {
+  document.querySelector("#card").style.display = `none`;
+  document.querySelector(".card").style.display = `none`;
+  document.querySelector(".backdrop").style.display = `none`;
+
+}
+
+function update() {
+  document.querySelector(".thongtin").innerHTML = `<p>Tên khách hàng: <input id="name"></p>
+  <p>Số điện thoại: <input id="phone"></p>
+  <p>Địa chỉ: <input id="address"></p>`;
+  document.querySelector("#update").innerHTML = `<button class="b" onclick="save()" style="bottom: 10px;
+  right: 70px;">Lưu</button>`
+}
+
+function save() {
+  for(let i=0; i<user.length; i++) {
+    if(user[i].username == current.username) {
+      user[i].name = document.querySelector("#name").value;
+      user[i].phone = document.querySelector("#phone").value;
+      user[i].address = document.querySelector("#address").value;
+      localStorage.setItem('user', JSON.stringify(user));
+      sessionStorage.setItem('current', JSON.stringify(user[i]));
+      current = JSON.parse(sessionStorage.getItem('current'));
+    }
+  }
+  document.querySelector(".thongtin").innerHTML = `<p>Tên khách hàng: ${current.name}</p>
+  <p>Số điện thoại: ${current.phone}</p>
+  <p>Địa chỉ: ${current.address}</p>`
+  document.querySelector("#update").innerHTML = `<button class="b" onclick="update()" style="bottom: 10px;
+  right: 70px;">Cập nhật thông tin</button>`
+}
