@@ -72,6 +72,8 @@ signup.addEventListener("submit", function (event) {
       address: address,
       name: name,
       phone: phone,
+      cart: [],
+      order: [],
     });
     localStorage.setItem("user", JSON.stringify(user));
     sessionStorage.setItem("current", JSON.stringify(user));

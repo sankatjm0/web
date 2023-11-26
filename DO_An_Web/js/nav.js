@@ -1,5 +1,4 @@
 const user = JSON.parse(localStorage.getItem("user")) || null;
-current = JSON.parse(sessionStorage.getItem("current")) || null;
 const createNav = () => {
   const navbar = document.querySelector(".navbar");
 
@@ -38,9 +37,9 @@ const createNav = () => {
 <h1>Thông tin tài khoản</h1>
 <p class="title">@sankatjm0</p>
 <div class="thongtin">
-<p>Tên khách hàng: ${current.name}</p>
-<p>Số điện thoại: ${current.phone}</p>
-<p>Địa chỉ: ${current.address}</p>
+<p>Tên khách hàng: </p>
+<p>Số điện thoại:</p>
+<p>Địa chỉ: </p>
 </div>
 <p><button class="b" onclick="cancel()" style="bottom: 10px;
 right: 10px;">Thoát</button></p>
@@ -70,8 +69,9 @@ const actionBtn = document.querySelector("#user-btn");
 userImageButton.addEventListener("click", () => {
   userPopup.classList.toggle("hide");
 });
+var current = JSON.parse(sessionStorage.getItem("current")) || null;
 
-// window.onload = () => {
+window.onload = () => {
 
     if (current != null) {
     //means user is logged in
@@ -79,6 +79,9 @@ userImageButton.addEventListener("click", () => {
     userInfo.innerHTML = `Xem thông tin
     `
     ;
+    document.querySelector(".thongtin").innerHTML = `<p>Tên khách hàng: ${current.name}</p>
+    <p>Số điện thoại: ${current.phone}</p>
+    <p>Địa chỉ: ${current.address}</p>`;
     actionBtn.innerHTML = "Đăng xuất";
     actionBtn.addEventListener("click", () => {
       sessionStorage.clear();
@@ -92,7 +95,7 @@ userImageButton.addEventListener("click", () => {
       location.replace("./signin.html");
     });
   }
-// };
+};
 
 // function myFunction() {
 //   var popup = document.getElementById("update-info");
@@ -150,4 +153,5 @@ function save() {
   <p>Địa chỉ: ${current.address}</p>`
   document.querySelector("#update").innerHTML = `<button class="b" onclick="update()" style="bottom: 10px;
   right: 70px;">Cập nhật thông tin</button>`
+  popuptext.innerHTML = `Xin chào, ${current.name}`;
 }
