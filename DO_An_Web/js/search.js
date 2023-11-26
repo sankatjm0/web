@@ -21,11 +21,10 @@ window.onload = function () {
 function redirectToProductDetails() {
     document.querySelectorAll('.product-card').forEach(card => {
         card.addEventListener('click', function(event) {
-            if (!event.target.matches('.card-btn')) {
                 const productId = this.getAttribute('data-id');
                 window.location.href = 'product.html?ID=' + encodeURIComponent(productId);
-            }
-        });
+
+            });
     });
 }
 
@@ -148,11 +147,6 @@ if(endIndex > list.length){
                     Newitem__img.src = item.img;
                     Newitem__img.alt=""
                     NewItem_product_image.prepend(Newitem__img);
-
-                    let New_button = document.createElement('button');
-                    New_button.className = "card-btn";
-                    New_button.innerHTML="add to whislist";
-                    NewItem_product_image.append(New_button);
 
                     let product_info = document.createElement('div');
                     product_info.className = "product-info";
