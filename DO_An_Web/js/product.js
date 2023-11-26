@@ -156,13 +156,14 @@ function decreaseQuantity(ID) {
   }
 }
 
-const cart = [];
+cart = [];
 
 function checklog() {
   if (current == null) {
     alert("Vui lòng đăng nhập để mua hàng.");
   } else cart = current.cart;
 }
+
 function addToCart(ID) {
   checklog();
   let checkProduct = cart.some(value => value.ID === ID);
