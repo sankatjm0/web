@@ -32,7 +32,7 @@ const createNav = () => {
   <li id="louisvuitton" class="link">Louis Vuitton</li>
  
 </ul>
-<div id="card">
+<div id="card" style="display="none";">
 <div class="backdrop"></div>
 <div class="card">
 <h1>Thông tin tài khoản</h1>
@@ -114,11 +114,16 @@ function addSDT() {
 
 function show() {
   document.querySelector("#card").style.display = `block`;
+  document.querySelector(".card").style.display = `block`;
+  document.querySelector(".backdrop").style.display = `block`;
 
 }
 
 function cancel() {
-  document.querySelector("#card").style.display = 'none';
+  document.querySelector("#card").style.display = `none`;
+  document.querySelector(".card").style.display = `none`;
+  document.querySelector(".backdrop").style.display = `none`;
+
 }
 
 function update() {
