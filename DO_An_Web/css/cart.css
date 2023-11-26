@@ -30,7 +30,7 @@ whishlist {
 
 .sm-product {
   width: 100%;
-  height: 100px;
+  height: 50%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -45,8 +45,8 @@ whishlist {
 }
 
 .sm-product-img {
-  height: 100px;
-  width: 100px;
+  height: 90px;
+  width: 80px;
   object-fit: cover;
   border-radius: 5px;
 }
