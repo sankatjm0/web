@@ -1,4 +1,6 @@
-let data = JSON.parse(localStorage.getItem("productInCart")) || [];
+let User = JSON.parse(localStorage.getItem("user")) || [];
+
+
 let donhang = document.getElementById("donhang")
 let content = document.getElementById("content");
 
@@ -29,23 +31,28 @@ donhang.addEventListener('click', function() {
     </div>`
 
     let thongtin = document.querySelector('.thongtin');
-
-    data.forEach(donhang => {
-        thongtin.innerHTML +=`
-        <div class="thongtinsanpham">
-            <div class="sanpham">${donhang.name}</div>
-            <div class="dongia">${donhang.price}</div>
-            <div class="soluong">${donhang.quantity}</div>
-            <div class="thoigian">${donhang.time}</div>
-            <div class="trangthai">
-                <select name="trangthai" id="trangthai-select">
-                <option value="0" selected>chưa xử lý</option>
-                <option value="1">đã xử lý</option>
-                </select>
-
+    User.forEach( user =>{
+        let data = user.cart;
+        if(data!=null)
+        data.forEach(donhang => {
+            thongtin.innerHTML +=`
+            <div class="thongtinsanpham">
+                <div class="sanpham">${donhang.name}</div>
+                <div class="dongia">${donhang.price}</div>
+                <div class="soluong">${donhang.quantity}</div>
+                <div class="thoigian">${donhang.time}</div>
+                <div class="trangthai">
+                    <select name="trangthai" id="trangthai-select">
+                    <option value="0" selected>chưa xử lý</option>
+                    <option value="1">đã xử lý</option>
+                    </select>
+    
+                </div>
             </div>
-        </div>
-        `
+            `
+        });
+
     });
+
 });
 

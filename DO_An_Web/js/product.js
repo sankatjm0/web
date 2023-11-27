@@ -198,7 +198,9 @@ function addToCart(ID) {
   current.cart = cart;
   sessionStorage.setItem('current', JSON.stringify(current));
   localStorage.setItem('user', JSON.stringify(user));
-}
+  }
+  localStorage.setItem('productInCart', JSON.stringify(productInCart));
+
 }
 
 //function deleteProductInCart (index) {

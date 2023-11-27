@@ -1,3 +1,4 @@
+
 const createSmallCards = (data) => {
   return `
     <div class="sm-product">
