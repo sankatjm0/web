@@ -1,4 +1,3 @@
-
 const createSmallCards = (data) => {
   return `
     <div class="sm-product">
@@ -14,43 +13,39 @@ const createSmallCards = (data) => {
         <p class="size">Size: ${data.size}</p>
       </div>
       <div class="item-counter">
-      <button onclick="decrease(${data.ID})" class="counter-btn decrement" data-id="${data.ID}">-</button>  
-      <p class="item-count" id="quantity-${data.ID}">${data.quantity}</p>
-      <button onclick="increase(${data.ID})" class="counter-btn increment" data-id="${data.ID}">+</button>
+        <button onclick="decreaseQuantity(${data.ID}, '${data.size}')" class="counter-btn decrement" data-id="${data.ID}">-</button>  
+        <p class="item-count" id="quantity-${data.ID}-${data.size}">${data.quantity}</p>
+        <button onclick="increaseQuantity(${data.ID}, '${data.size}')" class="counter-btn increment" data-id="${data.ID}">+</button>
       </div>
       <div class="item-status">
-      <p class="status">Trạng Thái: ${data.status}</p>
+        <p class="status">Trạng Thái: ${data.status}</p>
       </div>
-      
-      <button onclick="removeProduct(${data.ID})" class="sm-delete-btn" data-id="${data.ID}">
+      <button onclick="removeProduct(${data.ID}, '${data.size}')" class="sm-delete-btn" data-id="${data.ID}">
         <img src="img/close.png" alt="Delete">
       </button>
     </div>`;
 };
 
 let totalBill = 0;
-var data = [];
+let cartData = [];
 const setProducts = (name) => {
   if (current != null) {
-    data = current.cart;
+    cartData = current.cart;
   }
   const element = document.querySelector(`.${name}`);
-
-  // Xóa các phần tử con hiện có trong phần tử cha
   element.innerHTML = "";
 
-  if (data.length === 0) {
+  if (cartData.length === 0) {
     element.innerHTML = `<img src="img/empty-cart.png" class="empty-img" alt="">`;
   } else {
-    for (let i = 0; i < data.length; i++) {
-      element.innerHTML += createSmallCards(data[i]);
+    for (let i = 0; i < cartData.length; i++) {
+      element.innerHTML += createSmallCards(cartData[i]);
       if (name === "cart") {
-        totalBill += Number(data[i].price * data[i].quantity);
+        totalBill += Number(cartData[i].price * cartData[i].quantity);
       }
     }
     updateBill();
   }
-  //setupEvents(name); // Bỏ chú thích dòng này vì không thấy định nghĩa hàm setupEvents()
 };
 
 const updateBill = () => {
@@ -58,51 +53,50 @@ const updateBill = () => {
   billElement.textContent = `$${totalBill.toFixed(0)}`;
 };
 
-const increase = (productId) => {
-  const productIndex = data.findIndex((item) => item.ID === productId);
+const increaseQuantity = (ID, size) => {
+  const productIndex = cartData.findIndex((item) => item.ID === ID && item.size === size);
   if (productIndex !== -1) {
-    const product = data[productIndex];
+    const product = cartData[productIndex];
     product.quantity += 1;
     totalBill += Number(product.price);
-    document.getElementById(`quantity-${productId}`).textContent =
-      product.quantity;
+    document.getElementById(`quantity-${ID}-${size}`).textContent = product.quantity;
     updateBill();
     saveDataToLocal();
   }
 };
 
-const decrease = (productId) => {
-  const productIndex = data.findIndex((item) => item.ID === productId);
+const decreaseQuantity = (ID, size) => {
+  const productIndex = cartData.findIndex((item) => item.ID === ID && item.size === size);
   if (productIndex !== -1) {
-    const product = data[productIndex];
+    const product = cartData[productIndex];
     if (product.quantity > 1) {
       product.quantity -= 1;
       totalBill -= Number(product.price);
-      document.getElementById(`quantity-${productId}`).textContent =
-        product.quantity;
+      document.getElementById(`quantity-${ID}-${size}`).textContent = product.quantity;
       updateBill();
       saveDataToLocal();
     }
   }
 };
 
-const removeProduct = (productId) => {
-  const productIndex = data.findIndex((item) => item.ID === productId);
+const removeProduct = (ID, size) => {
+  const productIndex = cartData.findIndex((item) => item.ID === ID && item.size === size);
   if (productIndex !== -1) {
-    const product = data[productIndex];
+    const product = cartData[productIndex];
     totalBill -= Number(product.price * product.quantity);
-    data.splice(productIndex, 1);
+    cartData.splice(productIndex, 1);
     updateBill();
     saveDataToLocal();
     setProducts("cart");
   }
 };
+
 const saveDataToLocal = () => {
   for (let i = 0; i < user.length; i++) {
     if (user[i].username == current.username) {
-      user[i].cart = data;
+      user[i].cart = cartData;
     }
-    current.cart = data;
+    current.cart = cartData;
     sessionStorage.setItem("current", JSON.stringify(current));
     localStorage.setItem("user", JSON.stringify(user));
   }
