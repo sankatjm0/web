@@ -13,38 +13,43 @@ document
     document.getElementById("content").innerHTML = `
     <div style="margin:10px">
     <h2 style="font-size: 38px; text-align: center;">Quản lý sản phẩm<br></h2>
-    <form id="productForm">
-    <div style="display:"flex">
-        <label id="sp" for="brand">Nhãn hàng</label>
-        <select style="border:1px solid black;padding:5px;border-radius:5px; font-size:5px" id="brand" required>
+  <form id="productForm" class="card">
+    <div>
+
+<br>
+    <div style="font-size:20px">
+    <label for="prod-img" style="display: block; margin-bottom: 5px; top: 5px;">Ảnh
+        <input id="prod-img" name="prod-img" value="" type="file" accept="image/*" onchange="updateFileName()" style="display: none;" />
+    </label>
+    <div id="add-img">
+        <img id="preview" src="" style="width: 100%">
+        <input id="settle" type="submit" value="" />
+    </div>
+</div>
+
+
+       <h1><label id="sp" for="brand">Brand</label>
+        <select id="brand" style="border:1px solid black; border-radius:5px; font-size:22px" required>
           <option value="nike">Nike</option>
           <option value="lv">Louis Vuitton</option>
           <option value="gucci">Gucci</option>
           <option value="chanel">Chanel</option>
           <option value="adidas">Adidas</option>
         </select>
+        </h1>
       
-      <label for="name">Tên sản phẩm:</label>
-      <input type="text" id="name" required>
+    <p>
+        <input type="text" id="name" placeholder="Tên" required></h1>
 
-      <label for="price">Giá:</label>
-      <input type="number" id="price" required>
-      </div>
-      <div>
-  <label style="font-size:20px" for="prod-img">Chọn ảnh sản phẩm</label><br>
-  <input id="prod-img" name="prod-img" value="" type="file" accept="image/*" onchange="updateFileName()" /><br>
-  <div id="add-img">
-    <img id="preview" src="" width="20%">
-    <input id="settle" type="submit" value="" />
-  </div>
-  <small id="file-name"></small>
-</div>
+        <p>
+        <input type="number" class="price" id="price"placeholder="Giá" required ></p>
+    </div>
+   
 
-      <button style="background-color: #4CAF50; color: white; padding: 10px 20px;
-       font-size: 16px; border: none; border-radius: 4px; cursor: pointer;" type="submit">
+    <button type="submit">
         Thêm sản phẩm
-      </button>
-    </form>
+    </button>
+  </form>
 
     <br><br>
 
@@ -75,9 +80,11 @@ document
       const price = document.getElementById("price").value;
       const brand = document.getElementById("brand").value;
       const pic = document.getElementById("prod-img");
-      const reader = new FileReader();
 
-      pic.addEventListener("change", function () {
+      // Kiểm tra xem đã chọn hình ảnh hay chưa
+      if (pic.files.length > 0) {
+        const reader = new FileReader();
+
         reader.addEventListener("load", function () {
           products.push({
             img: reader.result,
@@ -85,20 +92,20 @@ document
             name: name,
             price: price,
           });
+
+          localStorage.setItem("product", JSON.stringify(products));
+          displayProducts();
+
+          // Đặt giá trị các trường dữ liệu về rỗng
+          document.getElementById("name").value = "";
+          document.getElementById("price").value = "";
+          document.getElementById("brand").value = "";
+          document.getElementById("prod-img").value = "";
+          document.getElementById("preview").src = "";
         });
 
-        reader.readAsDataURL(this.files[0]);
-      });
-
-      localStorage.setItem("product", JSON.stringify(products));
-
-      displayProducts();
-
-      document.getElementById("name").value = "";
-      document.getElementById("price").value = "";
-      document.getElementById("brand").value = "";
-      document.getElementById("prod-img").value = "";
-      document.getElementById("preview").src = "";
+        reader.readAsDataURL(pic.files[0]);
+      }
     });
 
     displayProducts();
@@ -169,16 +176,6 @@ function editProduct(index) {
       document.getElementById("prod-img").value = "";
       document.getElementById("preview").src = "";
     });
-}
-function updateFileName() {
-  const fileInput = document.getElementById('prod-img');
-  const fileNameContainer = document.getElementById('file-name');
-
-  if (fileInput.files.length > 0) {
-    fileNameContainer.textContent = fileInput.files[0].name;
-  } else {
-    fileNameContainer.textContent = '';
-  }
 }
 
 // Hàm khởi chạy khi trang được tải
