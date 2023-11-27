@@ -172,7 +172,9 @@ function addToCart(ID) {
       let product = products.find(value => value.ID === ID);
       cart.push({
           ...product,
-          quantity: 1,
+          quantity: 1,        
+          time: getCurrentTime(),
+          status: "Chưa xử lí",
           size: selectedSize
       });
   } else {
@@ -180,10 +182,13 @@ function addToCart(ID) {
       let getIndex = cart.findIndex(value => value.ID === ID);
       cart[getIndex] = {
           ...product,
-          quantity: ++product.quantity,
+          quantity: ++product.quantity,       
+          time: getCurrentTime(),
+          status: "Chưa xử lí",
           size: selectedSize
       };
   }
+
 
   // Lưu mảng productInCart vào localStorage sau khi thêm sản phẩm
   for (let i=0; i<user.length; i++) {

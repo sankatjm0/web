@@ -2,9 +2,6 @@ const createSmallCards = (data) => {
   return `
     <div class="sm-product">
       <div class="sm-img-container">
-      <button  class="sm-delete-btn" data-id="${data.ID}" onclick="removeProduct(${data.ID})">
-      <img src="img/close.png" alt="Delete">
-   </button>
         <img src="${data.img}" class="sm-product-img" alt="${data.name}">
       </div>
       <div class="sm-details">
@@ -12,6 +9,7 @@ const createSmallCards = (data) => {
           <p class="sm-product-name">${data.name}</p>
         </div>
         <p class="price">$${data.price}</p>
+        <p class="time">Time: ${data.time}</p>
         <p class="size">Size: ${data.size}</p>
       </div>
       <div class="item-counter">
@@ -19,8 +17,13 @@ const createSmallCards = (data) => {
       <p class="item-count" id="quantity-${data.ID}">${data.quantity}</p>
       <button onclick="increase(${data.ID})" class="counter-btn increment" data-id="${data.ID}">+</button>
       </div>
-     
+      <div class="item-status">
+      <p class="status">Trạng Thái: ${data.status}</p>
+      </div>
       
+      <button onclick="removeProduct(${data.ID})" class="sm-delete-btn" data-id="${data.ID}">
+        <img src="img/close.png" alt="Delete">
+      </button>
     </div>`;
 };
 

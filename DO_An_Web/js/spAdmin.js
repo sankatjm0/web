@@ -2,8 +2,8 @@
 const products = JSON.parse(localStorage.getItem("product")) || [];
 
 // Lấy tham chiếu đến các phần tử trên trang
-var productForm;
-var productTable;
+let productForm;
+let productTable;
 
 // Gắn sự kiện click cho nút "Quản lý sản phẩm"
 document
@@ -179,8 +179,9 @@ function editProduct(index) {
 }
 
 // Hàm khởi chạy khi trang được tải
-function init() {
-  displayProducts();
-}
 
-init();
+// function init() {
+//   displayProducts();
+// }
+
+// init();
