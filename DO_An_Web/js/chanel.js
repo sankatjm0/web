@@ -5,16 +5,13 @@ document.getElementById("chanel").addEventListener("click", function () {
 
 queryStrings = window.location.search;
 urlParamss = new URLSearchParams(queryStrings);
-searchIds = urlParamss.get('nav');
+searchIds = urlParamss.get("nav");
 
-if(searchIds==='chanel'){
+if (searchIds === "chanel") {
   chanel();
 }
 
-
-
-function chanel(){
-  
+function chanel() {
   document.getElementById("content").innerHTML = ` <section id="header">
   <section id="product1" class="section-p1">
       <h2 id="h2-brand">Chanel</h2>
@@ -58,7 +55,7 @@ function chanel(){
       // Tạo phần tử sản phẩm và các phần tử con
       var productElement = document.createElement("div");
       productElement.className = "pro";
-      productElement.setAttribute('data-id', product.ID);
+      productElement.setAttribute("data-id", product.ID);
 
       var imgElement = document.createElement("img");
       imgElement.src = product.img;
@@ -80,13 +77,6 @@ function chanel(){
       desElement.appendChild(priceElement);
 
       productElement.appendChild(desElement);
-
-      var cartLink = document.createElement("a");
-      cartLink.href = ""; // Đặt đường dẫn tới trang mua hàng tại đây
-      var cartIcon = document.createElement("i");
-      cartIcon.className = "fal fa-shopping-cart cart";
-      cartLink.appendChild(cartIcon);
-      productElement.appendChild(cartLink);
 
       container.appendChild(productElement);
     }
@@ -113,13 +103,14 @@ function chanel(){
   }
 
   function redirectToProductDetails() {
-    document.querySelectorAll('.pro').forEach(card => {
-        card.addEventListener('click', function() {
-            const productId = this.getAttribute('data-id');
-            console.log('Clicked product with ID:', productId);
-            console.log('Current URL:', window.location.href);
-            window.location.href = 'product.html?ID=' + encodeURIComponent(productId);
-        });
+    document.querySelectorAll(".pro").forEach((card) => {
+      card.addEventListener("click", function () {
+        const productId = this.getAttribute("data-id");
+        console.log("Clicked product with ID:", productId);
+        console.log("Current URL:", window.location.href);
+        window.location.href =
+          "product.html?ID=" + encodeURIComponent(productId);
+      });
     });
   }
 
