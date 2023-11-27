@@ -1,5 +1,6 @@
 {
     "cSpell.enableFiletypes": [
         "!css"
-    ]
+    ],
+    "livePreview.defaultPreviewPath": "/DO_An_Web/index-admin.html"
 }

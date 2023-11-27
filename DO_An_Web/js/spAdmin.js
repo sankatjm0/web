@@ -183,4 +183,11 @@ function init() {
   displayProducts();
 }
 
+function guest() {
+  sessionStorage.clear();
+  location.replace("index-user.html");
+}
+
 init();
+
+
