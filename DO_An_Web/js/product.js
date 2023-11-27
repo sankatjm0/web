@@ -166,30 +166,30 @@ function checklog() {
 
 function addToCart(ID) {
   checklog();
-  let checkProduct = cart.some(value => value.ID === ID);
   const selectedSize = document.querySelector('.size-radio-btn.check').innerText;
+
+  let checkProduct = cart.some(value => value.ID === ID && value.size === selectedSize);
+
   if (!checkProduct) {
-      let product = products.find(value => value.ID === ID);
-      cart.push({
-          ...product,
-          quantity: 1,        
-          time: getCurrentTime(),
-          status: "Chưa xử lí",
-          size: selectedSize
-      });
+    let product = products.find(value => value.ID === ID);
+    cart.push({
+      ...product,
+      quantity: 1,
+      time: getCurrentTime(),
+      status: "Chưa xử lí",
+      size: selectedSize
+    });
   } else {
-      let product = cart.find(value => value.ID === ID);
-      let getIndex = cart.findIndex(value => value.ID === ID);
-      cart[getIndex] = {
-          ...product,
-          quantity: ++product.quantity,       
-          time: getCurrentTime(),
-          status: "Chưa xử lí",
-          size: selectedSize
-      };
+    let product = cart.find(value => value.ID === ID && value.size === selectedSize);
+    let getIndex = cart.findIndex(value => value.ID === ID && value.size === selectedSize);
+    cart[getIndex] = {
+      ...product,
+      quantity: ++product.quantity,
+      time: getCurrentTime(),
+      status: "Chưa xử lí",
+      size: selectedSize
+    };
   }
-
-
   // Lưu mảng productInCart vào localStorage sau khi thêm sản phẩm
   for (let i=0; i<user.length; i++) {
     if (user[i].username == current.username) {
@@ -198,9 +198,7 @@ function addToCart(ID) {
   current.cart = cart;
   sessionStorage.setItem('current', JSON.stringify(current));
   localStorage.setItem('user', JSON.stringify(user));
-  }
-  localStorage.setItem('productInCart', JSON.stringify(productInCart));
-
+}
 }
 
 //function deleteProductInCart (index) {
