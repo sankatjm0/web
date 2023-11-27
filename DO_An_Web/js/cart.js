@@ -1,7 +1,4 @@
-data = [];
-if (current != null) {
-  data = current.cart;
-}
+
 const createSmallCards = (data) => {
   return `
     <div class="sm-product">
@@ -32,6 +29,10 @@ const createSmallCards = (data) => {
 let totalBill = 0;
 
 const setProducts = (name) => {
+  var data = [];
+  if (current != null) {
+    data = current.cart;
+  }
   const element = document.querySelector(`.${name}`);
     
   // Xóa các phần tử con hiện có trong phần tử cha
