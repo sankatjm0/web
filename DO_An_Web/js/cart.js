@@ -1,11 +1,10 @@
-
 const createSmallCards = (data) => {
   return `
     <div class="sm-product">
       <div class="sm-img-container">
-        <button  class="sm-delete-btn" data-id="${data.ID}">
-           <img src="img/close.png" alt="Delete">
-        </button>
+      <button  class="sm-delete-btn" data-id="${data.ID}" onclick="removeProduct(${data.ID})">
+      <img src="img/close.png" alt="Delete">
+   </button>
         <img src="${data.img}" class="sm-product-img" alt="${data.name}">
       </div>
       <div class="sm-details">
@@ -25,18 +24,16 @@ const createSmallCards = (data) => {
     </div>`;
 };
 
-
 let totalBill = 0;
-
+var data = [];
 const setProducts = (name) => {
-  var data = [];
   if (current != null) {
     data = current.cart;
   }
   const element = document.querySelector(`.${name}`);
-    
+
   // Xóa các phần tử con hiện có trong phần tử cha
-  element.innerHTML = '';
+  element.innerHTML = "";
 
   if (data.length === 0) {
     element.innerHTML = `<img src="img/empty-cart.png" class="empty-img" alt="">`;
@@ -58,24 +55,30 @@ const updateBill = () => {
 };
 
 const increase = (productId) => {
-  const product = data.find((item) => item.ID === productId);
-  if (product) {
+  const productIndex = data.findIndex((item) => item.ID === productId);
+  if (productIndex !== -1) {
+    const product = data[productIndex];
     product.quantity += 1;
     totalBill += Number(product.price);
-    document.getElementById(`quantity-${productId}`).textContent = product.quantity;
+    document.getElementById(`quantity-${productId}`).textContent =
+      product.quantity;
     updateBill();
     saveDataToLocal();
   }
 };
 
 const decrease = (productId) => {
-  const product = data.find((item) => item.ID === productId);
-  if (product && product.quantity > 1) {
-    product.quantity -= 1;
-    totalBill -= Number(product.price);
-    document.getElementById(`quantity-${productId}`).textContent = product.quantity;
-    updateBill();
-    saveDataToLocal();
+  const productIndex = data.findIndex((item) => item.ID === productId);
+  if (productIndex !== -1) {
+    const product = data[productIndex];
+    if (product.quantity > 1) {
+      product.quantity -= 1;
+      totalBill -= Number(product.price);
+      document.getElementById(`quantity-${productId}`).textContent =
+        product.quantity;
+      updateBill();
+      saveDataToLocal();
+    }
   }
 };
 
@@ -87,39 +90,38 @@ const removeProduct = (productId) => {
     data.splice(productIndex, 1);
     updateBill();
     saveDataToLocal();
-    setProducts("cart"); // Cập nhật lại danh sách sản phẩm trong giỏ hàng sau khi xóa
+    setProducts("cart");
   }
 };
-
 const saveDataToLocal = () => {
-  for (let i=0; i<user.length; i++) {
+  for (let i = 0; i < user.length; i++) {
     if (user[i].username == current.username) {
       user[i].cart = data;
     }
-  current.cart = data;
-  sessionStorage.setItem('current', JSON.stringify(current));
-  localStorage.setItem('user', JSON.stringify(user));
+    current.cart = data;
+    sessionStorage.setItem("current", JSON.stringify(current));
+    localStorage.setItem("user", JSON.stringify(user));
+  }
 };
-}
 
 setProducts("cart");
 
-document.getElementById("nike").addEventListener("click", function() {
+document.getElementById("nike").addEventListener("click", function () {
   window.location.href = "index-user.html?nav=nike";
 });
 
-document.getElementById("adidas").addEventListener("click", function() {
+document.getElementById("adidas").addEventListener("click", function () {
   window.location.href = "index-user.html?nav=adidas";
 });
 
-document.getElementById("gucci").addEventListener("click", function() {
+document.getElementById("gucci").addEventListener("click", function () {
   window.location.href = "index-user.html?nav=gucci";
 });
 
-document.getElementById("chanel").addEventListener("click", function() {
+document.getElementById("chanel").addEventListener("click", function () {
   window.location.href = "index-user.html?nav=chanel";
 });
 
-document.getElementById("louisvuitton").addEventListener("click", function() {
+document.getElementById("louisvuitton").addEventListener("click", function () {
   window.location.href = "index-user.html?nav=louisvuitton";
 });
