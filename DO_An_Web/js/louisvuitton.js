@@ -4,14 +4,13 @@ document.getElementById("louisvuitton").addEventListener("click", function () {
 });
 queryStrings = window.location.search;
 urlParamss = new URLSearchParams(queryStrings);
-searchIds = urlParamss.get('nav');
+searchIds = urlParamss.get("nav");
 
-if(searchIds==='louisvuitton'){
+if (searchIds === "louisvuitton") {
   louisvuitton();
 }
 
-function louisvuitton(){
-  
+function louisvuitton() {
   document.getElementById("content").innerHTML = ` <section id="header">
   <section id="product1" class="section-p1">
       <h2 id="h2-brand">Louis Vuitton</h2>
@@ -55,7 +54,7 @@ function louisvuitton(){
       // Tạo phần tử sản phẩm và các phần tử con
       var productElement = document.createElement("div");
       productElement.className = "pro";
-      productElement.setAttribute('data-id', product.ID);
+      productElement.setAttribute("data-id", product.ID);
 
       var imgElement = document.createElement("img");
       imgElement.src = product.img;
@@ -80,10 +79,6 @@ function louisvuitton(){
 
       var cartLink = document.createElement("a");
       cartLink.href = ""; // Đặt đường dẫn tới trang mua hàng tại đây
-      var cartIcon = document.createElement("i");
-      cartIcon.className = "fal fa-shopping-cart cart";
-      cartLink.appendChild(cartIcon);
-      productElement.appendChild(cartLink);
 
       container.appendChild(productElement);
     }
@@ -110,15 +105,16 @@ function louisvuitton(){
   }
 
   function redirectToProductDetails() {
-    document.querySelectorAll('.pro').forEach(card => {
-        card.addEventListener('click', function() {
-            const productId = this.getAttribute('data-id');
-            console.log('Clicked product with ID:', productId);
-            console.log('Current URL:', window.location.href);
-            window.location.href = 'product.html?ID=' + encodeURIComponent(productId);
-        });
+    document.querySelectorAll(".pro").forEach((card) => {
+      card.addEventListener("click", function () {
+        const productId = this.getAttribute("data-id");
+        console.log("Clicked product with ID:", productId);
+        console.log("Current URL:", window.location.href);
+        window.location.href =
+          "product.html?ID=" + encodeURIComponent(productId);
+      });
     });
-  }  
+  }
 
   // Mặc định hiển thị trang đầu tiên
   displayProducts(1);

@@ -2,8 +2,8 @@
 const products = JSON.parse(localStorage.getItem("product")) || [];
 
 // Lấy tham chiếu đến các phần tử trên trang
-var productForm;
-var productTable;
+let productForm;
+let productTable;
 
 // Gắn sự kiện click cho nút "Quản lý sản phẩm"
 document
@@ -183,11 +183,4 @@ function init() {
   displayProducts();
 }
 
-function guest() {
-  sessionStorage.clear();
-  location.replace("index-user.html");
-}
-
 init();
-
-
