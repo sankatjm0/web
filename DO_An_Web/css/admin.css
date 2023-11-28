@@ -308,3 +308,21 @@ transform: translateX(50px);
 .switch-toggle label input:checked + span {
   background: linear-gradient(to right, #9C27B0, #E91E63);
 }
+#trangthai{
+  font-size: 17px;
+}
+/* Định dạng nút lọc */
+.btn-locsanpham {
+  padding: 10px 20px; /* Điều chỉnh kích thước nút */
+  font-size: 16px; /* Điều chỉnh kích thước chữ */
+  background-color: #111; /* Màu nền của nút */
+  color: white; /* Màu chữ của nút */
+  border: none; /* Loại bỏ đường viền */
+  cursor: pointer; /* Biến đổi con trỏ thành bàn tay khi di chuột qua nút */
+}
+
+/* Hiệu ứng độ sâu khi nhấp vào nút */
+.btn-locsanpham:active {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(2px);
+}
