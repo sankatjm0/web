@@ -44,6 +44,7 @@ function checklog() {
             name: name.value,
             phone: phone.value,
             products: current.cart,
+            status: 1,
             time: getCurrentTime(),
           }
         );
