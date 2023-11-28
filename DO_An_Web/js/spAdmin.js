@@ -22,7 +22,9 @@ document
         <input id="prod-img" name="prod-img" value="" type="file" accept="image/*" onchange="updateFileName()" style="display: none;" />
         <img id="preview" src=""style="width:100%" >
     </label>
+    <div><img id="preview" style="width:300px;" src=""></div>
     </div>
+    
 </div>
 
 
@@ -50,7 +52,7 @@ document
 
     <br><br>
 
-    <table style="width: 100%; border: 1px solid black; text-align: center" id="productTable">
+    <table style=" width: 100%; border: 1px solid black; text-align: center" id="productTable">
       <tr style="border: 1px solid black">
         <th>Số Lượng</th>
         <th>Hãng</th>

@@ -127,8 +127,8 @@ function addProduct(item) {
       cart.push({
         ...product,
         quantity: 1,
-        // time: getCurrentTime(),
-        // status: "Chưa xử lí",
+        time: getCurrentTime(),
+        status: "Chưa xử lý",
         size: selectedSize
       });
       alert("Sản phẩm đã được thêm vào giỏ hàng.");
@@ -139,8 +139,8 @@ function addProduct(item) {
       cart[getIndex] = {
         ...product,
         quantity: ++product.quantity,
-        // time: getCurrentTime(),
-        // status: "Chưa xử lí",
+        time: getCurrentTime(),
+        status: "Chưa xử lý",
         size: selectedSize
       };
       alert("Sản phẩm đã được thêm vào giỏ hàng.");
@@ -157,10 +157,10 @@ function addProduct(item) {
     localStorage.setItem('user', JSON.stringify(user));
   }
 
-  // function getCurrentTime() {
-  //   const currentTime = new Date();
-  //   return currentTime.toLocaleString();
-  // }
+  function getCurrentTime() {
+    const currentTime = new Date();
+    return currentTime.toLocaleString();
+  }
 
   document.getElementById("nike").addEventListener("click", function () {
     window.location.href = "index-user.html?nav=nike";

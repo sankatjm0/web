@@ -6,6 +6,8 @@
 }
 
 #content {
+  overflow: auto;
+max-height: 100vh;
   position: absolute;
   width: 80%;
   height: 100vh;
