@@ -150,6 +150,23 @@ whishlist {
   text-transform: capitalize;
   text-decoration: none;
 }
+#check{
+
+  display: block;
+  width: 100%;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  height: 40px;
+  border-radius: 5px;
+  background: #383838;
+  color: #fff;
+  text-align: center;
+  line-height: 40px;
+  text-transform: capitalize;
+  text-decoration: none;
+
+}
 
 .bill {
   font-size: 40px;

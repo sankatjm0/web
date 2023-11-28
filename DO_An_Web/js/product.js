@@ -131,6 +131,8 @@ function addProduct(item) {
         // status: "Chưa xử lí",
         size: selectedSize
       });
+      alert("Sản phẩm đã được thêm vào giỏ hàng.");
+      
     } else {
       let product = cart.find(value => value.ID === ID && value.size === selectedSize);
       let getIndex = cart.findIndex(value => value.ID === ID && value.size === selectedSize);
@@ -141,6 +143,7 @@ function addProduct(item) {
         // status: "Chưa xử lí",
         size: selectedSize
       };
+      alert("Sản phẩm đã được thêm vào giỏ hàng.");
     }
 
     // Lưu mảng cart vào localStorage sau khi thêm sản phẩm

@@ -21,6 +21,28 @@ const createSmallCards = (data) => {
       </button>
     </div>`;
 };
+const createSmallOrder = (data) => {
+  return `
+  
+    <div class="sm-product">
+      <div class="sm-img-container">
+        <img src="${data.img}" class="sm-product-img" alt="${data.name}">
+      </div>
+      <div class="sm-details">
+        <div class="sm-text">
+          <p class="sm-product-name">${data.name}</p>
+        </div>
+        <p class="price">$${data.price}</p>
+        <p class="size">Size: ${data.size}</p>
+      </div>
+      <div class="item-counter">
+        <p class="item-count" id="quantity-${data.ID}-${data.size}">${data.quantity}</p>     
+         </div>
+        
+    </div>
+  
+    `;
+};
 
 let totalBill = 0;
 let cartData = [];
@@ -44,31 +66,58 @@ const setProducts = (name) => {
   }
 };
 
+let iD = JSON.parse(localStorage.getItem("ID"));
+var orderArr = JSON.parse(localStorage.getItem("order")) || [];
+const setOrder = (name) => {
+  const element = document.querySelector(`.${name}`);
+  element.innerHTML = "";
+
+  if (orderArr.length < 0) {
+    element.innerHTML = `<img src="img/empty-cart.png" class="empty-img" alt="">`;
+  } else {
+    for (let i = 0; i < orderArr.length; i++) {
+      if (orderArr[i].username === iD && orderArr[i].cost !== ""&&orderArr[i].products.length!==0) {
+        for (let j = 0; j < orderArr[i].products.length; j++) {
+          element.innerHTML += createSmallOrder(orderArr[i].products[j]);
+        }
+        element.innerHTML += `<h3>
+        Thành tiền :${orderArr[i].cost}</h3><br>`;
+      }
+    }
+  }
+};
+
 const updateBill = () => {
   const billElement = document.querySelector(".bill");
   billElement.textContent = `${totalBill.toFixed(0)}VND`;
 };
 
 const increaseQuantity = (ID, size) => {
-  const productIndex = cartData.findIndex((item) => item.ID === ID && item.size === size);
+  const productIndex = cartData.findIndex(
+    (item) => item.ID === ID && item.size === size
+  );
   if (productIndex !== -1) {
     const product = cartData[productIndex];
     product.quantity += 1;
     totalBill += Number(product.price);
-    document.getElementById(`quantity-${ID}-${size}`).textContent = product.quantity;
+    document.getElementById(`quantity-${ID}-${size}`).textContent =
+      product.quantity;
     updateBill();
     saveDataToLocal();
   }
 };
 
 const decreaseQuantity = (ID, size) => {
-  const productIndex = cartData.findIndex((item) => item.ID === ID && item.size === size);
+  const productIndex = cartData.findIndex(
+    (item) => item.ID === ID && item.size === size
+  );
   if (productIndex !== -1) {
     const product = cartData[productIndex];
     if (product.quantity > 1) {
       product.quantity -= 1;
       totalBill -= Number(product.price);
-      document.getElementById(`quantity-${ID}-${size}`).textContent = product.quantity;
+      document.getElementById(`quantity-${ID}-${size}`).textContent =
+        product.quantity;
       updateBill();
       saveDataToLocal();
     }
@@ -76,7 +125,9 @@ const decreaseQuantity = (ID, size) => {
 };
 
 const removeProduct = (ID, size) => {
-  const productIndex = cartData.findIndex((item) => item.ID === ID && item.size === size);
+  const productIndex = cartData.findIndex(
+    (item) => item.ID === ID && item.size === size
+  );
   if (productIndex !== -1) {
     const product = cartData[productIndex];
     totalBill -= Number(product.price * product.quantity);
@@ -99,6 +150,7 @@ const saveDataToLocal = () => {
 };
 
 setProducts("cart");
+setOrder("order");
 
 document.getElementById("nike").addEventListener("click", function () {
   window.location.href = "index-user.html?nav=nike";

@@ -20,6 +20,7 @@ document
     <div style="font-size:20px">
     <label for="prod-img" style="display: block; margin-bottom: 5px; top: 5px;">Chọn ảnh</br>
         <input id="prod-img" name="prod-img" value="" type="file" accept="image/*" onchange="updateFileName()" style="display: none;" />
+        <img id="preview" src=""style="width:100%" >
     </label>
     </div>
 </div>
@@ -40,12 +41,11 @@ document
 
         <p>
         <input type="number" class="price" id="price"placeholder="Giá" required ></p>
+        <p><button id="submit">Thêm sản phẩm </button></p>
     </div>
    
 
-    <button type="submit">
-        Thêm sản phẩm
-    </button>
+   
   </form>
 
     <br><br>
@@ -73,41 +73,32 @@ document
     productForm.addEventListener("submit", function (e) {
       e.preventDefault();
 
-      const name = document.getElementById("name").value;
-      const price = document.getElementById("price").value;
-      const brand = document.getElementById("brand").value;
-      const pic = document.getElementById("prod-img");
+      const product = {}; // Create a new product object
 
-      // Kiểm tra xem đã chọn hình ảnh hay chưa
-      if (pic.files.length > 0) {
-        const reader = new FileReader();
+      // Cập nhật thông tin sản phẩm
+      product.brand = document.getElementById("brand").value;
+      product.name = document.getElementById("name").value;
+      product.price = document.getElementById("price").value;
+      product.img = document.getElementById("prod-img").src;
 
-        reader.addEventListener("load", function () {
-          products.push({
-            img: reader.result,
-            brand: brand,
-            name: name,
-            price: price,
-          });
+      products.push(product); // Add the new product to the products array
 
-          localStorage.setItem("product", JSON.stringify(products));
-          displayProducts();
+      // Lưu danh sách sản phẩm vào localStorage
+      localStorage.setItem("product", JSON.stringify(products));
 
-          // Đặt giá trị các trường dữ liệu về rỗng
-          document.getElementById("name").value = "";
-          document.getElementById("price").value = "";
-          document.getElementById("brand").value = "";
-          document.getElementById("prod-img").value = "";
-          document.getElementById("preview").src = "";
-        });
+      // Hiển thị lại bảng sản phẩm
+      displayProducts();
 
-        reader.readAsDataURL(pic.files[0]);
-      }
+      // Đặt giá trị các trường dữ liệu về rỗng
+      document.getElementById("brand").value = "";
+      document.getElementById("name").value = "";
+      document.getElementById("price").value = "";
+      document.getElementById("prod-img").value = "";
+      document.getElementById("preview").src = "";
     });
 
     displayProducts();
   });
-
 // Hàm hiển thị bảng sản phẩm
 function displayProducts() {
   productTable.innerHTML = `
@@ -140,49 +131,34 @@ function displayProducts() {
 }
 
 // Hàm xóa sản phẩm
-function deleteProduct(index) {
+function deleteProduct1(index) {
   products.splice(index, 1);
   localStorage.setItem("product", JSON.stringify(products));
   displayProducts();
 }
+// Hàm xóa sản phẩm
+function deleteProduct(index) {
+  // Hiển thị thông báo xác nhận
+  const confirmation = confirm("Bạn có muốn xóa sản phẩm?");
+  
+  if (confirmation) {
+    products.splice(index, 1);
+    localStorage.setItem("product", JSON.stringify(products));
+    displayProducts();
+  }
+}
 
 // Hàm sửa sản phẩm
+
 function editProduct(index) {
   const product = products[index];
   document.getElementById("brand").value = product.brand;
   document.getElementById("name").value = product.name;
   document.getElementById("price").value = product.price;
-  document.getElementById("preview").src = product.img;
-
-  document
-    .getElementById("productForm")
-    .addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      product.brand = document.getElementById("brand").value;
-      product.name = document.getElementById("name").value;
-      product.price = document.getElementById("price").value;
-      product.img = document.getElementById("preview").src;
-
-      localStorage.setItem("product", JSON.stringify(products));
-      displayProducts();
-
-      document.getElementById("brand").value = "";
-      document.getElementById("name").value = "";
-      document.getElementById("price").value = "";
-      document.getElementById("prod-img").value = "";
-      document.getElementById("preview").src = "";
-    });
+  document.getElementById("prod-img").src = product.img;
+  deleteProduct1(index);
 }
 
 // Hàm khởi chạy khi trang được tải
-function init() {
-  displayProducts();
-}
 
-init();
-
-function guest() {
-  sessionStorage.clear();
-  location.replace('index-user.html');
-}
+displayProducts();

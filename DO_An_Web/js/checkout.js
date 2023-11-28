@@ -26,7 +26,7 @@ function checklog() {
   var address = document.getElementById("address");
   var name = document.getElementById("name");
   var phone = document.getElementById("phone");
-  var cost = document.querySelector(".bill").value;
+  var cost = document.querySelector(".bill").textContent;
   
   
   document
@@ -58,6 +58,7 @@ function checklog() {
         acc.order = orders;
         localStorage.setItem('user', JSON.stringify(user));
         sessionStorage.setItem('current', JSON.stringify(current));
+        location.reload();
       } else {
         alert("Vui lòng điền đủ thông tin!");
       }
