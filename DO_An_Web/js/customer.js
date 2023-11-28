@@ -29,9 +29,31 @@ document
         right: 10px;">Thoát</button></p>
         <p id="update"><button class="b" onclick="update()" style="bottom: 10px;
         right: 70px;">Cập nhật thông tin</button></p>
+        <p><button class="b" onclick="del()" style="bottom: 10px;
+        right: 200px;">Xóa</button></p>
         </div></div>`;
          displayCustomer();
     })
+
+    function del(i) {
+      let ans = confirm(`Xóa tài khoản ${user[i].username}?`)
+      if (ans) {
+        alert("Đã xóa tài khoản.");
+        user.splice(i,1);
+        document.querySelector("#list-user").innerHTML = `
+        <tr style="border: 1px solid black">
+        <th>Mã KH</th>
+        <th>Tài khoản</th>
+        <th>Tên khách hàng</th>
+        <th>Hóa đơn</th>
+        <th>Thông tin</th>
+        </tr>`;
+        displayCustomer();
+    document.querySelector("#card").style.display = `none`;
+    document.querySelector(".card2").style.display = `none`;
+      }
+      localStorage.setItem('user', JSON.stringify(user))
+    }
 
 function displayCustomer() {
     for (let i = 1; i < user.length; i++) {
@@ -42,12 +64,83 @@ function displayCustomer() {
           <td>${i}</td>
           <td>${kh.username}</td>
           <td>${kh.name}</td>
-          <td id="order" onclick="order(${i})">Kiểm tra</td>
+          <td id="order" onclick="checkorder(${i})">Kiểm tra</td>
           <td id="xem" onclick="show(${i})">Xem</td>
           `;
     
         document.querySelector("#list-user").appendChild(row);
       }
+}
+
+function statusDisplay(num) {
+  let status = "";
+  switch(num) {
+    case 1: status = "Chưa xác nhận"
+    break;
+    case 2: status = "Đã xác nhận"
+    break;
+    case 3: status = "Đang giao hàng"
+    break;
+    case 4: status = "Hoàn thành"
+    break;
+    case 5: status = "Đã hủy"
+  }
+  return status;
+}
+
+function checkorder(i) {
+  document.querySelector("#card").innerHTML = `
+    <div class="orders">
+    <h1>Lịch sử đơn hàng</h1>
+    <p class="title">Số lượng: ${(user[i].order).length} đơn</p>
+    <div id="orders">
+    <table style="width: 100%; border: 1px solid black; overflow-y: scroll; text-align: center" id="order-table">
+      <tr style="border: 1px solid black">
+        <th>Mã hóa đơn</th>
+        <th>SLSP</th>
+        <th>Tổng tiền</th>
+        <th>Thời gian</th>
+        <th>Trạng thái</th>
+      </tr>
+    </table>
+      </div>
+    <p><button class="b" onclick="cancelP(${i})" style="bottom: 10px;
+        right: 10px;">Thoát</button></p>
+  `;
+
+  if ((user[i].order).length > 0) {
+    for (let x = 0; x < (user[i].order).length; x++) {
+      const hd = (user[i].order)[x];
+  
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>HD${hd.index}</td>
+        <td>${(hd.products).length}</td>
+        <td>${hd.cost}</td>
+        <td>${hd.time}</td>
+        <td id="change-stt" onclick="changeStatus(${i},${x})" title="Sửa trạng thái">${statusDisplay(hd.status)}</td>
+      `;
+  
+      document.querySelector("#order-table").appendChild(row);
+    }
+  } else {document.querySelector("#orders").innerHTML = `<h1 style="margin-top:20%;color: gray;">Chưa có đơn hàng nào</h1>`}
+  document.querySelector("#card").style.display = `block`;
+  document.querySelector(".orders").style.display = `block`;
+}
+
+function cancelP() {
+  document.querySelector("#card").style.display = `none`;
+  document.querySelector(".orders").style.display = `none`;
+}
+
+function changeStatus(i, x) {
+  let stt = prompt("Chọn trạng thái từ 1-4:", (user[i].order)[x].status);
+  (user[i].order)[x].status = parseInt(stt);
+  localStorage.setItem('user', JSON.stringify(user));
+  let ec = order.find(value => value.index == (user[i].order)[x].index)
+  ec.status = parseInt(stt);
+  localStorage.setItem('order', JSON.stringify(order));
+  checkorder(i);
 }
 
 function show(i) {
@@ -65,6 +158,8 @@ function show(i) {
         right: 10px;">Thoát</button></p>
         <p id="update"><button class="b" onclick="update(${i})" style="bottom: 10px;
         right: 70px;">Cập nhật thông tin</button></p>
+        <p><button class="b" onclick="del(${i})" style="bottom: 10px;
+        right: 215px;">Xóa</button></p>
         `
     document.querySelector("#card").style.display = `block`;
     document.querySelector(".card2").style.display = `block`;
@@ -185,7 +280,18 @@ function show(i) {
         <p><button class="b" onclick="cancel(${i})" style="bottom: 10px;
         right: 10px;">Thoát</button></p>
         <p id="update"><button class="b" onclick="update(${i})" style="bottom: 10px;
-        right: 70px;">Cập nhật thông tin</button></p>`
+        right: 70px;">Cập nhật thông tin</button></p>
+        <p><button class="b" onclick="del()" style="bottom: 10px;
+        right: 215px;">Xóa</button></p>`
+        document.querySelector("#list-user").innerHTML = `
+        <tr style="border: 1px solid black">
+        <th>Mã KH</th>
+        <th>Tài khoản</th>
+        <th>Tên khách hàng</th>
+        <th>Hóa đơn</th>
+        <th>Thông tin</th>
+        </tr>`;
+        displayCustomer();
     }
     }
   }

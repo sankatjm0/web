@@ -79,6 +79,8 @@ createProduct();
     if (current != null) {
     //means user is logged in
     popuptext.innerHTML = `Xin chào, ${current.name}`;
+    userInfo.style = "font-size: 18px; padding: 2px 5px; border-style: none;  margin-top: 5px; background-color: #b3b3b3;"
+    
     userInfo.innerHTML = `Xem thông tin
     `
     ;
@@ -134,15 +136,15 @@ function update() {
   document.querySelector(".thongtin").innerHTML = `
   <div>
   <p>Tên khách hàng: </p><input type="text" id="name">
-  <small></small>
+  </br><small></small>
   </div>
   <div>
   <p>Số điện thoại: </p><input type="text" id="phone">
-  <small></small>
+  </br><small></small>
   </div>
   <div>
   <p>Địa chỉ: </p><input type="text" id="address">
-  <small></small>
+  </br><small></small>
   </div>`;
   document.querySelector("#update").innerHTML = `<button class="b" onclick="save()" style="bottom: 10px;
   right: 70px;">Lưu</button>`

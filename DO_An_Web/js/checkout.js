@@ -12,8 +12,8 @@ function checklog() {
     orders = current.order || [];
 
     document.querySelector("#add-checkout").innerHTML = `<div class="form">
-  <h1 class="heading">Checkout</h1>
-  <p class="text">delivert address</p>
+  <h1 class="heading">Đặt hàng</h1>
+  <p class="text">Thông tin nhận hàng</p>
   <input type="text" id="name" placeholder="Tên người nhận hàng">
   <input type="text" id="address" placeholder="Địa chỉ"> 
   <input type="text" id="phone" placeholder="Số điện thoại">
@@ -26,7 +26,6 @@ function checklog() {
   var address = document.getElementById("address");
   var name = document.getElementById("name");
   var phone = document.getElementById("phone");
-  var cost = document.querySelector(".bill").value;
   
   
   document
@@ -34,11 +33,14 @@ function checklog() {
     .addEventListener("click", function () {
   
       if (validateForm()) {
+        var cost = document.querySelector(".bill");
+
         alert("Đặt hàng thành công!");
         let acc = user.find(acc => acc.username == current.username)
         order.push(
           {
-            cost: cost,
+            index: order.length,
+            cost: cost.textContent,
             username: current.username,
             address: address.value,
             name: name.value,
@@ -50,12 +52,18 @@ function checklog() {
         );
         localStorage.setItem('order', JSON.stringify(order));
         current.cart = [];
-        let bill = order.find(item => item.username == current.username);
-        orders.push(bill);
+        var bills = []
+        for(let a=0; a<order.length; a++) {
+          if(order[a].username == current.username) {
+            bills.push(order[a]);
+          }
+        }
         document.querySelector("#add-checkout").innerHTML = ``;
+        document.querySelector(".bill").innerHTML = ``;
         document.querySelector(`.cart`).innerHTML = `<img src="img/empty-cart.png" class="empty-img" alt="">`;
         acc.cart = [];
-        acc.order = orders;
+        current.order = bills;
+        acc.order = bills;
         localStorage.setItem('user', JSON.stringify(user));
         sessionStorage.setItem('current', JSON.stringify(current));
       } else {
@@ -82,5 +90,5 @@ document.querySelector(".checkout-btn").addEventListener("click", function () {
 
 function getCurrentTime() {
   const currentTime = new Date();
-  return currentTime.toLocaleString("vi-VN", {day: 'numeric', month:'long', year: 'numeric'});
+  return currentTime.toLocaleString("vi-VN", {hour:'2-digit', minute:'2-digit', second: '2-digit', day: 'numeric', month:'long', year: 'numeric'});
 }
