@@ -18,12 +18,9 @@ document
 
 <br>
     <div style="font-size:20px">
-    <label for="prod-img" style="display: block; margin-bottom: 5px; top: 5px;">Ảnh
+    <label for="prod-img" style="display: block; margin-bottom: 5px; top: 5px;">Chọn ảnh</br>
         <input id="prod-img" name="prod-img" value="" type="file" accept="image/*" onchange="updateFileName()" style="display: none;" />
     </label>
-    <div id="add-img">
-        <img id="preview" src="" style="width: 100%">
-        <input id="settle" type="submit" value="" />
     </div>
 </div>
 
@@ -184,3 +181,8 @@ function init() {
 }
 
 init();
+
+function guest() {
+  sessionStorage.clear();
+  location.replace('index-user.html');
+}

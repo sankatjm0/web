@@ -1,4 +1,5 @@
 const user = JSON.parse(localStorage.getItem('user')) || [];
+const order = JSON.parse(localStorage.getItem('order')) || [];
 
 document
     .querySelector("#customer")
@@ -58,6 +59,7 @@ function show(i) {
         <p>Tên khách hàng: ${user[i].name}</p>
         <p>Số điện thoại: ${user[i].phone}</p>
         <p>Địa chỉ: ${user[i].address}</p>
+        <p>Ngày đăng kí: ${user[i].time}</p>
         </div>
         <p><button class="b" onclick="cancel(${i})" style="bottom: 10px;
         right: 10px;">Thoát</button></p>
@@ -75,7 +77,9 @@ function show(i) {
     document.querySelector(".thongtin2").innerHTML = `
     <p>Tên khách hàng: ${user[i].name}</p>
     <p>Số điện thoại: ${user[i].phone}</p>
-    <p>Địa chỉ: ${user[i].address}</p>`;
+    <p>Địa chỉ: ${user[i].address}</p>
+    <p>Ngày đăng kí: ${user[i].time}</p>
+    `;
     document.querySelector("#update").innerHTML = `<button class="b" onclick="update(${i})" style="bottom: 10px;
     right: 70px;">Cập nhật thông tin</button>`
     document.querySelector("#card").style.display = `none`;
@@ -152,12 +156,23 @@ function show(i) {
         if(user.find(user => user.username == document.querySelector("#username").value)){
             showError(document.querySelector("#username"), CHECK);
     }   else {
+      let prevName = user[i].username;
         user[i].name = document.querySelector("#name").value;
         user[i].phone = document.querySelector("#phone").value;
         user[i].address = document.querySelector("#address").value;
         user[i].username = document.querySelector("#username").value;
         user[i].password = document.querySelector("#password").value;
+        let hi = user[i].order;
+        for (let y=0; y<hi.length; y++) {
+         hi[y].username = document.querySelector("#username").value;}
+        for(let x = 0; x<order.length; x++) {
+          if (order[x].username == prevName) {
+            order[x].username = document.querySelector("#username").value;
+          }
+        }
         localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('order', JSON.stringify(order));
+
         document.querySelector(".card2").innerHTML = `
         <h1>Thông tin tài khoản</h1>
         <p class="title">@${user[i].username}</p>
@@ -165,6 +180,7 @@ function show(i) {
         <p>Tên khách hàng: ${user[i].name}</p>
         <p>Số điện thoại: ${user[i].phone}</p>
         <p>Địa chỉ: ${user[i].address}</p>
+        <p>Ngày đăng kí: ${user[i].time}</p>
         </div>
         <p><button class="b" onclick="cancel(${i})" style="bottom: 10px;
         right: 10px;">Thoát</button></p>
@@ -174,3 +190,6 @@ function show(i) {
     }
   }
   
+
+
+

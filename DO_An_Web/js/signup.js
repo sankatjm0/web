@@ -60,6 +60,7 @@ signup.addEventListener("submit", function (event) {
     checkUser();
 
     alert("Đăng kí thành công!");
+    
     let username = signup.elements["username"].value;
     let password = signup.elements["password"].value;
     let address = signup.elements["address"].value;
@@ -72,6 +73,7 @@ signup.addEventListener("submit", function (event) {
       address: address,
       name: name,
       phone: phone,
+      time: getCurrentTime(),
       cart: [],
       order: [],
     });
@@ -80,3 +82,8 @@ signup.addEventListener("submit", function (event) {
     location.replace("./index-user.html?");
   }
 });
+
+function getCurrentTime() {
+  const currentTime = new Date();
+  return currentTime.toLocaleString("vi-VN", {day: 'numeric', month:'long', year: 'numeric'});
+}

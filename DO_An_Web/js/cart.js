@@ -50,7 +50,7 @@ const setProducts = (name) => {
 
 const updateBill = () => {
   const billElement = document.querySelector(".bill");
-  billElement.textContent = `$${totalBill.toFixed(0)}`;
+  billElement.textContent = `${totalBill.toFixed(0)}VND`;
 };
 
 const increaseQuantity = (ID, size) => {
