@@ -9,16 +9,12 @@ const createSmallCards = (data) => {
           <p class="sm-product-name">${data.name}</p>
         </div>
         <p class="price">$${data.price}</p>
-        <p class="time">Time: ${data.time}</p>
         <p class="size">Size: ${data.size}</p>
       </div>
       <div class="item-counter">
         <button onclick="decreaseQuantity(${data.ID}, '${data.size}')" class="counter-btn decrement" data-id="${data.ID}">-</button>  
         <p class="item-count" id="quantity-${data.ID}-${data.size}">${data.quantity}</p>
         <button onclick="increaseQuantity(${data.ID}, '${data.size}')" class="counter-btn increment" data-id="${data.ID}">+</button>
-      </div>
-      <div class="item-status">
-        <p class="status">Trạng Thái: ${data.status}</p>
       </div>
       <button onclick="removeProduct(${data.ID}, '${data.size}')" class="sm-delete-btn" data-id="${data.ID}">
         <img src="img/close.png" alt="Delete">
