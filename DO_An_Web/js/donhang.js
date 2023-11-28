@@ -12,7 +12,7 @@ donhang.addEventListener('click', function () {
             <div class="boloc">bộ lọc</div>
         </div>
         <div class="timsanpham">
-            <input type="text" placeholder="Tên sản phẩm">
+            <input id = "tensanpham" type="text" placeholder="Tên sản phẩm">
             <div>
                 <label for="thoiGian">Thời gian:</label>
                 <input type="date" id="thoigian">
@@ -24,13 +24,13 @@ donhang.addEventListener('click', function () {
             </select>
             <div>
                 <label for="giaMin">Giá từ:</label>
-                <input type="number" id="giaMin" placeholder="min" min="0" onchange="capNhatGiaMax()">
+                <input type="number" id="giaMin" placeholder="min" min="0"">
             </div>
             <div>
                 <label for="giaMax">đến:</label>
                 <input type="number" id="giaMax" placeholder="max" min="0">
             </div>
-            <button onclick="locSanPham()" class="btn-locsanpham">Lọc</button>
+            <button class="btn-locsanpham">Lọc</button>
         </div>
         </div>
 
@@ -48,11 +48,78 @@ donhang.addEventListener('click', function () {
         </div>`;
 
     let thongtin = document.querySelector('.thongtin');
+    thongtin.innerHTML=``;
     User.forEach(user => {
         let data = user.cart;
         if (data != null)
             data.forEach(donhang => {
-                thongtin.innerHTML += `
+                xuatsanpham(thongtin,donhang);
+            });
+    });
+    let tensanpham = document.getElementById('tensanpham');
+    let thoigian = document.getElementById('thoigian');
+    let trangthai = document.getElementById('trangthai');
+    let giaMin = document.getElementById('giaMin');
+    let giaMax = document.getElementById('giaMax');
+    let loc = document.querySelector(".btn-locsanpham");
+
+    loc.addEventListener('click', function() {
+        locsanpham(thongtin, tensanpham, thoigian, trangthai, giaMin, giaMax);
+    });
+});
+
+function locsanpham(thongtin,tensanpham,thoigian,trangthai,giaMin,giaMax){
+    sanphamdaloc = [];
+
+    User.forEach(user => {
+        let data = user.cart;
+        if (data != null)
+            data.forEach(donhang => {
+                if(locdonhang(donhang,tensanpham,thoigian,trangthai,giaMin,giaMax)){
+                    sanphamdaloc.push(donhang);
+                }
+                
+            });
+    });
+
+    if(sanphamdaloc!= null){
+        thongtin.innerHTML=``;
+        sanphamdaloc.forEach(donhang => {
+            xuatsanpham(thongtin,donhang);
+        });
+    }
+
+}
+
+function locdonhang(donhang,tensanpham,thoigian,trangthai,giaMin,giaMax){
+    if(tensanpham.value!=""){
+        if(!donhang.name.toLowerCase().includes(tensanpham.value.toLowerCase())){
+            return false;
+        }
+    }
+    
+    if(thoigian.value!=""){
+        let date1 = new Date(thoigian.value);
+        let date2 = new Date(donhang.time);
+        if (date1.getDate() !== date2.getDate() ||date1.getMonth() !== date2.getMonth() ||date1.getFullYear() !== date2.getFullYear()) {
+            return false;
+        }
+    }
+    if(trangthai.value!=""){
+        if((trangthai.value.toLowerCase().localeCompare(donhang.status.toLowerCase()))!==0){
+            return false;
+        }
+    }
+    if(giaMin.value!="" && giaMax.value!="" ){
+        if(!(giaMin.value<= donhang.price&& donhang.price<= giaMax.value))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+function xuatsanpham(thongtin,donhang){
+    thongtin.innerHTML += `
             <div class="thongtinsanpham">
                 <img src="${donhang.img}" class="sm-product-img" alt="${donhang.name}">
                 <div class="sanpham">${donhang.name}</div>
@@ -68,10 +135,7 @@ donhang.addEventListener('click', function () {
                     </label>
                 </div>
             </div>`;
-            });
-    });
-});
-
+}
 function updateOrderStatus(username, ID, size) {
     User.forEach((user, userIndex) => {
         if (user.username === username && user.cart) {
