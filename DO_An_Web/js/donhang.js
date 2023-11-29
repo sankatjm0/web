@@ -66,6 +66,7 @@ donhang.addEventListener('click', function () {
     loc.addEventListener('click', function() {
         locsanpham(thongtin, tensanpham, thoigian, trangthai, giaMin, giaMax);
     });
+    
 });
 
 function locsanpham(thongtin,tensanpham,thoigian,trangthai,giaMin,giaMax){
@@ -123,7 +124,7 @@ function xuatsanpham(thongtin,donhang,user){
                 <div class="trangthai">${donhang.status}</div>
                 <div class="switch-toggle">
                     <label>
-                        <input type="checkbox" onclick="updateOrderStatus('${user.name}', ${donhang.ID},'${donhang.size}')">
+                        <input class="button-trangthai"type="checkbox" onclick="updateOrderStatus('${user.name}', ${donhang.ID},'${donhang.size}')">
                         <span></span>
                     </label>
                 </div>
