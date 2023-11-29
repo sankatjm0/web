@@ -12,16 +12,16 @@ const createFooter = () => {
         <p class="info">Số điện thoại - 0878955654</p>
         <div class="footer-social-container">
             <div>
-                <a href="#" class="social-link">terms & services</a>
+                <a href="https://www.facebook.com/sankatimo" class="social-link">terms & services</a>
                 <a href="#" class="social-link">privacy page</a>
             </div>
             <div>
                 <a href="#" class="social-link">instagram</a>
                 <a href="https://www.facebook.com/profile.php?id=100063895685315" class="social-link">facebook</a>
-                <a href="#" class="social-link">twitter</cl>
+                <a href="#" class="social-link">twitter</a>
             </div>
         </div>
-        <p class="footer-credit">Mua sắm theo cách của </p>
+        <p class="footer-credit">Mua sắm theo cách của bạn</p>
   
   `;
 };

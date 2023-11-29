@@ -31,7 +31,7 @@ function redirectToProductDetails() {
 let find = {};
 function Findname(){
     search.value=searchValue;
-
+    document.querySelector("#ten-prod").innerHTML = `${searchValue}`
     foundItems = [];
     if(products !== undefined)
     products.forEach(item => {

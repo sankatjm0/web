@@ -134,13 +134,19 @@ function cancelP() {
 }
 
 function changeStatus(i, x) {
-  let stt = prompt("Chọn trạng thái từ 1-4:", (user[i].order)[x].status);
-  (user[i].order)[x].status = parseInt(stt);
-  localStorage.setItem('user', JSON.stringify(user));
-  let ec = order.find(value => value.index == (user[i].order)[x].index)
-  ec.status = parseInt(stt);
-  localStorage.setItem('order', JSON.stringify(order));
-  checkorder(i);
+  let stt = prompt("Chọn trạng thái:\n1. Chưa xác nhận\n2. Đã xác nhận\n3. Đang giao hàng\n4. Hoàn thành\n5. Đã hủy", (user[i].order)[x].status);
+  if (parseInt(stt) != 1 && parseInt(stt) != 2 && parseInt(stt) != 3 && parseInt(stt) != 4 && parseInt(stt) != 5) {
+    alert("Vui lòng nhập số trạng thái hợp lệ.");
+  changeStatus(i, x)
+}
+   else {
+    (user[i].order)[x].status = parseInt(stt);
+    localStorage.setItem('user', JSON.stringify(user));
+    let ec = order.find(value => value.index == (user[i].order)[x].index)
+    ec.status = parseInt(stt);
+    localStorage.setItem('order', JSON.stringify(order));
+    checkorder(i);
+  }
 }
 
 function show(i) {
@@ -208,7 +214,7 @@ function show(i) {
     </div>
     </div>`;
     document.querySelector("#update").innerHTML = `<button class="b" onclick="save(${i})" style="bottom: 10px;
-    right: 70px;">Lưu</button>`
+    right: 70px; width: 138.6px">Lưu</button>`
     
   }
   

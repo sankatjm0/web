@@ -47,7 +47,6 @@ signin.addEventListener("submit", function (event) {
     for (let i = 0; i < userArr.length; i++) {
       if (userArr[i].username === signin.elements["username"].value) {
         var iD = userArr[i].username;
-        localStorage.setItem("ID", JSON.stringify(iD));
         count++;
         checkPass(i);
       }
@@ -55,3 +54,4 @@ signin.addEventListener("submit", function (event) {
     if (count == 0) alert("Tài khoản không tồn tại.");
   }
 });
+

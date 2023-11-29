@@ -25,12 +25,8 @@ function checklog() {
   `;
   var address = document.getElementById("address");
   var name = document.getElementById("name");
-  var phone = document.getElementById("phone");
-<<<<<<< HEAD
+  var phone = document.getElementById("phone");  
   var cost = document.querySelector(".bill").textContent;
-=======
->>>>>>> c335c9730c83863d89ec9b6d64b17edf59fb4003
-  
   
   document
     .querySelector(".place-order-btn")

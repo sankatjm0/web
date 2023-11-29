@@ -14,7 +14,6 @@ function louisvuitton() {
   document.getElementById("content").innerHTML = ` <section id="header">
   <section id="product1" class="section-p1">
       <h2 id="h2-brand">Louis Vuitton</h2>
-      <p>Bộ sưu tập mùa hè Thiết kế hiện đại mới</p>
       <div class="pro-container" id="product-container"></div>
       <div id="pagination"></div>
   </section>

@@ -215,3 +215,12 @@ small {
 .thongtin > p {
   margin-top: 10px;
 }
+
+.pro {
+  transition: transform .2s;
+}
+
+
+.pro:hover {
+  transform: scale(1.1);
+}
