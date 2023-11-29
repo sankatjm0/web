@@ -53,7 +53,7 @@ donhang.addEventListener('click', function () {
         let data = user.cart;
         if (data != null)
             data.forEach(donhang => {
-                xuatsanpham(thongtin,donhang);
+                xuatsanpham(thongtin,donhang,user);
             });
     });
     let tensanpham = document.getElementById('tensanpham');
@@ -66,28 +66,22 @@ donhang.addEventListener('click', function () {
     loc.addEventListener('click', function() {
         locsanpham(thongtin, tensanpham, thoigian, trangthai, giaMin, giaMax);
     });
+    
 });
 
 function locsanpham(thongtin,tensanpham,thoigian,trangthai,giaMin,giaMax){
-    sanphamdaloc = [];
 
+    thongtin.innerHTML=``;
     User.forEach(user => {
         let data = user.cart;
         if (data != null)
             data.forEach(donhang => {
                 if(locdonhang(donhang,tensanpham,thoigian,trangthai,giaMin,giaMax)){
-                    sanphamdaloc.push(donhang);
+                    xuatsanpham(thongtin,donhang,user);
                 }
                 
             });
     });
-
-    if(sanphamdaloc!= null){
-        thongtin.innerHTML=``;
-        sanphamdaloc.forEach(donhang => {
-            xuatsanpham(thongtin,donhang);
-        });
-    }
 
 }
 
@@ -118,7 +112,7 @@ function locdonhang(donhang,tensanpham,thoigian,trangthai,giaMin,giaMax){
     }
     return true;
 }
-function xuatsanpham(thongtin,donhang){
+function xuatsanpham(thongtin,donhang,user){
     thongtin.innerHTML += `
             <div class="thongtinsanpham">
                 <img src="${donhang.img}" class="sm-product-img" alt="${donhang.name}">
@@ -130,7 +124,7 @@ function xuatsanpham(thongtin,donhang){
                 <div class="trangthai">${donhang.status}</div>
                 <div class="switch-toggle">
                     <label>
-                        <input type="checkbox" onclick="updateOrderStatus('${user.username}', ${donhang.ID},'${donhang.size}')">
+                        <input class="button-trangthai"type="checkbox" onclick="updateOrderStatus('${user.name}', ${donhang.ID},'${donhang.size}')">
                         <span></span>
                     </label>
                 </div>
@@ -140,9 +134,10 @@ function updateOrderStatus(username, ID, size) {
     User.forEach((user, userIndex) => {
         if (user.username === username && user.cart) {
             user.cart.forEach((donhang, orderIndex) => {
-                if (donhang.ID === ID && donhang.size === size && donhang.status === "Chưa xử lí") {
+                if (donhang.ID === ID && donhang.size === size && donhang.status === "Chưa xử lý") {
                     // Update order status to "đã xử lí"
-                    User[userIndex].cart[orderIndex].status = "Đã xử lí";
+                    console.log("Đã xử lý");
+                    User[userIndex].cart[orderIndex].status = "Đã xử lý";
                 }
             });
         }
