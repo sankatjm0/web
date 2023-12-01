@@ -20,7 +20,7 @@
 }
 
 .cart,
-whishlist {
+.order-history {
   width: 100%;
   padding: 20px;
   border-radius: 5px;
@@ -130,8 +130,8 @@ whishlist {
 }
 
 .text {
-  text-transform: capitalize;
   font-size: 18px;
+  text-align: center;
 }
 
 .checkout-btn,
@@ -149,11 +149,13 @@ whishlist {
   line-height: 40px;
   text-transform: capitalize;
   text-decoration: none;
+  margin-bottom: 0;
 }
 #check{
 
   display: block;
   width: 100%;
+  margin-bottom: 0;
   border: none;
   outline: none;
   cursor: pointer;

@@ -49,11 +49,11 @@ let cartData = [];
 const setProducts = (name) => {
   if (current != null) {
     cartData = current.cart;
-  }
+  
   const element = document.querySelector(`.${name}`);
   element.innerHTML = "";
 
-  if (cartData.length === 0) {
+  if (cartData.length === 0 || current == null) {
     element.innerHTML = `<img src="img/empty-cart.png" class="empty-img" alt="">`;
   } else {
     for (let i = 0; i < cartData.length; i++) {
@@ -64,15 +64,17 @@ const setProducts = (name) => {
     }
     updateBill();
   }
+} else {document.querySelector(`.${name}`).innerHTML = `<img src="img/empty-cart.png" class="empty-img" alt="">`;}
 };
+ 
 
-let iD = JSON.parse(localStorage.getItem("ID"));
 var orderArr = JSON.parse(localStorage.getItem("order")) || [];
 const setOrder = (name) => {
+  if (current != null ) {const iD = current.username;
   const element = document.querySelector(`.${name}`);
   element.innerHTML = "";
 
-  if (orderArr.length < 0) {
+  if (current.order == 0 ) {
     element.innerHTML = `<img src="img/empty-cart.png" class="empty-img" alt="">`;
   } else {
     for (let i = 0; i < orderArr.length; i++) {
@@ -81,10 +83,12 @@ const setOrder = (name) => {
           element.innerHTML += createSmallOrder(orderArr[i].products[j]);
         }
         element.innerHTML += `<h3>
-        Thành tiền :${orderArr[i].cost}</h3><br>`;
+        Thành tiền: ${orderArr[i].cost}</h3><br>`;
       }
     }
   }
+} else {document.querySelector(`.${name}`).innerHTML = `<img src="img/empty-cart.png" class="empty-img" alt="">`;}
+
 };
 
 const updateBill = () => {
@@ -150,7 +154,7 @@ const saveDataToLocal = () => {
 };
 
 setProducts("cart");
-setOrder("order");
+setOrder("order-history");
 
 document.getElementById("nike").addEventListener("click", function () {
   window.location.href = "index-user.html?nav=nike";
