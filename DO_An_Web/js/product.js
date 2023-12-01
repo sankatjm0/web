@@ -128,7 +128,6 @@ function addProduct(item) {
         ...product,
         quantity: 1,
         time: getCurrentTime(),
-        status: "Chưa xử lý",
         size: selectedSize
       });
       alert("Sản phẩm đã được thêm vào giỏ hàng.");
@@ -140,7 +139,6 @@ function addProduct(item) {
         ...product,
         quantity: ++product.quantity,
         time: getCurrentTime(),
-        status: "Chưa xử lý",
         size: selectedSize
       };
       alert("Sản phẩm đã được thêm vào giỏ hàng.");
