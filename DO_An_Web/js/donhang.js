@@ -4,86 +4,132 @@ document
 .querySelector("#donhang")
 .addEventListener("click", function () {
     document.querySelector("#content").innerHTML = `
-    <div style="margin:10px">
-        <h2 style="font-size: 38px; text-align: center;">Quản lý đơn hàng<br></h2>
-        <div style="display: flex;width: 100%; "class="status_classification">
-            <div style=" margin: 0px 5px"; class="tatcasanpham status">Tất cả sản phẩm</div>
-            <div style=" margin: 0px 5px" class="chuaxacnhan status" >Chưa xác nhận</div>
-            <div style=" margin: 0px 5px" class="daxacnhan status" >Đã xác nhận</div>
-            <div style=" margin: 0px 5px" class="hoanthanh status" >Hoàn thành</div>
-            <div class="search">
-                <input type="text" placeholder="Tim tai khoan" class="tim_hang"  />
-                <button class="search-btn"  >Tim</button>
+    <div style="margin: 10px">
+    <div class="filter-container">
+        <div class="status_classification">
+            <span><strong>Lọc theo Trạng thái:</strong></span>
+            <div class="status-filter-container">
+            <div class="status-filter-dropdown" onclick="toggleStatusOptions()">▼</div>
+                <div class="status-options" id="statusOptions">
+                    <div class="status-option" data-status="all">Tất cả sản phẩm</div>
+                    <div class="status-option" data-status="chuaxacnhan">Chưa xác nhận</div>
+                    <div class="status-option" data-status="daxacnhan">Đã xác nhận</div>
+                    <div class="status-option" data-status="hoanthanh">Hoàn thành</div>
+                </div>
             </div>
         </div>
-        <div>
-            <table style="width: 100%; text-align: left; border-collapse: collapse;" id="list-user">
-                <tr>
-                    <th>Mã đơn hàng</th>
-                    <th>Tài khoản</th>
-                    <th>Tên khách hàng</th>
-                    <th>Chi tiết đơn hàng</th>
-                    <th>Trạng thái</th>
-                </tr>
-            </table>
+        <div class="search">
+            <input type="text" placeholder="Tìm tài khoản" class="tim_hang" />
+            <button class="search-btn" onclick="search()">Tìm</button>
         </div>
-        <div id="card" style="display: none;">
-            <div class="card2">
-                <button class="b" onclick="cancelP()" style="bottom: 10px; right: 10px;">Thoát</button>
-            </div>
-        </div>
+    </div>
+    <table style="width: 100%; text-align: left; border-collapse: collapse;" id="list-user">
+        <tr>
+            <th>Mã đơn hàng</th>
+            <th>Tài khoản</th>
+            <th>Tên khách hàng</th>
+            <th>Chi tiết đơn hàng</th>
+            <th>Trạng thái</th>
+        </tr>
+    </table>
+</div>
+<div id="card" style="display: none;">
+    <div class="card2">
+        <button class="b" onclick="cancelP()" style="bottom: 10px; right: 10px;">Thoát</button>
+    </div>
+</div>
     </div>`;
     displayDonHang(Order);
     filter();
 });
 
-function product_filtering(name_status,Order){
-    Order_status = [];
-    status_Arr = name_status.split(" ");
-    let status;
-    switch(status_Arr[0]){
-        case "tatcasanpham":
-            status = 0;
-            return Order;
-        case "chuaxacnhan":
-            status = 1;
-            break;
-        case "daxacnhan":
-            status = 2;
-            break;
-        case "hoanthanh":
-            status = 4;
-            break;
+function product_filtering(status, Order) {
+    if (status === 'all') {
+        return Order;
     }
-    Order.forEach(dh => {
-        console.log(dh.status);
-        if(dh.status == status){
-            Order_status.push(dh);
-        }
-    });
-    return Order_status;
-} 
 
-function filter(){
+    const filteredOrders = Order.filter(dh => dh.status === getStatusValue(status));
+    return filteredOrders;
+}
+
+function getStatusValue(status) {
+    switch (status) {
+        case 'all':
+            return 0;
+        case 'chuaxacnhan':
+            return 1;
+        case 'daxacnhan':
+            return 2;
+        case 'hoanthanh':
+            return 4;
+        default:
+            return -1; // Handle other cases if needed
+    }
+}
+
+
+function toggleStatusOptions() {
+    const statusOptions = document.getElementById("statusOptions");
+    const displayStatus = window.getComputedStyle(statusOptions).display;
+
+    // Kiểm tra xem hiện đang thực hiện tìm kiếm hay không
+    const isSearching = document.querySelector('.tim_hang').value.trim() !== '';
+
+    // Hiển thị thanh lọc nếu đang nhấn vào nút lọc hoặc không thực hiện tìm kiếm
+    statusOptions.style.display = (!isSearching && displayStatus === "none") ? "block" : "none";
+
+    // Đóng thanh lọc nếu đang thực hiện tìm kiếm
+    if (isSearching) {
+        statusOptions.style.display = "none";
+    }
+}
+
+
+function filter() {
     Ordercopy = [...Order];
-    document.querySelectorAll('.status').forEach(status => { 
-        status.addEventListener('click', function(event) {
-            Ordercopy = product_filtering(event.target.className,Order)
-            displayDonHang(Ordercopy);
+    const statusDropdown = document.querySelector('.status-options');
+
+    document.querySelectorAll('.status-option').forEach(statusOption => {
+        statusOption.addEventListener('click', function (event) {
+            const selectedStatus = event.target.getAttribute('data-status');
+            
+            if (selectedStatus === 'all') {
+                document.querySelectorAll('.order-row').forEach(row => {
+                    row.style.display = 'table-row';
+                });
+            } else {
+                Ordercopy = product_filtering(selectedStatus, Order);
+                displayDonHang(Ordercopy);
+            }
+
+            toggleStatusOptions();  // Đóng dropdown sau khi chọn một tùy chọn trạng thái
         });
     });
 
-    document.querySelector('.search-btn').addEventListener('click',function(){
-        Order_name = [];
-        let name = document.querySelector('.tim_hang');
+    document.querySelector('.search-btn').addEventListener('click', function () {
+        Order_username = [];
+        let usernameInput = document.querySelector('.tim_hang');
+        
+        // Lưu lại giá trị tìm kiếm trước khi xóa
+        const searchValue = usernameInput.value.trim();
+        
+        // Xóa nội dung trong ô nhập
+        usernameInput.value = '';
+    
+        // Tiếp tục xử lý tìm kiếm
         Order.forEach(dh => {
-            if(dh.name.toLowerCase()==name.value.toLowerCase()){
-                Order_name.push(dh);
+            if (dh.username.toLowerCase() == searchValue.toLowerCase()) {
+                Order_username.push(dh);
             }
         });
-        displayDonHang(Order_name);
+    
+        displayDonHang(Order_username);
+    
+        // Đóng dropdown sau khi tìm kiếm
+        toggleStatusOptions();
     });
-}
+}    
+
 
 function displayDonHang(Order) {
 const listUserTable = document.querySelector("#list-user");
