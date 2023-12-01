@@ -20,7 +20,7 @@ window.onload = function () {
 
 function redirectToProductDetails() {
     document.querySelectorAll('.product-card').forEach(card => {
-        card.addEventListener('click', function(event) {
+        card.addEventListener('click', function() {
                 const productId = this.getAttribute('data-id');
                 window.location.href = 'product.html?ID=' + encodeURIComponent(productId);
 

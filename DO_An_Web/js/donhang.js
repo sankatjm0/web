@@ -6,6 +6,16 @@ document
     document.querySelector("#content").innerHTML = `
     <div style="margin:10px">
         <h2 style="font-size: 38px; text-align: center;">Quản lý đơn hàng<br></h2>
+        <div style="display: flex;width: 100%; "class="status_classification">
+            <div style=" margin: 0px 5px"; class="tatcasanpham status">Tất cả sản phẩm</div>
+            <div style=" margin: 0px 5px" class="chuaxacnhan status" >Chưa xác nhận</div>
+            <div style=" margin: 0px 5px" class="daxacnhan status" >Đã xác nhận</div>
+            <div style=" margin: 0px 5px" class="hoanthanh status" >Hoàn thành</div>
+            <div class="search">
+                <input type="text" placeholder="Tim tai khoan" class="tim_hang"  />
+                <button class="search-btn"  >Tim</button>
+            </div>
+        </div>
         <div>
             <table style="width: 100%; text-align: left; border-collapse: collapse;" id="list-user">
                 <tr>
@@ -23,12 +33,72 @@ document
             </div>
         </div>
     </div>`;
-    displayDonHang();
+    displayDonHang(Order);
+    filter();
 });
 
-function displayDonHang() {
-const listUserTable = document.querySelector("#list-user");
+function product_filtering(name_status,Order){
+    Order_status = [];
+    status_Arr = name_status.split(" ");
+    let status;
+    switch(status_Arr[0]){
+        case "tatcasanpham":
+            status = 0;
+            return Order;
+        case "chuaxacnhan":
+            status = 1;
+            break;
+        case "daxacnhan":
+            status = 2;
+            break;
+        case "hoanthanh":
+            status = 4;
+            break;
+    }
+    Order.forEach(dh => {
+        console.log(dh.status);
+        if(dh.status == status){
+            Order_status.push(dh);
+        }
+    });
+    return Order_status;
+} 
 
+function filter(){
+    Ordercopy = [...Order];
+    document.querySelectorAll('.status').forEach(status => { 
+        status.addEventListener('click', function(event) {
+            Ordercopy = product_filtering(event.target.className,Order)
+            displayDonHang(Ordercopy);
+        });
+    });
+
+    document.querySelector('.search-btn').addEventListener('click',function(){
+        Order_name = [];
+        let name = document.querySelector('.tim_hang');
+        Order.forEach(dh => {
+            if(dh.name.toLowerCase()==name.value.toLowerCase()){
+                Order_name.push(dh);
+            }
+        });
+        displayDonHang(Order_name);
+    });
+}
+
+function displayDonHang(Order) {
+const listUserTable = document.querySelector("#list-user");
+while (listUserTable.firstChild) {
+    listUserTable.removeChild(listUserTable.firstChild);
+}
+listUserTable.innerHTML=`
+<tr>
+<th>Mã đơn hàng</th>
+<th>Tài khoản</th>
+<th>Tên khách hàng</th>
+<th>Chi tiết đơn hàng</th>
+<th>Trạng thái</th>
+</tr>
+`
 Order.forEach((dh, i) => {
     const row = document.createElement("tr");
     row.innerHTML = `
