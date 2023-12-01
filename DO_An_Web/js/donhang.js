@@ -11,7 +11,7 @@ document
             <div class="status-filter-container">
             <div class="status-filter-dropdown" onclick="toggleStatusOptions()">▼</div>
                 <div class="status-options" id="statusOptions">
-                    <div class="status-option" data-status="all">Tất cả sản phẩm</div>
+                    <div class="status-option" data-status="all">Tất cả</div>
                     <div class="status-option" data-status="chuaxacnhan">Chưa xác nhận</div>
                     <div class="status-option" data-status="daxacnhan">Đã xác nhận</div>
                     <div class="status-option" data-status="hoanthanh">Hoàn thành</div>
@@ -44,6 +44,8 @@ document
 });
 
 function product_filtering(status, Order) {
+    console.log("Selected Status:", status);
+
     if (status === 'all') {
         return Order;
     }
@@ -51,6 +53,20 @@ function product_filtering(status, Order) {
     const filteredOrders = Order.filter(dh => dh.status === getStatusValue(status));
     return filteredOrders;
 }
+
+function toggleStatusOptions() {
+    const statusOptions = document.getElementById("statusOptions");
+    const displayStatus = window.getComputedStyle(statusOptions).display;
+
+    // Check if the search input has focus
+    const isSearching = document.querySelector('.tim_hang').matches(':focus');
+
+    console.log("Display Status Options:", displayStatus);
+
+    // Show the status dropdown only if not searching
+    statusOptions.style.display = (!isSearching && displayStatus === "none") ? "block" : "none";
+}
+
 
 function getStatusValue(status) {
     switch (status) {
@@ -68,22 +84,6 @@ function getStatusValue(status) {
 }
 
 
-function toggleStatusOptions() {
-    const statusOptions = document.getElementById("statusOptions");
-    const displayStatus = window.getComputedStyle(statusOptions).display;
-
-    // Kiểm tra xem hiện đang thực hiện tìm kiếm hay không
-    const isSearching = document.querySelector('.tim_hang').value.trim() !== '';
-
-    // Hiển thị thanh lọc nếu đang nhấn vào nút lọc hoặc không thực hiện tìm kiếm
-    statusOptions.style.display = (!isSearching && displayStatus === "none") ? "block" : "none";
-
-    // Đóng thanh lọc nếu đang thực hiện tìm kiếm
-    if (isSearching) {
-        statusOptions.style.display = "none";
-    }
-}
-
 
 function filter() {
     Ordercopy = [...Order];
@@ -92,31 +92,28 @@ function filter() {
     document.querySelectorAll('.status-option').forEach(statusOption => {
         statusOption.addEventListener('click', function (event) {
             const selectedStatus = event.target.getAttribute('data-status');
-            
+
             if (selectedStatus === 'all') {
-                document.querySelectorAll('.order-row').forEach(row => {
-                    row.style.display = 'table-row';
-                });
+                displayDonHang(Order); // Show all orders
             } else {
-                Ordercopy = product_filtering(selectedStatus, Order);
-                displayDonHang(Ordercopy);
+                filterAndDisplay(selectedStatus);
             }
 
-            toggleStatusOptions();  // Đóng dropdown sau khi chọn một tùy chọn trạng thái
+            toggleStatusOptions(); // Close dropdown after selecting a status option
         });
     });
 
     document.querySelector('.search-btn').addEventListener('click', function () {
         Order_username = [];
         let usernameInput = document.querySelector('.tim_hang');
-        
-        // Lưu lại giá trị tìm kiếm trước khi xóa
+    
+        // Save the search value before clearing
         const searchValue = usernameInput.value.trim();
-        
-        // Xóa nội dung trong ô nhập
+    
+        // Clear the input content
         usernameInput.value = '';
     
-        // Tiếp tục xử lý tìm kiếm
+        // Continue processing the search
         Order.forEach(dh => {
             if (dh.username.toLowerCase() == searchValue.toLowerCase()) {
                 Order_username.push(dh);
@@ -125,10 +122,18 @@ function filter() {
     
         displayDonHang(Order_username);
     
-        // Đóng dropdown sau khi tìm kiếm
-        toggleStatusOptions();
+        // Close dropdown after searching only if not searching by username
+        if (!searchValue) {
+            toggleStatusOptions();
+        }
     });
-}    
+    
+    function filterAndDisplay(selectedStatus) {
+        Ordercopy = product_filtering(selectedStatus, Order);
+        displayDonHang(Ordercopy);
+    }
+}
+
 
 
 function displayDonHang(Order) {
