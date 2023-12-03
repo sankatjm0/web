@@ -14,13 +14,15 @@ document
                     <div class="status-option" data-status="all">Tất cả</div>
                     <div class="status-option" data-status="chuaxacnhan">Chưa xác nhận</div>
                     <div class="status-option" data-status="daxacnhan">Đã xác nhận</div>
+                    <div class="status-option" data-status="danggiaohang">Đang Giao Hàng</div>
                     <div class="status-option" data-status="hoanthanh">Hoàn thành</div>
+                    <div class="status-option" data-status="dahuy">Đã Hủy</div>
                 </div>
             </div>
         </div>
         <div class="search">
             <input type="text" placeholder="Tìm tài khoản" class="tim_hang" />
-            <button class="search-btn" onclick="search()">Tìm</button>
+            <button class="search-btn">Tìm</button>
         </div>
     </div>
     <table style="width: 100%; text-align: left; border-collapse: collapse;" id="list-user">
@@ -76,8 +78,12 @@ function getStatusValue(status) {
             return 1;
         case 'daxacnhan':
             return 2;
+        case 'danggiaohang':
+            return 3;
         case 'hoanthanh':
             return 4;
+        case 'dahuy':
+            return 5;
         default:
             return -1; // Handle other cases if needed
     }
@@ -91,12 +97,14 @@ function filter() {
 
     document.querySelectorAll('.status-option').forEach(statusOption => {
         statusOption.addEventListener('click', function (event) {
+            Ordercopy = [...Order];
             const selectedStatus = event.target.getAttribute('data-status');
 
             if (selectedStatus === 'all') {
-                displayDonHang(Order); // Show all orders
+                displayDonHang(Ordercopy); // Show all orders
             } else {
-                filterAndDisplay(selectedStatus);
+                Ordercopy = product_filtering(selectedStatus, Ordercopy);
+                displayDonHang(Ordercopy);
             }
 
             toggleStatusOptions(); // Close dropdown after selecting a status option
@@ -104,9 +112,8 @@ function filter() {
     });
 
     document.querySelector('.search-btn').addEventListener('click', function () {
-        Order_username = [];
         let usernameInput = document.querySelector('.tim_hang');
-    
+        Order_name=[];
         // Save the search value before clearing
         const searchValue = usernameInput.value.trim();
     
@@ -114,13 +121,13 @@ function filter() {
         usernameInput.value = '';
     
         // Continue processing the search
-        Order.forEach(dh => {
+        Ordercopy.forEach(dh => {
             if (dh.username.toLowerCase() == searchValue.toLowerCase()) {
-                Order_username.push(dh);
+                Order_name.push(dh);
             }
         });
     
-        displayDonHang(Order_username);
+        displayDonHang(Order_name);
     
         // Close dropdown after searching only if not searching by username
         if (!searchValue) {
@@ -128,10 +135,7 @@ function filter() {
         }
     });
     
-    function filterAndDisplay(selectedStatus) {
-        Ordercopy = product_filtering(selectedStatus, Order);
-        displayDonHang(Ordercopy);
-    }
+
 }
 
 
@@ -203,23 +207,23 @@ document.querySelector("#card").style.display = `none`;
 }
 
 function changeStatus(i, x) {
-let stt = prompt("Chọn trạng thái:\n1. Chưa xác nhận\n2. Đã xác nhận\n3. Đang giao hàng\n4. Hoàn thành\n5. Đã hủy", Order[i].status[x].status);
+    let stt = prompt("Chọn trạng thái:\n1. Chưa xác nhận\n2. Đã xác nhận\n3. Đang giao hàng\n4. Hoàn thành\n5. Đã hủy", Order[i].status[x].status);
 
-if (stt === null) {
-    // User pressed cancel
-    return;
-}
+    if (stt === null) {
+        // User pressed cancel
+        return;
+    }
 
-stt = parseInt(stt);
+    stt = parseInt(stt);
 
-if (isNaN(stt) || stt < 1 || stt > 5) {
-    alert("Vui lòng nhập số trạng thái hợp lệ.");
-    changeStatus(i, x);
-} else {
-    Order[i].status[x].status = stt;
-    localStorage.setItem('order', JSON.stringify(Order));
-    checkorder(i);
-}
+    if (isNaN(stt) || stt < 1 || stt > 5) {
+        alert("Vui lòng nhập số trạng thái hợp lệ.");
+        changeStatus(i, x);
+    } else {
+        Order[i].status[x].status = stt;
+        localStorage.setItem('order', JSON.stringify(Order));
+        checkorder(i);
+    }
 }
 
 function show(i) {
