@@ -38,7 +38,6 @@ body {
 
 input[type="text"],
 input[type="password"],
-input[type="email"],
 input[type="number"],
  textarea{
   display: block;
@@ -128,8 +127,12 @@ label a {
   text-transform: capitalize;
   text-align: center;
   display: block;
+  text-decoration: none;
 }
 
+.link:hover {
+  color: gray;
+}
 /*alert*/
 .alert-box {
   width: 300px;
