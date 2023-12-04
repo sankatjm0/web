@@ -1,4 +1,4 @@
-let Order = JSON.parse(localStorage.getItem('order')) || [];
+const Order = JSON.parse(localStorage.getItem('order')) || [];
 
 document
 .querySelector("#donhang")
