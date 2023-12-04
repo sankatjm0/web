@@ -1,26 +1,26 @@
 products = JSON.parse(localStorage.getItem("product")) || [];
 document.getElementById("nike").addEventListener("click", function () {
-  pd('nike');
+  pd("nike");
 });
 
 document.getElementById("louisvuitton").addEventListener("click", function () {
-  pd('louisvuitton');
+  pd("louisvuitton");
 });
 
 document.getElementById("chanel").addEventListener("click", function () {
-  pd('chanel');
+  pd("chanel");
 });
 
 document.getElementById("adidas").addEventListener("click", function () {
-  pd('adidas');
+  pd("adidas");
 });
 
 document.getElementById("gucci").addEventListener("click", function () {
-  pd('gucci');
+  pd("gucci");
 });
 
 document.getElementById("h2-brand").addEventListener("click", function () {
-  pd('new')
+  pd("new");
 });
 // queryStrings = window.location.search;
 // urlParamss = new URLSearchParams(queryStrings);
@@ -31,7 +31,6 @@ document.getElementById("h2-brand").addEventListener("click", function () {
 // }
 
 function pd(namePd) {
-  
   var itemsPerPage = 8;
   var v = [];
   var t = 0;
@@ -39,23 +38,26 @@ function pd(namePd) {
     var product = products[i];
     if (namePd == "new") {
       var totalPages = Math.ceil(12 / itemsPerPage);
-
-      v = JSON.parse(localStorage.getItem("product"));}
-      else{
-    if (product.brand === namePd) {
-      document.getElementById("content").innerHTML = ` <section id="header">
+      for (var j = 0; j < 12; j++) {
+        var x = JSON.parse(localStorage.getItem("product"));
+        v[j]=x[Math.floor(Math.random() * products.length)];
+      }
+    } else {
+      if (product.brand === namePd) {
+        document.getElementById("content").innerHTML = ` <section id="header">
   <section id="product1" class="section-p1">
-      <h2 id="h2-brand" style="autocapitalize=on;">${namePd.charAt(0).toUpperCase() + namePd.slice(1)}</h2>
+      <h2 id="h2-brand" style="autocapitalize=on;">${
+        namePd.charAt(0).toUpperCase() + namePd.slice(1)
+      }</h2>
       <div class="pro-container" id="product-container"></div>
       <div id="pagination"></div>
   </section>
 </section>`;
-      v[t] = product;
-      t++;
-      var totalPages = Math.ceil(v.length / itemsPerPage);
-
+        v[t] = product;
+        t++;
+        var totalPages = Math.ceil(v.length / itemsPerPage);
+      }
     }
-  }
   }
   // Tính tổng số trang
 
@@ -130,7 +132,10 @@ function pd(namePd) {
   function redirectToProductDetails() {
     document.querySelectorAll(".pro").forEach((card) => {
       card.addEventListener("click", function () {
-        if(document.querySelector("#content") != null) document.querySelector("#content").innerHTML = `<section class="product-details">
+        if (document.querySelector("#content") != null)
+          document.querySelector(
+            "#content"
+          ).innerHTML = `<section class="product-details">
        
   </section>`;
         const productId = this.getAttribute("data-id");
@@ -138,43 +143,39 @@ function pd(namePd) {
         // console.log("Current URL:", window.location.href);
         // window.location.href =
         //   "index-user.html?ID=" + encodeURIComponent(productId);
-          let checkdBtn = 0;
-// const queryString = window.location.search;
-// const urlParams = new URLSearchParams(queryString);
-// const searchId = urlParams.get('ID');
+        let checkdBtn = 0;
+        // const queryString = window.location.search;
+        // const urlParams = new URLSearchParams(queryString);
+        // const searchId = urlParams.get('ID');
 
-products = JSON.parse(localStorage.getItem("product")) || [];
+        products = JSON.parse(localStorage.getItem("product")) || [];
 
-if (products.length > 1) {
-  searchProduct();
+        if (products.length > 1) {
+          searchProduct();
 
-  sizeBtns = document.querySelectorAll(".size-radio-btn");
-  sizeBtns.forEach((item, i) => {
-    
-    item.addEventListener("click", () => {
-      
-      sizeBtns[checkdBtn].classList.remove("check");
-      item.classList.add("check");
-      checkdBtn = i;
-    });
-  });
-}
+          sizeBtns = document.querySelectorAll(".size-radio-btn");
+          sizeBtns.forEach((item, i) => {
+            item.addEventListener("click", () => {
+              sizeBtns[checkdBtn].classList.remove("check");
+              item.classList.add("check");
+              checkdBtn = i;
+            });
+          });
+        }
 
-function searchProduct() {
-  if (products !== undefined) {
-    products.forEach(item => {
-      if (item.ID.toString() === productId) {
-        
-        addProduct(item);
-      }
-    });
-  }
-}
+        function searchProduct() {
+          if (products !== undefined) {
+            products.forEach((item) => {
+              if (item.ID.toString() === productId) {
+                addProduct(item);
+              }
+            });
+          }
+        }
 
-function addProduct(item) {
-  
-  const addproduct = document.querySelector(".product-details");
-  addproduct.innerHTML = `
+        function addProduct(item) {
+          const addproduct = document.querySelector(".product-details");
+          addproduct.innerHTML = `
   <div class="image-slider">
     <img src="${item.img}" alt="">
   </div>
@@ -211,20 +212,17 @@ function addProduct(item) {
     </div>
   </div>
 </div>
-`;}
+`;
+        }
 
-  
-
-  // function getCurrentTime() {
-  //   const currentTime = new Date();
-  //   return currentTime.toLocaleString();
-  // }
-
-
+        // function getCurrentTime() {
+        //   const currentTime = new Date();
+        //   return currentTime.toLocaleString();
+        // }
       });
     });
   }
-  
+
   // Mặc định hiển thị trang đầu tiên
   displayProducts(1);
   displayPagination();
@@ -254,8 +252,12 @@ function decreaseQuantity(ID) {
 function updateCartQuantity(ID, newQuantity) {
   checklog();
 
-  const selectedSize = document.querySelector('.size-radio-btn.check').innerText;
-  const index = cart.findIndex(value => value.ID === ID && value.size === selectedSize);
+  const selectedSize = document.querySelector(
+    ".size-radio-btn.check"
+  ).innerText;
+  const index = cart.findIndex(
+    (value) => value.ID === ID && value.size === selectedSize
+  );
 
   if (index !== -1) {
     cart[index].quantity = newQuantity;
@@ -267,8 +269,8 @@ function updateCartQuantity(ID, newQuantity) {
       }
     }
     current.cart = cart;
-    sessionStorage.setItem('current', JSON.stringify(current));
-    localStorage.setItem('user', JSON.stringify(user));
+    sessionStorage.setItem("current", JSON.stringify(current));
+    localStorage.setItem("user", JSON.stringify(user));
   }
 }
 
@@ -280,27 +282,34 @@ function checklog() {
 
 function addToCart(ID) {
   checklog();
-  const selectedSize = document.querySelector('.size-radio-btn.check').innerText;
+  const selectedSize = document.querySelector(
+    ".size-radio-btn.check"
+  ).innerText;
 
-  let checkProduct = cart.some(value => value.ID === ID && value.size === selectedSize);
+  let checkProduct = cart.some(
+    (value) => value.ID === ID && value.size === selectedSize
+  );
 
   if (!checkProduct) {
-    let product = products.find(value => value.ID === ID);
+    let product = products.find((value) => value.ID === ID);
     cart.push({
       ...product,
       quantity: 1,
-      size: selectedSize
+      size: selectedSize,
     });
     alert("Sản phẩm đã được thêm vào giỏ hàng.");
-    
   } else {
-    let product = cart.find(value => value.ID === ID && value.size === selectedSize);
-    let getIndex = cart.findIndex(value => value.ID === ID && value.size === selectedSize);
+    let product = cart.find(
+      (value) => value.ID === ID && value.size === selectedSize
+    );
+    let getIndex = cart.findIndex(
+      (value) => value.ID === ID && value.size === selectedSize
+    );
     cart[getIndex] = {
       ...product,
       quantity: ++product.quantity,
       time: getCurrentTime(),
-      size: selectedSize
+      size: selectedSize,
     };
     alert("Sản phẩm đã được thêm vào giỏ hàng.");
   }
@@ -312,9 +321,10 @@ function addToCart(ID) {
     }
   }
   current.cart = cart;
-  sessionStorage.setItem('current', JSON.stringify(current));
-  localStorage.setItem('user', JSON.stringify(user));
+  sessionStorage.setItem("current", JSON.stringify(current));
+  localStorage.setItem("user", JSON.stringify(user));
 }
+pd("new");
 // document.getElementById("nike").addEventListener("click", function () {
 //   window.location.href = "index-user.html?nav=nike";
 // });
