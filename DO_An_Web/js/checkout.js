@@ -11,7 +11,7 @@ function checklog() {
     cart = current.cart;
     orders = current.order || [];
 
-    document.querySelector("#add-checkout").innerHTML = `<div class="form">
+    if(document.querySelector("#add-checkout")!= null) {document.querySelector("#add-checkout").innerHTML = `<div class="form">
   <h1 class="heading">Đặt hàng</h1>
   <p class="text">Thông tin nhận hàng</p>
   <input type="text" id="name" placeholder="Tên người nhận hàng">
@@ -71,7 +71,7 @@ function checklog() {
         alert("Vui lòng điền đủ thông tin!");
       }
     });
-
+  }
   function validateForm() {
     if (
       address.value.trim() === "" ||

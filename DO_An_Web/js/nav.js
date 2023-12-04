@@ -181,11 +181,20 @@ function save() {
     let phoneValid = hasValue(document.querySelector("#phone"), PHONE_REQUIRED);
     let nameValid = hasValue(document.querySelector("#name"), NAME_REQUIRED);
   if (addressValid && phoneValid && nameValid) {
-    if  ( document.querySelector("#phone").value.length < 10 || document.querySelector("#phone").value.length >11)
+    if  (document.querySelector("#phone").value.length != 10 || (document.querySelector("#phone").value)[0] != "0") 
  { 
       showError(document.querySelector("#phone"), "Số điện thoại không hợp lệ");
 
-} else{
+} else if (isNumeric(document.querySelector("#phone").value) )
+{ 
+     showError(document.querySelector("#phone"), "Số điện thoại không hợp lệ");
+} else if (/\d/.test(document.querySelector("#name").value))
+{ 
+     showError(document.querySelector("#name"), "Tên không hợp lệ");
+
+
+
+}else {
   for(let i=0; i<user.length; i++) {
     if(user[i].username == current.username) {
       user[i].name = document.querySelector("#name").value;
@@ -205,4 +214,8 @@ function save() {
   popuptext.innerHTML = `Xin chào, ${current.name}`;
 }
 }
+}
+
+function isNumeric(str) {
+  if (typeof str == "string") return false;
 }
