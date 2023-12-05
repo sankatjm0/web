@@ -40,7 +40,7 @@ function pd(namePd) {
       var totalPages = Math.ceil(12 / itemsPerPage);
       for (var j = 0; j < 12; j++) {
         var x = JSON.parse(localStorage.getItem("product"));
-        v[j]=x[Math.floor(Math.random() * products.length)];
+        v[j] = x[Math.floor(Math.random() * products.length)];
       }
     } else {
       if (product.brand === namePd) {
@@ -100,7 +100,7 @@ function pd(namePd) {
       desElement.appendChild(nameElement);
 
       var priceElement = document.createElement("h4");
-      priceElement.innerText = product.price;
+      priceElement.innerText = product.price + " VND";
       desElement.appendChild(priceElement);
 
       productElement.appendChild(desElement);

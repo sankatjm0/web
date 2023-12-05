@@ -28,10 +28,9 @@ document
 </div>
 
 
-       <h1><label id="sp" for="brand">Brand</label>
-        <select id="brand" style="border:1px solid black; border-radius:5px; font-size:22px" required>
+        <select id="brand" style="border:1px solid black; border-radius:5px; font-size:22px; width:204px" value="" required>
           <option value="nike">Nike</option>
-          <option value="lv">Louis Vuitton</option>
+          <option value="louisvuitton">Louis Vuitton</option>
           <option value="gucci">Gucci</option>
           <option value="chanel">Chanel</option>
           <option value="adidas">Adidas</option>
@@ -52,7 +51,7 @@ document
 
     <br><br>
 
-    <table style=" width: 100%; border: 1px solid black; text-align: center" id="productTable">
+    <table style=" width: 100%; border-collapse: collapse; text-align: center" id="productTable">
       <tr style="border: 1px solid black">
         <th>Số Lượng</th>
         <th>Hãng</th>
@@ -87,7 +86,7 @@ document
 
       // Lưu danh sách sản phẩm vào localStorage
       localStorage.setItem("product", JSON.stringify(products));
-
+      var p = JSON.parse(localStorage.getItem("product")) || [];
       // Hiển thị lại bảng sản phẩm
       displayProducts();
 
@@ -97,6 +96,19 @@ document
       document.getElementById("price").value = "";
       document.getElementById("prod-img").value = "";
       document.getElementById("preview").src = "";
+      for (let i = 0; i < p.length; i++) {
+        for (let j = 0; j < p.length; j++) {
+          if (
+            p[i].brand === p[j].brand &&
+            p[i].name === p[j].name &&
+            p[i].price === p[j].price &&
+            p[i].img === p[j].img
+          ) {
+            deleteProduct1(i);
+            return;
+          }
+        }
+      }
     });
 
     displayProducts();
@@ -142,7 +154,7 @@ function deleteProduct1(index) {
 function deleteProduct(index) {
   // Hiển thị thông báo xác nhận
   const confirmation = confirm("Bạn có muốn xóa sản phẩm?");
-  
+
   if (confirmation) {
     products.splice(index, 1);
     localStorage.setItem("product", JSON.stringify(products));
@@ -158,7 +170,7 @@ function editProduct(index) {
   document.getElementById("name").value = product.name;
   document.getElementById("price").value = product.price;
   document.getElementById("prod-img").src = product.img;
-  deleteProduct1(index);
+  document.getElementById("preview").src = product.img;
 }
 
 // Hàm khởi chạy khi trang được tải
