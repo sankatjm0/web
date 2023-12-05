@@ -7,7 +7,7 @@ document
         document.querySelector("#content").innerHTML = `
         <div class="filter-container">
           <div class="search">
-            <input type="text" placeholder="Tìm tên tài khoản khách hàng" class="khachhang_spadmin" />
+            <input type="text" placeholder="Tìm Mã KH hoặc tên KH" class="khachhang_spadmin" />
             <button class="khachhang-search">Tìm</button>
           </div>
         </div>
@@ -50,30 +50,38 @@ document
           user_temp =[" "];
           let khachhang = document.querySelector('.khachhang_spadmin');
           let khachhangvalue = khachhang.value.trim();
-          
-          user.forEach( user => {
-            if(user.username.toLowerCase() == khachhangvalue.toLowerCase()){
-              user_temp.push(user);
+
+          if (!isNaN(khachhangvalue)) {
+            if(user[khachhangvalue]!= null )
+            {
+              let khachhangid = parseInt(khachhangvalue);
+              user_temp.push(user[khachhangid]);
             }
-          });
+          } 
+          else {
+            user.forEach( user => {
+              if(user.username.toLowerCase() == khachhangvalue.toLowerCase()){
+                user_temp.push(user);
+              }
+            });
+        }
+        
+        const user_clear = document.querySelector("#list-user");
+        while (user_clear.firstChild) {
+          user_clear.removeChild(user_clear.firstChild);
+        }
+        user_clear.innerHTML = `
+        <tr style="border: 1px solid black">
+        <th>Mã KH</th>
+        <th>Tài khoản</th>
+        <th>Tên khách hàng</th>
+        <th>Hóa đơn</th>
+        <th>Thông tin</th>
+        </tr>`;
+        displayCustomer(user_temp);
 
-          const user_clear = document.querySelector("#list-user");
-          while (user_clear.firstChild) {
-            user_clear.removeChild(user_clear.firstChild);
-          }
-          user_clear.innerHTML = `
-          <tr style="border: 1px solid black">
-          <th>Mã KH</th>
-          <th>Tài khoản</th>
-          <th>Tên khách hàng</th>
-          <th>Hóa đơn</th>
-          <th>Thông tin</th>
-          </tr>`;
-
-          displayCustomer(user_temp);
-        });
-      }
-
+      });
+    }
     function del(i) {
       let ans = confirm(`Xóa tài khoản ${user[i].username}?`)
       if (ans) {
