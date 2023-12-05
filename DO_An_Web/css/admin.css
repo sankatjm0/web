@@ -347,12 +347,14 @@ transform: translateX(50px);
 }
 
 .search-btn ,.spadmin-search,.khachhang-search{
-  padding: 10px;
+  padding: 5px;
   background-color: #101210;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  margin: 5px;
+  width: 50px;
 }
 
 .search-btn:hover {

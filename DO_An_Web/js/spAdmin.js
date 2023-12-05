@@ -120,22 +120,31 @@ document
     });
 
     displayProducts(products);
-    filterspad(products)
+    filterspad(products);
   });
 
-function filterspad(products){
-  document.querySelector('.spadmin-search').addEventListener('click', function () {
-    product_temp =[];
-    let tenhang = document.querySelector('.tim_spadmin');
-    let tenhangvalue = tenhang.value.trim();
-    
-    products.forEach( product => {
-      if(product.name.toLowerCase().includes(tenhangvalue.toLowerCase())){
-        product_temp.push(product);
+function filterspad(products) {
+  document
+    .querySelector(".spadmin-search")
+    .addEventListener("click", function () {
+      product_temp = [];
+      let tenhang = document.querySelector(".tim_spadmin");
+      let tenhangvalue = tenhang.value.trim();
+      let f = false;
+      products.forEach((product) => {
+        if (product.name.toLowerCase().includes(tenhangvalue.toLowerCase())) {
+          product_temp.push(product);
+          f = true;
+        }
+      });
+      if (f === false) {
+        alert("Không tìm thấy sản phẩm");
+        document.querySelector(".tim_spadmin").value = "";
+        displayProducts(products);
+        return;
       }
+      displayProducts(product_temp);
     });
-    displayProducts(product_temp);
-  });
 }
 // Hàm hiển thị bảng sản phẩm
 function displayProducts(products) {
