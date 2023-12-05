@@ -53,7 +53,8 @@ right: 70px;">Cập nhật thông tin</button></p>
 createNav();
 
 document.querySelector(".search-btn").addEventListener("click", function () {
-  const searchValue = document.querySelector(".search-box").value;
+  const searchValue = document.querySelector(".search-box").value.trim();
+  if(searchValue !=="")
   window.location.href =
     "search.html?search=" + encodeURIComponent(searchValue);
 });

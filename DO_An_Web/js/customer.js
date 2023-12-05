@@ -50,7 +50,9 @@ document
           user_temp =[" "];
           let khachhang = document.querySelector('.khachhang_spadmin');
           let khachhangvalue = khachhang.value.trim();
-
+          if(!khachhangvalue){
+            return;
+          }
           if (!isNaN(khachhangvalue)) {
             if(user[khachhangvalue]!= null )
             {
