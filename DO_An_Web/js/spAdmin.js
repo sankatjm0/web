@@ -11,6 +11,14 @@ document
   .addEventListener("click", function () {
     // Thay đổi nội dung của phần tử có id "content"
     document.getElementById("content").innerHTML = `
+    <div class="filter-container">
+      <div class="search">
+        <input type="text" placeholder="Tìm sản phẩm" class="tim_spadmin" />
+        <button class="spadmin-search">Tìm</button>
+      </div>
+    </div>
+
+
     <div style="margin:10px">
     <h2 style="font-size: 38px; text-align: center;">Quản lý sản phẩm<br></h2>
   <form id="productForm" class="card">
@@ -89,7 +97,7 @@ document
       localStorage.setItem("product", JSON.stringify(products));
 
       // Hiển thị lại bảng sản phẩm
-      displayProducts();
+      displayProducts(products);
 
       // Đặt giá trị các trường dữ liệu về rỗng
       document.getElementById("brand").value = "";
@@ -99,10 +107,26 @@ document
       document.getElementById("preview").src = "";
     });
 
-    displayProducts();
+    displayProducts(products);
+    filterspad(products)
   });
+
+function filterspad(products){
+  document.querySelector('.spadmin-search').addEventListener('click', function () {
+    product_temp =[];
+    let tenhang = document.querySelector('.tim_spadmin');
+    let tenhangvalue = tenhang.value.trim();
+    
+    products.forEach( product => {
+      if(product.name.toLowerCase().includes(tenhangvalue.toLowerCase())){
+        product_temp.push(product);
+      }
+    });
+    displayProducts(product_temp);
+  });
+}
 // Hàm hiển thị bảng sản phẩm
-function displayProducts() {
+function displayProducts(products) {
   productTable.innerHTML = `
     <tr>
       <th>Số Lượng</th>
@@ -136,7 +160,7 @@ function displayProducts() {
 function deleteProduct1(index) {
   products.splice(index, 1);
   localStorage.setItem("product", JSON.stringify(products));
-  displayProducts();
+  displayProducts(products);
 }
 // Hàm xóa sản phẩm
 function deleteProduct(index) {
@@ -146,7 +170,7 @@ function deleteProduct(index) {
   if (confirmation) {
     products.splice(index, 1);
     localStorage.setItem("product", JSON.stringify(products));
-    displayProducts();
+    displayProducts(products);
   }
 }
 
@@ -163,4 +187,4 @@ function editProduct(index) {
 
 // Hàm khởi chạy khi trang được tải
 
-displayProducts();
+displayProducts(products);
