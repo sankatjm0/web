@@ -113,7 +113,7 @@ function phantrang(list){
                 var page = parseInt(this.dataset.page);
                 showProduct(list,page);
             });
-
+            if(list.length/lengthpage>1)
             paginationContainer.appendChild(pageLink);
         }
 

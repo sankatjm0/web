@@ -21,7 +21,8 @@
 
 #product1{
   margin: 0 5vh;
-  width: 80%
+  width: 80%;
+  display: flex;  
 }
 .shop-filter-group-item {
   text-transform: capitalize;
@@ -68,3 +69,7 @@
   cursor: pointer;
 }
 
+#product1 .pro-container{
+  justify-content:flex-start;
+  margin-left: 10vh;
+}
