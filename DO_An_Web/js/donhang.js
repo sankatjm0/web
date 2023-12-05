@@ -111,7 +111,7 @@ function filter() {
         });
     });
 
-    document.querySelector('.search-btn').addEventListener('click', function () {
+    document.querySelector('.search-btn')?.addEventListener('click', function () {
         let usernameInput = document.querySelector('.tim_hang');
         Order_name=[];
         // Save the search value before clearing

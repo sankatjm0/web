@@ -4,7 +4,15 @@ const order = JSON.parse(localStorage.getItem('order')) || [];
 document
     .querySelector("#customer")
     .addEventListener("click", function () {
-        document.querySelector("#content").innerHTML = `<div style="margin:10px">
+        document.querySelector("#content").innerHTML = `
+        <div class="filter-container">
+          <div class="search">
+            <input type="text" placeholder="Tìm Mã KH hoặc tên KH" class="khachhang_spadmin" />
+            <button class="khachhang-search">Tìm</button>
+          </div>
+        </div>
+
+        <div style="margin:10px">
         <h2 style="font-size: 38px; text-align: center;">Quản lý khách hàng<br></h2>
         <div>
         <table style="width: 100%; border: 1px solid black; text-align: center" id="list-user">
@@ -32,9 +40,50 @@ document
         <p><button class="b" onclick="del()" style="bottom: 10px;
         right: 200px;">Xóa</button></p>
         </div></div>`;
-         displayCustomer();
+         displayCustomer(user);
+         filter_khachang(user);
     })
 
+          
+      function filter_khachang(user){
+        document.querySelector('.khachhang-search').addEventListener('click', function () {
+          user_temp =[" "];
+          let khachhang = document.querySelector('.khachhang_spadmin');
+          let khachhangvalue = khachhang.value.trim();
+          if(!khachhangvalue){
+            return;
+          }
+          if (!isNaN(khachhangvalue)) {
+            if(user[khachhangvalue]!= null )
+            {
+              let khachhangid = parseInt(khachhangvalue);
+              user_temp.push(user[khachhangid]);
+            }
+          } 
+          else {
+            user.forEach( user => {
+              if(user.username.toLowerCase() == khachhangvalue.toLowerCase()){
+                user_temp.push(user);
+              }
+            });
+        }
+        
+        const user_clear = document.querySelector("#list-user");
+        while (user_clear.firstChild) {
+          user_clear.removeChild(user_clear.firstChild);
+        }
+        user_clear.innerHTML = `
+        <tr style="border: 1px solid black">
+        <th>Mã KH</th>
+        <th>Tài khoản</th>
+        <th>Tên khách hàng</th>
+        <th>Hóa đơn</th>
+        <th>Thông tin</th>
+        </tr>`;
+        displayCustomer(user_temp);
+
+      });
+    }
     function del(i) {
       let ans = confirm(`Xóa tài khoản ${user[i].username}?`)
       if (ans) {
@@ -48,14 +97,14 @@ document
         <th>Hóa đơn</th>
         <th>Thông tin</th>
         </tr>`;
-        displayCustomer();
+        displayCustomer(user);
     document.querySelector("#card").style.display = `none`;
     document.querySelector(".card2").style.display = `none`;
       }
       localStorage.setItem('user', JSON.stringify(user))
     }
 
-function displayCustomer() {
+function displayCustomer(user) {
     for (let i = 1; i < user.length; i++) {
         const kh = user[i];
     
@@ -138,7 +187,7 @@ function changeStatus(i, x) {
   if (parseInt(stt) != 1 && parseInt(stt) != 2 && parseInt(stt) != 3 && parseInt(stt) != 4 && parseInt(stt) != 5) {
     alert("Vui lòng nhập số trạng thái hợp lệ.");
   changeStatus(i, x)
-}
+  }
    else {
     (user[i].order)[x].status = parseInt(stt);
     localStorage.setItem('user', JSON.stringify(user));
@@ -297,11 +346,7 @@ function show(i) {
         <th>Hóa đơn</th>
         <th>Thông tin</th>
         </tr>`;
-        displayCustomer();
+        displayCustomer(user);
     }
     }
   }
-  
-
-
-
