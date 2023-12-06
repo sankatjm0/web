@@ -159,12 +159,16 @@ listUserTable.innerHTML=`
 Order.forEach((dh, i) => {
     const row = document.createElement("tr");
     row.innerHTML = `
-      <td style="border: none;">DH${i + 1}</td>
-      <td style="border: none;">${dh.username}</td>
-      <td style="border: none;">${dh.name}</td>
-      <td style="border: none;" id="xem" onclick="show(${i})">Xem</td>
-      <td style="border: none;" id="order" onclick="changeOrderStatus(${i})">${statusDisplay(dh.status)}</td>
-    `;
+  <td style="border: none;" data-index="${i}">DH${i + 1}</td>
+  <td style="border: none;">${dh.username}</td>
+  <td style="border: none;">${dh.name}</td>
+  <td style="border: none;" id="xem" onclick="show(${i})">Xem</td>
+  <td style="border: none;" class="order-status" data-index="${i}" onclick="changeOrderStatus(${i})">${statusDisplay(dh.status)}</td>
+`;
+document.querySelectorAll('.status-option').forEach(statusOption => {
+    statusOption.classList.add('status-option');
+  });
+
     listUserTable.appendChild(row);
 });
 }
@@ -316,10 +320,19 @@ function changeOrderStatus(i) {
 }
 
 
-// Function to update the UI with the new status
 function updateOrderStatusUI(index, newStatus) {
-    const statusCell = document.querySelector(`#order${index}`);
-    statusCell.textContent = statusDisplay(newStatus);
-}
+    console.log("Updating status for index", index, "to", newStatus);
+    const statusCell = document.querySelector(`.order-status[data-index="${index}"]`);
+    
+    if (statusCell) {
+        statusCell.textContent = statusDisplay(newStatus);
+        console.log("Status updated successfully.");
+    } else {
+        console.error("Error: Status cell not found for index", index);
+    }
 
+    // Update the Order array with the new status
+    Order[index].status = newStatus;
+    localStorage.setItem('order', JSON.stringify(Order));
+}
 

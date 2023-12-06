@@ -434,3 +434,17 @@ transform: translateX(50px);
 .status-filter-dropdown:active .arrow-icon {
   transform: scale(1.2); /* Phóng to mũi tên khi nhấn */
 }
+
+/* Ô hiển thị trạng thái khi không hover */
+.order-status {
+  background-color: transparent;
+  color: black; /* Màu chữ khi không hover */
+  cursor: pointer;
+}
+
+/* Ô hiển thị trạng thái khi hover */
+.order-status:hover {
+  background-color: #e0e0e0; /* Màu nền khi hover */
+  color: rgb(35, 53, 212); /* Màu chữ khi hover */
+}
+
