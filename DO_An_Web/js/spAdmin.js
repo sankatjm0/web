@@ -15,6 +15,8 @@ document
       <div class="search">
         <input type="text" placeholder="Tìm sản phẩm" class="tim_spadmin" />
         <button class="spadmin-search">Tìm</button>
+        <img onclick="reload2()" class="reload" src="./img/OIP.jpg">
+
       </div>
     </div>
 
@@ -61,7 +63,7 @@ document
 
     <table style=" width: 100%; border-collapse: collapse; text-align: center" id="productTable">
       <tr style="border: 1px solid black">
-        <th>Số Lượng</th>
+        <th>STT</th>
         <th>Hãng</th>
         <th>Tên sản phẩm</th>
         <th>Hình ảnh</th>
@@ -150,7 +152,7 @@ function filterspad(products) {
 function displayProducts(products) {
   productTable.innerHTML = `
     <tr>
-      <th>Số Lượng</th>
+      <th>STT</th>
       <th>Hãng</th>
       <th>Tên sản phẩm</th>
       <th>Giá</th>
@@ -209,3 +211,11 @@ function editProduct(index) {
 // Hàm khởi chạy khi trang được tải
 
 displayProducts(products);
+
+function isNumeric(str) {
+  if (typeof str == "string") return false;
+}
+
+function reload2() {
+  displayProducts(products);
+}

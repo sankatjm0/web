@@ -275,7 +275,9 @@ function signupSite() {
   
   
   
-  function isNumeric(str) {
-    if (typeof str == "string") return false;
-  }
+  
+}
+
+function isNumeric(str) {
+  if (typeof str == "string") return false;
 }

@@ -9,6 +9,8 @@ document
           <div class="search">
             <input type="text" placeholder="Tìm Mã KH hoặc tên KH" class="khachhang_spadmin" />
             <button class="khachhang-search">Tìm</button>
+            <img onclick="reload()" class="reload" src="./img/OIP.jpg">
+
           </div>
         </div>
 
@@ -42,12 +44,21 @@ document
         </div></div>`;
          displayCustomer(user);
          filter_khachang(user);
+
+         
     })
+
+
+    function reload() {
+             displayCustomer(user);
+    
+        }
+    
 
           
       function filter_khachang(user){
         document.querySelector('.khachhang-search').addEventListener('click', function () {
-          user_temp =[" "];
+          user_temp =[""];
           let khachhang = document.querySelector('.khachhang_spadmin');
           let khachhangvalue = khachhang.value.trim();
           if(!khachhangvalue){
@@ -163,7 +174,7 @@ function checkorder(i) {
   
       const row = document.createElement("tr");
       row.innerHTML = `
-        <td>HD${hd.index}</td>
+        <td id="hd" onclick=>HD${hd.index+1}</td>
         <td>${(hd.products).length}</td>
         <td>${hd.cost}</td>
         <td>${hd.time}</td>
@@ -258,7 +269,7 @@ function show(i) {
     <small></small>
     </div>
     <div>
-    <p>Mật khẩu: </p><input type="text" id="password"></br>
+    <p>Mật khẩu: </p><input type="password" id="password"></br>
     <small></small>
     </div>
     </div>`;
@@ -306,6 +317,26 @@ function show(i) {
         if(user.find(user => user.username == document.querySelector("#username").value)){
             showError(document.querySelector("#username"), CHECK);
     }   else {
+      if(document.querySelector("#password").value.length < 8){
+        showError(document.querySelector("#password"), "Mật khẩu có độ dài lớn hơn hoặc bằng 8");
+      
+  } else if  ( document.querySelector("#phone").value.length != 10 || (document.querySelector("#phone").value)[0] != "0") 
+   { 
+        showError(document.querySelector("#phone"), "Số điện thoại không hợp lệ");
+  
+  } else if (isNumeric(document.querySelector("#phone")) )
+  { 
+       showError(document.querySelector("#phone"), "Số điện thoại không hợp lệ");
+  
+  
+  
+  } else if (/\d/.test(document.querySelector("#name").value))
+  { 
+       showError(document.querySelector("#name"), "Tên không hợp lệ");
+  
+  
+  
+  } else {    
       let prevName = user[i].username;
         user[i].name = document.querySelector("#name").value;
         user[i].phone = document.querySelector("#phone").value;
@@ -350,3 +381,9 @@ function show(i) {
     }
     }
   }
+  
+}
+function isNumeric(str) {
+  if (typeof str == "string") return false;
+}
+

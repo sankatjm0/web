@@ -39,7 +39,7 @@ document
 </div>
 <div id="card3" style="display: none;">
     <div class="card4">
-        <button class="b3" onclick="cancelP()" style="bottom: 10px; right: 10px;">Thoát</button>
+        <button class="b3" onclick="cancelP2()" style="bottom: 10px; right: 10px;">Thoát</button>
     </div>
 </div>
     </div>`;
@@ -162,7 +162,7 @@ Order.forEach((dh, i) => {
   <td style="border: none;" data-index="${i}">DH${i + 1}</td>
   <td style="border: none;">${dh.username}</td>
   <td style="border: none;">${dh.name}</td>
-  <td style="border: none;" id="xem" onclick="show(${i})">Xem</td>
+  <td style="border: none;" id="xem" onclick="show2(${i})">Xem</td>
   <td style="border: none;" class="order-status" data-index="${i}" onclick="changeOrderStatus(${i})">${statusDisplay(dh.status)}</td>
 `;
 document.querySelectorAll('.status-option').forEach(statusOption => {
@@ -182,14 +182,14 @@ selectedOrder.status.forEach((orderStatus, index) => {
         <p>Đơn hàng ${i + 1}: ${orderStatus.name} - Trạng thái hiện tại: ${statusDisplay(orderStatus.status)}</p>
         <label for="newStatus${index}">Thay đổi trạng thái:</label>
         <input type="number" id="newStatus${index}" name="newStatus${index}" min="1" max="5" required>
-        <button onclick="changeStatus(${i}, ${index})">Xác nhận</button>
+        <button onclick="changeStatus2(${i}, ${index})">Xác nhận</button>
     `;
 });
 
 document.querySelector("#card3").innerHTML = `
     <div class="card4">
         ${statusDetails}
-        <button class="b3" onclick="cancelP()" style="bottom: 10px; right: 10px;">Thoát</button>
+        <button class="b3" onclick="cancelP2()" style="bottom: 10px; right: 10px;">Thoát</button>
     </div>
 `;
 
@@ -208,11 +208,11 @@ function statusDisplay(num) {
     return statusMap[num] || "Unknown";
 }
 
-function cancelP() {
+function cancelP2() {
 document.querySelector("#card3").style.display = `none`;
 }
 
-function changeStatus(i, x) {
+function changeStatus2(i, x) {
     let stt = prompt("Chọn trạng thái:\n1. Chưa xác nhận\n2. Đã xác nhận\n3. Đang giao hàng\n4. Hoàn thành\n5. Đã hủy", Order[i].status[x].status);
 
     if (stt === null) {
@@ -224,7 +224,7 @@ function changeStatus(i, x) {
 
     if (isNaN(stt) || stt < 1 || stt > 5) {
         alert("Vui lòng nhập số trạng thái hợp lệ.");
-        changeStatus(i, x);
+        changeStatus2(i, x);
     } else {
         Order[i].status[x].status = stt;
         localStorage.setItem('order', JSON.stringify(Order));
@@ -234,13 +234,13 @@ function changeStatus(i, x) {
 
 
 
-function show(i) {
+function show2(i) {
 document.querySelector("#card3").innerHTML = `
     <div class="card4">
         <h1>Chi tiết đơn hàng</h1>
         <p class="title3">@${Order[i].username}</p>
         <div class="thongtin3">
-            <p>Ngày xác nhận mua hàng: ${Order[i].time}</p>
+            <p style="text-align: center;">${Order[i].time}</p>
         </div>
         <div id="order-products3">
             <h2>Sản phẩm đã mua</h2>
@@ -259,7 +259,7 @@ document.querySelector("#card3").innerHTML = `
             </table>
         </div>
         <p>
-            <button class="b3" onclick="cancel(${i})" style="bottom: 10px; right: 10px;">Thoát</button>
+            <button class="b3" onclick="cancel2(${i})" style="bottom: 10px; right: 10px;">Thoát</button>
         </p>
     </div>
 `;
@@ -285,11 +285,11 @@ document.querySelector("#card3").style.display = `block`;
 document.querySelector(".card4").style.display = `block`;
 }
 
-function cancel(i) {
+function cancel2(i) {
 document.querySelector(".title3").innerHTML = `<h1>Thông tin tài khoản</h1>
 <p class="title3">@${Order[i].username}</p>`;
 document.querySelector(".thongtin3").innerHTML = `
-    <p>Ngày xác nhận mua hàng: ${Order[i].time}</p>
+    <p style="text-align: center;">${Order[i].time}</p>
 `;
 document.querySelector("#card3").style.display = `none`;
 document.querySelector(".card4").style.display = `none`;

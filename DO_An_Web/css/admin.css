@@ -37,21 +37,16 @@ max-height: 100vh;
   margin: 0 auto;
 }
 
-#leftmenu ul li {
-  position: absolute;
-  left: 10px;
-  right: 10px;
-  list-style-type: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-}
 
 #leftmenu ul li > child {
   border: none;
   position: absolute;
   top: 50%;
   left: 0;
+  width: 100%;
   right: 0;
   vertical-align: middle;
+  justify-items: center;
 }
 
 #leftmenu ul li:hover {
@@ -66,11 +61,17 @@ max-height: 100vh;
 }
 
 #leftmenu ul li {
+  position: relative;
+  justify-items: center;
+  left: 10px;
+  right: 10px;
+  list-style-type: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  text-align: center;
   vertical-align: middle;
   align-items: center;
   justify-content: center;
   width: 100%;
-  position: relative;
   color: #000000;
   font-size: 100%;
   display: inline-block;
@@ -102,7 +103,7 @@ h2 {
 
 /* Chỉnh kiểu dáng cho các ô nhập liệu */
 input[type="text"],
-input[type="number"] {
+input[type="number"], input[type="password"] {
   padding: 5px;
   /* margin: 5px; */
   font-size: 16px;
@@ -373,7 +374,6 @@ transform: translateX(50px);
 
 .tim_hang {
   padding: 8px;
-  margin-right: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
@@ -385,8 +385,18 @@ transform: translateX(50px);
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin: 5px;
+  margin-left: 3px;
   width: 50px;
+  height: 30px;
+}
+
+.reload {
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 3px;
+  height: 30px;
+  width: 30px;
 }
 
 .search-btn:hover {
@@ -407,10 +417,12 @@ transform: translateX(50px);
 /* CSS cho nút mũi tên */
 .status-filter-dropdown {
   cursor: pointer;
-  padding: 5px 5px; /* Kích thước của nút */
+  margin-left: 5px;
+  padding: 3px 3px; /* Kích thước của nút */
   background-color: #040e15; /* Màu nền của nút */
   color: #fff; /* Màu chữ của nút */
   border: none;
+  height: 20px;
   border-radius: 4px; /* Đường cong viền nút */
   transition: background-color 0.3s, transform 0.3s; /* Hiệu ứng chuyển đổi màu nền và kích thước */
 }
