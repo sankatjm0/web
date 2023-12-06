@@ -9,6 +9,10 @@
   width: 70%;
 }
 
+.product-list3 {
+  width: 70%;
+}
+
 .checkout-section {
   width: 28%;
 }
@@ -43,6 +47,7 @@
 .whislist.sm-product:last-child {
   margin-bottom: 0;
 }
+
 
 .sm-product-img {
   height: 90px;

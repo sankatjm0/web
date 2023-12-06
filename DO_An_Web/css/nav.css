@@ -174,12 +174,44 @@ small {
   z-index: 1000;
 }
 
+.card3 {
+  padding: 25px;
+  display: none;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  width: 70%;
+  height:300%;
+  margin: 0.5% 15%;
+  text-align: center;
+  position: absolute;
+  z-index: 1000;
+}
+
 .title {
   color: grey;
   font-size: 18px;
 }
 
+.title3 {
+  color: grey;
+  font-size: 18px;
+}
+
 .b {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color:black;
+  text-align: center;
+  cursor: pointer;
+  font-size: 15px;
+  position: absolute;
+  
+}
+
+.b3 {
   border: none;
   outline: 0;
   display: inline-block;
@@ -212,7 +244,22 @@ small {
   height: 70%;
 }
 
+.thongtin3 {
+  font-size: 20px;
+  font-family: 'Times New Roman', Times, serif;
+  text-align: center;
+  position: absolute;
+  top: 30%;
+  left: 15%;
+  width: 70%;
+  height: 70%;
+}
+
 .thongtin > p {
+  margin-top: 10px;
+}
+
+.thongtin3 > p {
   margin-top: 10px;
 }
 

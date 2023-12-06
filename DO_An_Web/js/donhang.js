@@ -1,3 +1,5 @@
+
+
 const Order = JSON.parse(localStorage.getItem('order')) || [];
 
 document
@@ -35,9 +37,9 @@ document
         </tr>
     </table>
 </div>
-<div id="card" style="display: none;">
-    <div class="card2">
-        <button class="b" onclick="cancelP()" style="bottom: 10px; right: 10px;">Thoát</button>
+<div id="card3" style="display: none;">
+    <div class="card4">
+        <button class="b3" onclick="cancelP()" style="bottom: 10px; right: 10px;">Thoát</button>
     </div>
 </div>
     </div>`;
@@ -180,15 +182,15 @@ selectedOrder.status.forEach((orderStatus, index) => {
     `;
 });
 
-document.querySelector("#card").innerHTML = `
-    <div class="card2">
+document.querySelector("#card3").innerHTML = `
+    <div class="card4">
         ${statusDetails}
-        <button class="b" onclick="cancelP()" style="bottom: 10px; right: 10px;">Thoát</button>
+        <button class="b3" onclick="cancelP()" style="bottom: 10px; right: 10px;">Thoát</button>
     </div>
 `;
 
-document.querySelector("#card").style.display = `block`;
-document.querySelector(".card2").style.display = `block`;
+document.querySelector("#card3").style.display = `block`;
+document.querySelector(".card4").style.display = `block`;
 }
 
 function statusDisplay(num) {
@@ -203,7 +205,7 @@ function statusDisplay(num) {
 }
 
 function cancelP() {
-document.querySelector("#card").style.display = `none`;
+document.querySelector("#card3").style.display = `none`;
 }
 
 function changeStatus(i, x) {
@@ -226,17 +228,19 @@ function changeStatus(i, x) {
     }
 }
 
+
+
 function show(i) {
-document.querySelector("#card").innerHTML = `
-    <div class="card2">
+document.querySelector("#card3").innerHTML = `
+    <div class="card4">
         <h1>Chi tiết đơn hàng</h1>
-        <p class="title">@${Order[i].username}</p>
-        <div class="thongtin2">
+        <p class="title3">@${Order[i].username}</p>
+        <div class="thongtin3">
             <p>Ngày xác nhận mua hàng: ${Order[i].time}</p>
         </div>
-        <div id="order-products">
+        <div id="order-products3">
             <h2>Sản phẩm đã mua</h2>
-            <table id="product-table" style="width: 100%; text-align: left; border-collapse: collapse;">
+            <table id="product-table3" style="width: 100%; text-align: left; border-collapse: collapse;">
                 <thead>
                     <tr>
                         <th style="border: none;">Hình ảnh </th>
@@ -247,16 +251,16 @@ document.querySelector("#card").innerHTML = `
                         <th style="border: none;">Số lượng</th>
                     </tr>
                 </thead>
-                <tbody id="product-list"></tbody>
+                <tbody id="product-list3"></tbody>
             </table>
         </div>
         <p>
-            <button class="b" onclick="cancel(${i})" style="bottom: 10px; right: 10px;">Thoát</button>
+            <button class="b3" onclick="cancel(${i})" style="bottom: 10px; right: 10px;">Thoát</button>
         </p>
     </div>
 `;
 
-const productList = document.querySelector("#product-list");
+const productList = document.querySelector("#product-list3");
 
 Order[i].products.forEach(product => {
     const row = document.createElement("tr");
@@ -273,19 +277,20 @@ Order[i].products.forEach(product => {
     productList.appendChild(row);
 });
 
-document.querySelector("#card").style.display = `block`;
-document.querySelector(".card2").style.display = `block`;
+document.querySelector("#card3").style.display = `block`;
+document.querySelector(".card4").style.display = `block`;
 }
 
 function cancel(i) {
-document.querySelector(".title").innerHTML = `<h1>Thông tin tài khoản</h1>
-<p class="title">@${Order[i].username}</p>`;
-document.querySelector(".thongtin2").innerHTML = `
+document.querySelector(".title3").innerHTML = `<h1>Thông tin tài khoản</h1>
+<p class="title3">@${Order[i].username}</p>`;
+document.querySelector(".thongtin3").innerHTML = `
     <p>Ngày xác nhận mua hàng: ${Order[i].time}</p>
 `;
-document.querySelector("#card").style.display = `none`;
-document.querySelector(".card2").style.display = `none`;
-}
+document.querySelector("#card3").style.display = `none`;
+document.querySelector(".card4").style.display = `none`;
+}  
+
 function changeOrderStatus(i) {
     const selectedOrder = Order[i];
 
