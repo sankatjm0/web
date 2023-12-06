@@ -48,6 +48,7 @@ document
       function filter_khachang(user){
         document.querySelector('.khachhang-search').addEventListener('click', function () {
           user_temp =[" "];
+          id=[];
           let khachhang = document.querySelector('.khachhang_spadmin');
           let khachhangvalue = khachhang.value.trim();
           if(!khachhangvalue){
@@ -58,12 +59,14 @@ document
             {
               let khachhangid = parseInt(khachhangvalue);
               user_temp.push(user[khachhangid]);
+              id.push(khachhangid);
             }
           } 
           else {
-            user.forEach( user => {
+            user.forEach( (user,index) => {
               if(user.username.toLowerCase() == khachhangvalue.toLowerCase()){
                 user_temp.push(user);
+                id.push(index);
               }
             });
         }
@@ -81,6 +84,14 @@ document
         <th>Thông tin</th>
         </tr>`;
         displayCustomer(user_temp);
+
+        var rows = user_clear.getElementsByTagName("tr");
+        for (var i = 0; i < rows.length; i++) {
+          var cells = rows[i].getElementsByTagName("td");
+          if(cells[0]) {
+            cells[0].innerHTML = id[i-1];
+          }
+        }
 
       });
     }
