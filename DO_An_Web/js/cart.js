@@ -1,4 +1,7 @@
 document.querySelector("#show-cart").addEventListener("click", function() {
+  if (document.querySelector(".cart-section") != null) {
+    event.preventDefault();
+  } else {
   document.querySelector("#content").innerHTML = `
 
   <div id="add-checkout"></div>
@@ -152,7 +155,7 @@ function getCurrentTime() {
     year: "numeric",
   });
 }
-
+  }
 })
 // document.getElementById("nike").addEventListener("click", function () {
 //   window.location.href = "index-user.html?nav=nike";
