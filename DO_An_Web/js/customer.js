@@ -50,15 +50,57 @@ document
 
 
     function reload() {
-             displayCustomer(user);
-    
+      document.querySelector("#content").innerHTML = `
+      <div class="filter-container">
+        <div class="search">
+          <input type="text" placeholder="Tìm Mã KH hoặc tên KH" class="khachhang_spadmin" />
+          <button class="khachhang-search">Tìm</button>
+          <img onclick="reload()" class="reload" src="./img/OIP.jpg">
+
+        </div>
+      </div>
+
+      <div style="margin:10px">
+      <h2 style="font-size: 38px; text-align: center;">Quản lý khách hàng<br></h2>
+      <div>
+      <table style="width: 100%; border: 1px solid black; text-align: center" id="list-user">
+      <tr style="border: 1px solid black">
+      <th>Mã KH</th>
+      <th>Tài khoản</th>
+      <th>Tên khách hàng</th>
+      <th>Hóa đơn</th>
+      <th>Thông tin</th>
+      </tr>
+      </table></div>
+      <div id="card" style="display="none";">
+      <div class="card2">
+      <h1>Thông tin tài khoản</h1>
+      <p class="title">@</p>
+      <div class="thongtin2">
+      <p>Tên khách hàng: </p>
+      <p>Số điện thoại:</p>
+      <p>Địa chỉ: </p>
+      </div>
+      <p><button class="b" onclick="cancel()" style="bottom: 10px;
+      right: 10px;">Thoát</button></p>
+      <p id="update"><button class="b" onclick="update()" style="bottom: 10px;
+      right: 70px;">Cập nhật thông tin</button></p>
+      <p><button class="b" onclick="del()" style="bottom: 10px;
+      right: 200px;">Xóa</button></p>
+      </div></div>`;
+       displayCustomer(user);
+       filter_khachang(user);
+
+       
+  
         }
     
 
           
       function filter_khachang(user){
         document.querySelector('.khachhang-search').addEventListener('click', function () {
-          user_temp =[""];
+          user_temp =[" "];
+          id=[];
           let khachhang = document.querySelector('.khachhang_spadmin');
           let khachhangvalue = khachhang.value.trim();
           if(!khachhangvalue){
@@ -69,12 +111,14 @@ document
             {
               let khachhangid = parseInt(khachhangvalue);
               user_temp.push(user[khachhangid]);
+              id.push(khachhangid);
             }
           } 
           else {
-            user.forEach( user => {
+            user.forEach( (user,index) => {
               if(user.username.toLowerCase() == khachhangvalue.toLowerCase()){
                 user_temp.push(user);
+                id.push(index);
               }
             });
         }
@@ -92,6 +136,14 @@ document
         <th>Thông tin</th>
         </tr>`;
         displayCustomer(user_temp);
+
+        var rows = user_clear.getElementsByTagName("tr");
+        for (var i = 0; i < rows.length; i++) {
+          var cells = rows[i].getElementsByTagName("td");
+          if(cells[0]) {
+            cells[0].innerHTML = id[i-1];
+          }
+        }
 
       });
     }

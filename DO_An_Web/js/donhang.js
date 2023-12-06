@@ -47,15 +47,19 @@ document
     filter();
 });
 
-function product_filtering(status, Order) {
+function product_filtering(status, Order,filteredOrders,id) {
     console.log("Selected Status:", status);
 
     if (status === 'all') {
         return Order;
     }
 
-    const filteredOrders = Order.filter(dh => dh.status === getStatusValue(status));
-    return filteredOrders;
+    Order.filter((dh,index) => {
+        if(dh.status === getStatusValue(status)){
+            filteredOrders.push(dh);
+            id.push(index);
+        }
+    });
 }
 
 function toggleStatusOptions() {
@@ -96,26 +100,43 @@ function getStatusValue(status) {
 function filter() {
     Ordercopy = [...Order];
     const statusDropdown = document.querySelector('.status-options');
-
+    let filteredOrders;
     document.querySelectorAll('.status-option').forEach(statusOption => {
         statusOption.addEventListener('click', function (event) {
             Ordercopy = [...Order];
+            filteredOrders=[];
+            id=[];
+            console.log(id);
             const selectedStatus = event.target.getAttribute('data-status');
 
             if (selectedStatus === 'all') {
                 displayDonHang(Ordercopy); // Show all orders
             } else {
-                Ordercopy = product_filtering(selectedStatus, Ordercopy);
-                displayDonHang(Ordercopy);
+                product_filtering(selectedStatus, Ordercopy,filteredOrders,id);
+                displayDonHang(filteredOrders);
+                const user_clear = document.querySelector("#list-user");
+                var rows = user_clear.getElementsByTagName("tr");
+                for (var i = 0; i < rows.length; i++) {
+                    var cells = rows[i].getElementsByTagName("td");
+                    if(cells[0]) {
+                        cells[0].innerHTML = "DH" + (id[i-1]+1);
+                    }
+                }
             }
-
             toggleStatusOptions(); // Close dropdown after selecting a status option
+            
         });
     });
 
     document.querySelector('.search-btn')?.addEventListener('click', function () {
         let usernameInput = document.querySelector('.tim_hang');
         Order_name=[];
+        id2=[];
+        let check_filter = false;
+        if(filteredOrders?.length!=0 && filteredOrders != undefined){
+            Ordercopy=filteredOrders;
+            check_filter=true;
+        }
         // Save the search value before clearing
         const searchValue = usernameInput.value.trim();
     
@@ -123,13 +144,27 @@ function filter() {
         usernameInput.value = '';
     
         // Continue processing the search
-        Ordercopy.forEach(dh => {
+        Ordercopy.forEach((dh,index) => {
             if (dh.username.toLowerCase() == searchValue.toLowerCase()) {
                 Order_name.push(dh);
+                if(check_filter === false){
+                    id2.push(index);
+                }
+                if(check_filter === true){
+                    id2.push(id(index));
+                }
             }
         });
     
         displayDonHang(Order_name);
+        const user_clear = document.querySelector("#list-user");
+        var rows = user_clear.getElementsByTagName("tr");
+        for (var i = 0; i < rows.length; i++) {
+            var cells = rows[i].getElementsByTagName("td");
+            if(cells[0]) {
+                cells[0].innerHTML = "DH" + (id2[i-1]+1);
+            }
+        }
     
         // Close dropdown after searching only if not searching by username
         if (!searchValue) {
