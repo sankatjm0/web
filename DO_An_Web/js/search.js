@@ -14,6 +14,7 @@ const searchValue = urlParams.get('search');
       
 window.onload = function () {
     products = JSON.parse(localStorage.getItem("product")) || [];
+    document.querySelector(".search-box").value = "";
     Findname();
     redirectToProductDetails();
 }
@@ -21,16 +22,97 @@ window.onload = function () {
 function redirectToProductDetails() {
     document.querySelectorAll('.product-card').forEach(card => {
         card.addEventListener('click', function() {
-                const productId = this.getAttribute('data-id');
-                window.location.href = 'product.html?ID=' + encodeURIComponent(productId);
+            if (document.querySelector(".search-results") != null)
+            document.querySelector(
+              ".search-results"
+            ).innerHTML = `<section class="product-details">
+         
+    </section>`;
+          // console.log("Clicked product with ID:", productId);
+          // console.log("Current URL:", window.location.href);
+          // window.location.href =
+          //   "index-user.html?ID=" + encodeURIComponent(productId);
+          let checkdBtn = 0;
+          // const queryString = window.location.search;
+          // const urlParams = new URLSearchParams(queryString);
+          // const searchId = urlParams.get('ID');
+          const productId = this.getAttribute("data-id");
+          if (products.length > 1) {
+            searchProduct();
+  
+            sizeBtns = document.querySelectorAll(".size-radio-btn");
+            sizeBtns.forEach((item, i) => {
+              item.addEventListener("click", () => {
+                sizeBtns[checkdBtn].classList.remove("check");
+                item.classList.add("check");
+                checkdBtn = i;
+              });
 
-            });
+          
     });
-}
+    function searchProduct() {
+        if (products !== undefined) {
+          products.forEach((item) => {
+            if (item.ID == productId) {
+              addProduct(item);
+            }
+          });
+        }
+      }
+    
+      function addProduct(item) {
+        const addproduct = document.querySelector(".product-details");
+        addproduct.innerHTML = `
+    <div class="image-slider">
+    <img src="${item.img}" alt="">
+    </div>
+    
+    <div class="details">
+    <h2 class="product-brand">${item.brand}</h2>
+    <p class="product-short-des">${item.name}</p>
+    <span class="product-price">${item.price}</span>
+    
+    <p class="product-sub-headding">Chọn kích thước</p>
+    
+    <input type="radio" name="size" value="s" checked hidden id="s-size">
+    <label for="s-size" class="size-radio-btn check">s</label>
+    <input type="radio" name="size" value="m" hidden id="m-size">
+    <label for="m-size" class="size-radio-btn">m</label>
+    <input type="radio" name="size" value="l" hidden id="l-size">
+    <label for="l-size" class="size-radio-btn">l</label>
+    <input type="radio" name="size" value="xl" hidden id="xl-size">
+    <label for="xl-size" class="size-radio-btn">xl</label>
+    <input type="radio" name="size" value="xxl" hidden id="xxl-size">
+    <label for="xxl-size" class="size-radio-btn">xxl</label>
+    <br>
+    <br>
+    <div class="qlt">
+      <button onclick="decreaseQuantity2(${item.ID})">-</button>
+      <span id="quantity-${item.ID}" class="quantity-display">1</span>
+      <button onclick="increaseQuantity2(${item.ID})">+</button>
+    </div>
+    <br>
+    
+    <div class="btn-group">
+    <br>
+    <button onclick='addToCart(${item.ID})' class="btn">Thêm vào giỏ hàng</button>
+    </div>
+    </div>
+    </div>
+    `;
+      }
+}})})}
+
+
+  // function getCurrentTime() {
+  //   const currentTime = new Date();
+  //   return currentTime.toLocaleString();
+  // }
+
 
 let find = {};
 function Findname(){
-    search.value=searchValue;
+    // search.value=searchValue;
     document.querySelector("#ten-prod").innerHTML = `${searchValue}`
     foundItems = [];
     if(products !== undefined)

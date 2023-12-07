@@ -57,6 +57,7 @@ document.querySelector(".search-btn").addEventListener("click", function () {
   if(searchValue !=="")
   window.location.href =
     "search.html?search=" + encodeURIComponent(searchValue);
+    
 });
 
 // nav popup

@@ -8,12 +8,17 @@
     <title>Search Results</title>
     <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="css/search.css">
+    <link rel="stylesheet" href="css/product.css">
+    <link rel="stylesheet" href="css/cart.css">
+    <link rel="stylesheet" href="css/checkout.css">
+
     <link rel="stylesheet" href="css/nav.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
 </head>
 
 <body>
     <nav class="navbar"></nav>
+    <div id="content">
     <h2 class="headding">Kết quả tìm kiếm cho <span id="ten-prod">product</span></h2>
     <section class="search-results">
         
@@ -55,10 +60,10 @@
                     <input id="number2" type="number" placeholder="đ ĐẾN" class="shop-filter-group-filter-input">
                     </label>
                 </div>
-                <button id="primary" class="btn btn--primary shop-filter-group-filter-btn">ÁP DỤNG</button>
+                <button id="primary" class="btnn btn--primary shop-filter-group-filter-btnn">ÁP DỤNG</button>
             </fieldset>
 
-            <button id ="reset" class="btn btn--primary shop-filter-group-filter-btn shop-filter-group--new">LÀM MỚI</button>
+            <button id ="reset" class="btnn btn--primary shop-filter-group-filter-btnn shop-filter-group--new">LÀM MỚI</button>
         </nav>
         
         <section id="product1" class="section-p1">
@@ -68,11 +73,16 @@
     </section>
     
     <div id="pagination"></div>
+    </div>
 
     <footer></footer>
 
     <script src="js/nav.js"></script>
     <script src="js/footer.js"></script>
+    <script src="js/product.js"></script>
+    <script src="js/onload.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/home.js"></script>
     <script src="js/search.js"></script>
 
 

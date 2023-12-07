@@ -263,7 +263,6 @@ function addToCart(ID) {
     cart[getIndex] = {
       ...product,
       quantity: ++product.quantity,
-      time: getCurrentTime(),
       size: selectedSize,
     };
     alert("Sản phẩm đã được thêm vào giỏ hàng.");
