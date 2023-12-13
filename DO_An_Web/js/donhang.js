@@ -27,7 +27,7 @@ document
             <button class="search-btn">Tìm</button>
         </div>
     </div>
-    <table style="width: 100%; text-align: left; border-collapse: collapse;" id="list-user">
+    <table style=" width: 100%; text-align: left; border-collapse: collapse;" id="list-user">
         <tr>
             <th>Mã đơn hàng</th>
             <th>Tài khoản</th>
@@ -273,12 +273,17 @@ function show2(i) {
 document.querySelector("#card3").innerHTML = `
     <div class="card4">
         <h1>Chi tiết đơn hàng</h1>
-        <p class="title3">@${Order[i].username}</p>
         <div class="thongtin3">
             <p style="text-align: center;">${Order[i].time}</p>
+            <p>Người nhận: ${Order[i].name}</p>
+            <p>Địa chỉ giao hàng: ${Order[i].address}</p>
+            <p>Số điện thoại nhận hàng: ${Order[i].phone}</p>
+            <p>Tổng: ${Order[i].cost}</p>
+
         </div>
         <div id="order-products3">
-            <h2>Sản phẩm đã mua</h2>
+            <h3>Sản phẩm đã mua</h3>
+            <div id="flow">
             <table id="product-table3" style="width: 100%; text-align: left; border-collapse: collapse;">
                 <thead>
                     <tr>
@@ -292,6 +297,7 @@ document.querySelector("#card3").innerHTML = `
                 </thead>
                 <tbody id="product-list3"></tbody>
             </table>
+        </div>
         </div>
         <p>
             <button class="b3" onclick="cancel2(${i})" style="bottom: 10px; right: 10px;">Thoát</button>
@@ -321,8 +327,6 @@ document.querySelector(".card4").style.display = `block`;
 }
 
 function cancel2(i) {
-document.querySelector(".title3").innerHTML = `<h1>Thông tin tài khoản</h1>
-<p class="title3">@${Order[i].username}</p>`;
 document.querySelector(".thongtin3").innerHTML = `
     <p style="text-align: center;">${Order[i].time}</p>
 `;

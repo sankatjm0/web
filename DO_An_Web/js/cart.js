@@ -93,6 +93,11 @@ function checklog() {
 
             alert("Đặt hàng thành công!");
             let acc = user.find((acc) => acc.username == current.username);
+            const tk = new Date();
+      let day = tk.getDate();
+      let month = tk.getMonth() + 1;
+      let year = tk.getFullYear();
+      let tkdate = `${day}-${month}-${year}`;
             order.push({
               index: order.length,
               cost: cost.textContent,
@@ -102,6 +107,7 @@ function checklog() {
               phone: phone.value,
               products: current.cart,
               status: 1,
+              date: tkdate,
               time: getCurrentTime(),
             });
             localStorage.setItem("order", JSON.stringify(order));

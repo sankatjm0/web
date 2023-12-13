@@ -135,13 +135,18 @@ button:hover, a:hover {
 }
 
 .thongtin3 {
+  display: block;
   font-size: 20px;
   font-family: 'Times New Roman', Times, serif;
   text-align: center;
   position: absolute;
-  top: 20%;
-  left: 20%;
-  width: 70%;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+}
+
+.thongtin3 p {
+  margin-top: 5px;
 }
 
 .thongtin2 #input {
@@ -175,6 +180,7 @@ button:hover, a:hover {
             <li id="products-admin"><img src="img/icon-bill.png">Sản phẩm</a></li>
             <li id="donhang"><img src="img/icon-bill.png">Đơn hàng</a></li>
             <li id="customer"><img src="img/icon-multiple-users.png">Khách hàng</a></li>
+            <li id="tk"><img src="img/icon-bill.png">Thống kê</a></li>
             <li  onclick="guest()"><img src="img/icon-information.png">Trang chủ</a></li>
         </ul>
         </div>
@@ -188,6 +194,8 @@ button:hover, a:hover {
     <script src="js/customer.js"></script>
     <script src="js/onload.js"></script>
     <script src="js/donhang.js"></script>
+    <script src="js/thongke.js"></script>
+
 
 </body>
 

@@ -224,6 +224,7 @@ function signupSite() {
       let name = signup.elements["name"].value;
       let phone = signup.elements["phone"].value;
       var user = JSON.parse(localStorage.getItem("user")) || [];
+      
       user.push({
         username: username,
         password: password,
@@ -270,6 +271,7 @@ function signupSite() {
   
   function getCurrentTime() {
     const currentTime = new Date();
+    
     return currentTime.toLocaleString("vi-VN", {hour:'2-digit', minute:'2-digit', second: '2-digit', day: 'numeric', month:'long', year: 'numeric'});
   }
   
